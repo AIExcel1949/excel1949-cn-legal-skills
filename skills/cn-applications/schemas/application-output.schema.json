@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-applications/application-output.schema.json",
+  "title": "程序申请工作底稿输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "application_id", "application_type", "artifact_state", "routing_checklist", "material_gaps", "review_items", "source_record"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "application_id": {"type": "string"},
+    "application_type": {"type": "string"}, "artifact_state": {"const": "lawyer_review_required"},
+    "routing_checklist": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["item_id", "question", "status"], "properties": {"item_id": {"type": "string"}, "question": {"type": "string"}, "status": {"const": "lawyer_review_required"}}}},
+    "material_gaps": {"type": "array", "items": {"type": "object"}},
+    "review_items": {"type": "array", "items": {"type": "object"}},
+    "source_record": {"type": "object"}
+  }
+}

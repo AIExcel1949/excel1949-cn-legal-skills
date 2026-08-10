@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "labor",
+  "title": "Labor & Employment Domain Pack",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "劳动关系、订立履行、工资工时、解除终止和竞业限制的事实整理",
+      "仲裁前置、时效和用工主体候选识别",
+      "工资、补偿和赔偿项目的计算入口"
+    ],
+    "excluded": [
+      "工伤认定待遇、社保行政争议、船员劳动和跨境用工的最终结论"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-LABOR-CONTRACT",
+      "title": "中华人民共和国劳动合同法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_0abfdd261c03417b949df19d869add8d.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-LABOR-DISPUTE-II-2025",
+      "title": "最高人民法院关于审理劳动争议案件适用法律问题的解释（二）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://gongbao.court.gov.cn/Details/bb72019c45453f84d920bd6375573e.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "relationship_subject",
+      "label": "劳动关系与用工主体",
+      "questions": [
+        "谁招聘、管理、发薪、缴纳社保并提供工作条件？",
+        "是否存在关联公司、外包、转包、挂靠、派遣或平台用工？",
+        "书面合同与实际用工是否一致？"
+      ],
+      "fact_fields": [
+        "招聘主体",
+        "管理主体",
+        "工资支付",
+        "社保缴纳",
+        "合同与实际用工"
+      ],
+      "evidence_prompts": [
+        "劳动合同、录用和入职材料",
+        "考勤、工作指令和账号权限",
+        "工资流水、个税和社保记录"
+      ],
+      "calculation_hooks": [],
+      "deadline_hooks": [
+        "入职与离职日期候选",
+        "仲裁时效起算候选"
+      ],
+      "prohibitions": [
+        "不得仅凭合同抬头排除实际用工主体"
+      ]
+    },
+    {
+      "issue_key": "wage_hours",
+      "label": "工资、工时与待遇",
+      "questions": [
+        "工资结构、计薪周期、发放记录和争议月份是什么？",
+        "执行何种工时制度，是否存在审批或特殊工时文件？",
+        "加班事实、用人单位掌握的记录和劳动者自有记录如何相互印证？"
+      ],
+      "fact_fields": [
+        "工资结构",
+        "计薪周期",
+        "工时制度",
+        "考勤与加班",
+        "休假与待遇"
+      ],
+      "evidence_prompts": [
+        "工资条、银行流水和个税记录",
+        "考勤、排班、审批和工作成果",
+        "规章制度及公示送达材料"
+      ],
+      "calculation_hooks": [
+        "欠薪逐月台账",
+        "加班时数和计算规则的人工确认输入"
+      ],
+      "deadline_hooks": [
+        "工资支付周期",
+        "连续侵害和终止节点候选"
+      ],
+      "prohibitions": [
+        "不得只按聊天中的工作消息时点自动认定全部加班时间"
+      ]
+    },
+    {
+      "issue_key": "termination_restriction",
+      "label": "解除终止与竞业",
+      "questions": [
+        "谁在何时以何种理由提出解除或终止，通知何时到达？",
+        "理由所依赖的制度、程序、证据和工会环节是否完整？",
+        "竞业限制对象、秘密接触、范围、期限和补偿履行如何？"
+      ],
+      "fact_fields": [
+        "解除主体与理由",
+        "通知送达",
+        "制度与程序",
+        "工作年限",
+        "竞业约定与履行"
+      ],
+      "evidence_prompts": [
+        "解除通知及送达凭证",
+        "规章制度、民主程序和公示材料",
+        "绩效、违纪或协商记录",
+        "竞业协议、秘密接触和补偿流水"
+      ],
+      "calculation_hooks": [
+        "经济补偿或赔偿候选项目",
+        "竞业补偿和违约金台账"
+      ],
+      "deadline_hooks": [
+        "解除通知到达日",
+        "仲裁申请日期与时效候选"
+      ],
+      "prohibitions": [
+        "不得把用人单位书面理由自动视为真实、合法且程序完备"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "当地最低工资、工资支付、社会保险、特殊工时或裁审口径变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-LABOR-001",
+      "prompt": "劳动者称在两家关联公司交替工作三年，被口头辞退并拖欠两个月工资。",
+      "expected_questions": [
+        "谁招聘、管理、发薪和缴纳社保？",
+        "口头辞退的时间、表达、在场人和后续行为是什么？",
+        "工资结构和欠付月份如何核对？",
+        "仲裁申请时点和时效事实是什么？"
+      ],
+      "forbidden_inferences": [
+        "不得仅按社保缴纳单位认定唯一用工主体",
+        "不得在规则和工资基数未核验时直接给出补偿金额"
+      ]
+    }
+  ],
+  "author": "AIOffice职场通关-excel1949",
+  "title_zh": "劳动用工基础业务包"
+}

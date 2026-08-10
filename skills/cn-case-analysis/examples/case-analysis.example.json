@@ -1,0 +1,354 @@
+{
+  "schema_version": "1.0",
+  "analysis_id": "ANALYSIS-2026-001",
+  "matter_id": "MATTER-2026-001",
+  "analysis_perspective": "neutral",
+  "as_of_date": "2026-07-18",
+  "analysis_objective": "根据现有脱敏材料整理付款请求、质量抗辩和管辖问题，仅形成律师复核底稿。",
+  "parties": [
+    {
+      "party_id": "PARTY-A",
+      "entity_type": "legal_person",
+      "procedural_roles": ["原告候选"],
+      "name": "甲公司",
+      "name_status": "user_confirmed",
+      "source_spans": [{"source_id": "SRC-reg-a", "quote": "甲公司登记信息"}]
+    },
+    {
+      "party_id": "PARTY-B",
+      "entity_type": "legal_person",
+      "procedural_roles": ["被告候选"],
+      "name": "乙公司",
+      "name_status": "user_confirmed",
+      "source_spans": [{"source_id": "SRC-reg-b", "quote": "乙公司登记信息"}]
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "CLAIM-payment",
+      "order": 1,
+      "text_verbatim": "请求乙公司支付尚欠货款及依法核验后的相应资金占用损失。",
+      "status": "stated",
+      "liable_party_ids": ["PARTY-B"],
+      "source_spans": [{"source_id": "SRC-interview", "quote": "希望对方支付剩余货款"}]
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "FACT-contract",
+      "field": "合同签订",
+      "raw_value": "双方于2025年4月签署书面买卖合同。",
+      "status": "user_confirmed",
+      "source_spans": [{"source_id": "SRC-contract", "page": 1, "quote": "甲公司与乙公司订立本合同"}],
+      "confirmed_at": "2026-07-18T09:00:00+08:00"
+    },
+    {
+      "fact_id": "FACT-delivery",
+      "field": "交付数量",
+      "raw_value": "甲公司主张全部交付，乙公司对部分签收单所载数量提出异议。",
+      "status": "disputed",
+      "source_spans": [
+        {"source_id": "SRC-delivery", "page": 2, "quote": "本批货物签收"},
+        {"source_id": "SRC-interview-b", "quote": "部分数量与实际到货不符"}
+      ]
+    },
+    {
+      "fact_id": "FACT-quality-notice",
+      "field": "质量异议通知时间",
+      "raw_value": "双方对首次提出质量异议的时间陈述不一致。",
+      "status": "conflict",
+      "source_spans": [
+        {"source_id": "SRC-chat-a", "quote": "首次反馈时间为6月12日"},
+        {"source_id": "SRC-email-b", "quote": "5月底已经提出质量问题"}
+      ]
+    },
+    {
+      "fact_id": "FACT-jurisdiction",
+      "field": "管辖约定",
+      "raw_value": "合同含有争议解决条款，但扫描件文字清晰度不足。",
+      "status": "unreadable",
+      "source_spans": [{"source_id": "SRC-contract", "page": 8, "quote": "争议解决条款扫描内容无法完整识别"}]
+    }
+  ],
+  "issues": [
+    {
+      "issue_id": "ISSUE-payment",
+      "question": "甲公司主张货款请求所依赖的事实与证据是否完整？",
+      "status": "disputed",
+      "element_ids": ["ELEMENT-contract", "ELEMENT-delivery", "ELEMENT-unpaid"],
+      "burden_of_proof": "由提出付款请求的一方对请求基础事实承担相应举证责任。"
+    },
+    {
+      "issue_id": "ISSUE-quality-defense",
+      "question": "乙公司提出的质量异议对付款请求可能产生何种抗辩影响？",
+      "status": "open",
+      "element_ids": ["ELEMENT-quality", "ELEMENT-notice"],
+      "burden_of_proof": "由提出质量抗辩的一方就其抗辩基础提交相应材料。"
+    },
+    {
+      "issue_id": "ISSUE-jurisdiction",
+      "question": "现有材料能否支持确定争议解决条款的内容及其程序影响？",
+      "status": "blocked",
+      "element_ids": ["ELEMENT-clause", "ELEMENT-forum"],
+      "burden_of_proof": "提出程序主张的一方应提交可核验的条款文本及关联材料。"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EVID-contract",
+      "name": "买卖合同扫描件",
+      "source_id": "SRC-contract",
+      "fact_ids": ["FACT-contract", "FACT-jurisdiction"],
+      "authenticity": "unreviewed",
+      "legality": "unreviewed",
+      "relevance": "accepted",
+      "verification_status": "pending"
+    },
+    {
+      "evidence_id": "EVID-delivery",
+      "name": "送货及签收材料汇编",
+      "source_id": "SRC-delivery",
+      "fact_ids": ["FACT-delivery"],
+      "authenticity": "disputed",
+      "legality": "unreviewed",
+      "relevance": "accepted",
+      "verification_status": "pending"
+    },
+    {
+      "evidence_id": "EVID-quality-chat",
+      "name": "质量异议沟通记录",
+      "source_id": "SRC-chat-a",
+      "fact_ids": ["FACT-quality-notice"],
+      "authenticity": "unreviewed",
+      "legality": "unreviewed",
+      "relevance": "accepted",
+      "verification_status": "pending"
+    }
+  ],
+  "authorities": [],
+  "issue_analyses": [
+    {
+      "issue_id": "ISSUE-payment",
+      "parent_issue_id": null,
+      "frame": "claim_right",
+      "order": 1,
+      "claim_ids": ["CLAIM-payment"],
+      "positions": [
+        {
+          "position_id": "POSITION-a-payment",
+          "party_id": "PARTY-A",
+          "position_type": "assertion",
+          "statement": "甲公司主张已经按约交付，乙公司尚欠部分货款。",
+          "fact_ids": ["FACT-contract", "FACT-delivery"],
+          "evidence_ids": ["EVID-contract", "EVID-delivery"],
+          "authority_ids": []
+        },
+        {
+          "position_id": "POSITION-b-payment",
+          "party_id": "PARTY-B",
+          "position_type": "denial",
+          "statement": "乙公司对部分交付数量及付款条件是否成就持异议。",
+          "fact_ids": ["FACT-delivery"],
+          "evidence_ids": ["EVID-delivery"],
+          "authority_ids": []
+        }
+      ],
+      "elements": [
+        {
+          "element_id": "ELEMENT-contract",
+          "name": "请求基础关系及主体",
+          "order": 1,
+          "status": "supported",
+          "burden_party_ids": ["PARTY-A"],
+          "fact_ids": ["FACT-contract"],
+          "evidence_ids": ["EVID-contract"],
+          "authority_ids": [],
+          "opposing_arguments": [],
+          "working_note": "现有合同扫描件可定位主体与合同关系，仍须核验原件及签署权限。"
+        },
+        {
+          "element_id": "ELEMENT-delivery",
+          "name": "交付事实与数量",
+          "order": 2,
+          "status": "disputed",
+          "burden_party_ids": ["PARTY-A"],
+          "fact_ids": ["FACT-delivery"],
+          "evidence_ids": ["EVID-delivery"],
+          "authority_ids": [],
+          "opposing_arguments": ["乙公司对部分签收数量持异议。"],
+          "working_note": "应逐笔对应订单、送货单、签收人权限和入库记录。"
+        },
+        {
+          "element_id": "ELEMENT-unpaid",
+          "name": "付款条件与未付金额",
+          "order": 3,
+          "status": "missing",
+          "burden_party_ids": ["PARTY-A"],
+          "fact_ids": [],
+          "evidence_ids": [],
+          "authority_ids": [],
+          "opposing_arguments": ["乙公司保留对账和抵扣意见。"],
+          "working_note": "尚缺完整对账表、发票和付款流水，不能计算未付金额。"
+        }
+      ],
+      "risks": [
+        {
+          "risk_id": "RISK-amount",
+          "risk_type": "evidence_gap",
+          "level": "high",
+          "description": "现有材料无法逐笔复核请求金额。",
+          "related_ids": ["CLAIM-payment", "ELEMENT-unpaid"],
+          "next_action": "补充对账表、发票、付款流水并交由金额计算 Skill 处理。"
+        }
+      ],
+      "research_items": []
+    },
+    {
+      "issue_id": "ISSUE-quality-defense",
+      "parent_issue_id": "ISSUE-payment",
+      "frame": "defense",
+      "order": 2,
+      "claim_ids": ["CLAIM-payment"],
+      "positions": [
+        {
+          "position_id": "POSITION-b-quality",
+          "party_id": "PARTY-B",
+          "position_type": "assertion",
+          "statement": "乙公司主张部分货物存在质量问题并已及时通知。",
+          "fact_ids": ["FACT-quality-notice"],
+          "evidence_ids": ["EVID-quality-chat"],
+          "authority_ids": []
+        },
+        {
+          "position_id": "POSITION-a-quality",
+          "party_id": "PARTY-A",
+          "position_type": "denial",
+          "statement": "甲公司对质量问题及通知时间均不予确认。",
+          "fact_ids": ["FACT-quality-notice"],
+          "evidence_ids": ["EVID-quality-chat"],
+          "authority_ids": []
+        }
+      ],
+      "elements": [
+        {
+          "element_id": "ELEMENT-quality",
+          "name": "质量问题的具体内容及材料支持",
+          "order": 1,
+          "status": "partially_supported",
+          "burden_party_ids": ["PARTY-B"],
+          "fact_ids": ["FACT-quality-notice"],
+          "evidence_ids": ["EVID-quality-chat"],
+          "authority_ids": [],
+          "opposing_arguments": ["甲公司不认可质量问题本身。"],
+          "working_note": "沟通记录只能显示曾提出异议，尚缺检验、退换货或损失材料。"
+        },
+        {
+          "element_id": "ELEMENT-notice",
+          "name": "异议通知的时间及程序影响",
+          "order": 2,
+          "status": "research_required",
+          "burden_party_ids": ["PARTY-B"],
+          "fact_ids": ["FACT-quality-notice"],
+          "evidence_ids": ["EVID-quality-chat"],
+          "authority_ids": [],
+          "opposing_arguments": ["甲公司主张通知时间晚于乙公司陈述。"],
+          "working_note": "先核对事实时间，再检索与验收、通知相关的现行规则及反向观点。"
+        }
+      ],
+      "risks": [],
+      "research_items": [
+        {
+          "research_id": "RESEARCH-quality-notice",
+          "question": "在事实时间核清后，质量异议通知对付款请求的可能影响及反向观点是什么？",
+          "reason": "现有材料中的通知时间相互冲突，且尚未加载实体法知识包。",
+          "priority": "high",
+          "status": "open"
+        }
+      ]
+    },
+    {
+      "issue_id": "ISSUE-jurisdiction",
+      "parent_issue_id": null,
+      "frame": "procedure",
+      "order": 3,
+      "claim_ids": [],
+      "positions": [
+        {
+          "position_id": "POSITION-a-forum",
+          "party_id": "PARTY-A",
+          "position_type": "reservation",
+          "statement": "甲公司尚未确定拟提交的受理机构，待核验争议解决条款。",
+          "fact_ids": ["FACT-jurisdiction"],
+          "evidence_ids": ["EVID-contract"],
+          "authority_ids": []
+        }
+      ],
+      "elements": [
+        {
+          "element_id": "ELEMENT-clause",
+          "name": "争议解决条款的完整文本",
+          "order": 1,
+          "status": "missing",
+          "burden_party_ids": ["PARTY-A"],
+          "fact_ids": ["FACT-jurisdiction"],
+          "evidence_ids": ["EVID-contract"],
+          "authority_ids": [],
+          "opposing_arguments": [],
+          "working_note": "应取得清晰合同原件或完整扫描件。"
+        },
+        {
+          "element_id": "ELEMENT-forum",
+          "name": "条款效力及受理机构",
+          "order": 2,
+          "status": "lawyer_judgment_required",
+          "burden_party_ids": ["PARTY-A"],
+          "fact_ids": ["FACT-jurisdiction"],
+          "evidence_ids": ["EVID-contract"],
+          "authority_ids": [],
+          "opposing_arguments": [],
+          "working_note": "在取得完整条款并检索现行程序规则后，由律师判断。"
+        }
+      ],
+      "risks": [
+        {
+          "risk_id": "RISK-jurisdiction",
+          "risk_type": "procedure_uncertainty",
+          "level": "high",
+          "description": "争议解决条款目前不可完整识读，可能影响程序路径。",
+          "related_ids": ["ISSUE-jurisdiction", "FACT-jurisdiction", "EVID-contract"],
+          "next_action": "取得完整条款后核验管辖或仲裁约定，并由律师作程序判断。"
+        }
+      ],
+      "research_items": [
+        {
+          "research_id": "RESEARCH-jurisdiction",
+          "question": "完整条款取得后，应适用哪些现行程序规则判断受理机构？",
+          "reason": "当前不能识别条款内容，也未完成程序法源核验。",
+          "priority": "high",
+          "status": "open"
+        }
+      ]
+    }
+  ],
+  "pending_confirmations": [
+    {
+      "confirmation_id": "CONFIRM-delivery",
+      "question": "请逐笔确认送货单对应的订单、数量、签收人身份及是否实际入库。",
+      "related_fact_ids": ["FACT-delivery"],
+      "blocking": true
+    }
+  ],
+  "lawyer_judgments": [
+    {
+      "judgment_id": "JUDGMENT-claim-basis",
+      "question": "在事实与法源核验完成后，应选择何种请求基础及是否提出备位请求？",
+      "status": "pending"
+    },
+    {
+      "judgment_id": "JUDGMENT-procedure-path",
+      "question": "争议解决条款核清后，应选择何种程序路径？",
+      "status": "pending"
+    }
+  ],
+  "domain_packs": []
+}

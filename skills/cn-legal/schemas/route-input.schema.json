@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal/route-input.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "jurisdiction",
+    "track",
+    "track_status",
+    "requested_outputs",
+    "urgent_flags"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "minLength": 1
+    },
+    "track": {
+      "enum": [
+        "dispute",
+        "transaction",
+        "compliance",
+        "mixed",
+        "unknown"
+      ]
+    },
+    "track_status": {
+      "enum": [
+        "user_confirmed",
+        "unconfirmed"
+      ]
+    },
+    "mixed_tracks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "dispute",
+          "transaction",
+          "compliance"
+        ]
+      }
+    },
+    "requested_outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "delivery_format": {
+      "enum": [
+        "source_native",
+        "docx"
+      ]
+    },
+    "runtime_profile": {
+      "enum": [
+        "codex_app",
+        "claude_code",
+        "openclaw",
+        "portable_serial"
+      ]
+    },
+    "urgent_flags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "deadline",
+          "personal_safety",
+          "asset_preservation",
+          "criminal_coercive_measure",
+          "regulatory_response",
+          "none"
+        ]
+      }
+    },
+    "case_cause": {
+      "type": "string",
+      "description": "案由文本，用于匹配领域业务包（可选）"
+    }
+  },
+  "additionalProperties": false
+}

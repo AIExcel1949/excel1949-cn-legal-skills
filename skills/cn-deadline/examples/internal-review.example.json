@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MATTER-DEMO-001",
+  "as_of_date": "2026-07-18",
+  "calendars": [
+    {
+      "calendar_id": "office-demo-2026",
+      "timezone": "Asia/Shanghai",
+      "coverage_start": "2026-07-01",
+      "coverage_end": "2026-08-31",
+      "declared_complete": true,
+      "weekend_weekdays": [5, 6],
+      "non_working_dates": ["2026-07-15"],
+      "working_dates": ["2026-07-18"],
+      "source": {
+        "source_id": "SRC-CALENDAR-DEMO-001",
+        "authority_type": "internal_policy",
+        "title": "AIOffice教学脱敏日历示例",
+        "document_locator": "教学示例数据，不是官方节假日安排",
+        "quote": "2026年7月15日为示例非工作日，7月18日为示例调休工作日。",
+        "effect_status": "effective",
+        "verified_on": "2026-07-18"
+      }
+    }
+  ],
+  "deadlines": [
+    {
+      "deadline_id": "DL-DEMO-001",
+      "label": "材料接收后内部复核期限",
+      "timezone": "Asia/Shanghai",
+      "event": {
+        "event_id": "EVT-DEMO-001",
+        "event_type": "材料接收",
+        "occurred_at": "2026-07-13T15:20:00+08:00",
+        "operative_date": "2026-07-13",
+        "operative_date_basis": "以脱敏的材料接收登记日为内部起算日。",
+        "evidence_locator": "evidence/receipt-demo-001.pdf#page=1",
+        "confirmed_by_human": true
+      },
+      "rule": {
+        "rule_id": "RULE-DEMO-001",
+        "name": "内部复核五个工作日教学示例",
+        "calculation": {
+          "method": "counted_days",
+          "count": 5,
+          "day_kind": "working",
+          "include_operative_date": false
+        },
+        "non_working_expiry": "next_working_day",
+        "calendar_id": "office-demo-2026",
+        "deadline_time": "18:00:00",
+        "source": {
+          "source_id": "SRC-RULE-DEMO-001",
+          "authority_type": "internal_policy",
+          "title": "AIOffice内部复核教学规则示例",
+          "document_locator": "教学脱敏示例第1条，不是实际律所制度或法定期限",
+          "quote": "材料接收日不计入，在五个工作日内完成内部复核；届满日非工作日的，顺延至下一工作日。",
+          "effect_status": "effective",
+          "verified_on": "2026-07-18"
+        }
+      },
+      "adjustments": [],
+      "exceptions": [
+        "本例仅测试计算引擎，不提供任何法定期限结论。"
+      ],
+      "blocking_questions": []
+    }
+  ]
+}

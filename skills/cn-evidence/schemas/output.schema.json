@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-evidence/transcribe-output.schema.json",
+  "title": "录音文字稿输出结构（v3.2）",
+  "description": "待人工校核的录音文字索引中间数据。文字稿不替代原始录音，也不自动证明录音真实性或合法性。",
+  "type": "object",
+  "required": ["meta", "segments", "review"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "录音元信息（来自 case-info.json + Whisper 检测结果）",
+      "required": ["recording_time", "recording_method", "recording_duration", "original_file"],
+      "properties": {
+        "recording_time": {
+          "type": "string",
+          "description": "录音时间"
+        },
+        "recording_location": {
+          "type": "string",
+          "description": "录音地点"
+        },
+        "recording_method": {
+          "type": "string",
+          "description": "录音方式"
+        },
+        "recording_duration": {
+          "type": "string",
+          "description": "录音时长"
+        },
+        "original_file": {
+          "type": "string",
+          "description": "原始录音文件名"
+        },
+        "original_md5": {
+          "type": "string",
+          "description": "旧数据兼容字段"
+        },
+        "original_sha256": {
+          "type": "string",
+          "description": "原始录音文件 SHA-256 哈希值",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "transcribe_model": {
+          "type": "string",
+          "description": "使用的 ASR 模型/backend（如 paraformer-zh / funasr-nano / sensevoice-small / large-v3）",
+          "examples": ["paraformer-zh", "funasr-nano", "sensevoice-small", "large-v3"]
+        },
+        "transcribe_date": {
+          "type": "string",
+          "description": "转写日期时间（ISO 8601）"
+        },
+        "speakers": {
+          "type": "object",
+          "description": "说话人映射（键为 A/B/C...，值为姓名和身份）",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "role": { "type": "string" },
+              "voice_desc": { "type": "string" }
+            }
+          }
+        },
+        "case": {
+          "type": "object",
+          "description": "关联案件信息",
+          "properties": {
+            "cause": { "type": "string" },
+            "docket_number": { "type": "string" },
+            "evidentiary_purpose": { "type": "string" }
+          }
+        }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "description": "转写正文段落数组。每个元素为一个自然句。",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["start", "speaker", "text"],
+        "properties": {
+          "start": {
+            "type": "number",
+            "description": "段落起始时间（秒）",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "description": "段落结束时间（秒）",
+            "minimum": 0
+          },
+          "time_label": {
+            "type": "string",
+            "description": "格式化的时间戳标签 [MM:SS]",
+            "pattern": "^\\[\\d{2}:\\d{2}\\]$",
+            "examples": ["[00:01]", "[03:45]"]
+          },
+          "speaker": {
+            "type": "string",
+            "description": "说话人标识（A/B/C/... 或姓名）",
+            "examples": ["A", "张某某"]
+          },
+          "speaker_label": {
+            "type": "string",
+            "description": "显示用的说话人标签（含姓名和身份）"
+          },
+          "text": {
+            "type": "string",
+            "description": "转写文本内容（逐字原文）"
+          },
+          "confidence": {
+            "type": "number",
+            "description": "该段落的平均对数概率（avg_logprob）",
+            "minimum": -20,
+            "maximum": 5
+          },
+          "confidence_flag": {
+            "type": "string",
+            "description": "置信度标记",
+            "enum": ["normal", "low", "unintelligible"],
+            "default": "normal"
+          },
+          "no_speech_prob": {
+            "type": "number",
+            "description": "非语音概率",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "compression_ratio": {
+            "type": "number",
+            "description": "文本压缩比（幻听检测用）"
+          },
+          "flags": {
+            "type": "array",
+            "description": "段落标记",
+            "items": {
+              "type": "string",
+              "enum": [
+                "suspected_edit",
+                "dialect_detected",
+                "background_noise",
+                "multiple_speakers",
+                "whispered",
+                "shouted",
+                "emotional",
+                "hallucination_suspected"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "review": {
+      "type": "object",
+      "description": "人工回听校核信息",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["未完成逐句回听", "已完成逐句回听"]
+        },
+        "transcriber": {
+          "type": "string",
+          "description": "整理人姓名"
+        },
+        "transcriber_role": {
+          "type": "string",
+          "description": "转写人身份"
+        },
+        "date": {
+          "type": "string",
+          "description": "声明日期"
+        },
+        "reviewer": { "type": "string", "description": "校核人姓名" }
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "description": "旧版兼容字段；v3.2 默认不再向文字稿渲染独立附件说明",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["original_audio", "sha256", "md5", "review_note", "format_info"]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "description": "转写过程中产生的警告信息",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": ["info", "warning", "error"]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string",
+            "description": "警告相关的时间戳或段落编号"
+          }
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "description": "转写统计信息",
+      "properties": {
+        "total_segments": { "type": "integer" },
+        "total_duration_seconds": { "type": "number" },
+        "avg_confidence": { "type": "number" },
+        "low_confidence_ratio": { "type": "number" },
+        "unintelligible_count": { "type": "integer" },
+        "speaker_turn_count": { "type": "integer" },
+        "speaker_distribution": {
+          "type": "object",
+          "description": "各说话人发言段落数",
+          "additionalProperties": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

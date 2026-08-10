@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-criminal-defense/output.schema.json",
+  "title": "中国刑事辩护工作台输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "as_of_date", "stage", "review_state", "external_action_state", "accusation_status", "official_documents", "accusations", "authorities", "deadline_rules", "element_candidates", "evidence_reviews", "exclusion_clues", "liberty_and_meeting_tasks", "sentencing_candidates", "defense_positions", "human_escalations", "prohibitions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "stage": {"type": "string"},
+    "review_state": {"const": "lawyer_review_required"},
+    "external_action_state": {"const": "not_performed"},
+    "accusation_status": {"const": "verbatim_record_only_not_final_finding"},
+    "official_documents": {"type": "array"},
+    "accusations": {"type": "array"},
+    "authorities": {"type": "array"},
+    "deadline_rules": {"type": "array"},
+    "element_candidates": {"type": "array"},
+    "evidence_reviews": {"type": "array"},
+    "exclusion_clues": {"type": "array"},
+    "liberty_and_meeting_tasks": {"type": "array"},
+    "sentencing_candidates": {"type": "array"},
+    "defense_positions": {"type": "array"},
+    "human_escalations": {"type": "array", "items": {"type": "object", "required": ["escalation_id", "severity", "reason", "related_ids"], "properties": {"escalation_id": {"type": "string"}, "severity": {"enum": ["critical", "high"]}, "reason": {"type": "string"}, "related_ids": {"type": "array", "items": {"type": "string"}}}}},
+    "prohibitions": {"type": "array", "minItems": 6, "items": {"type": "string"}}
+  }
+}

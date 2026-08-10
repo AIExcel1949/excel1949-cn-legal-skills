@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "intake_id": "INTAKE-2026-001",
+  "matter": {
+    "matter_id": "MATTER-2026-001",
+    "procedure_type": "commercial",
+    "stage": "pre_litigation"
+  },
+  "request": {
+    "received_at": "2026-07-18T09:00:00+08:00",
+    "raw_request": "甲公司称乙公司收到货物后仍有部分价款未付，希望评估催收和诉讼方案。",
+    "desired_outcomes": ["核对欠款构成", "评估可采取的追偿步骤"],
+    "urgency_status": "no_urgency_stated",
+    "language_or_accessibility_needs": []
+  },
+  "participants": [
+    {
+      "party_id": "PARTY-001",
+      "entity_type": "legal_person",
+      "procedural_roles": ["prospective_client"],
+      "name": "甲公司",
+      "name_status": "user_confirmed",
+      "source_spans": [{"source_id": "SRC-001", "paragraph": 0, "quote": "甲公司"}]
+    },
+    {
+      "party_id": "PARTY-002",
+      "entity_type": "legal_person",
+      "procedural_roles": ["counterparty"],
+      "name": "乙公司",
+      "name_status": "stated",
+      "source_spans": [{"source_id": "SRC-001", "paragraph": 0, "quote": "乙公司"}]
+    }
+  ],
+  "materials": [
+    {
+      "source_id": "SRC-001",
+      "file_name": "当事人书面陈述.txt",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "mime_type": "text/plain",
+      "acquisition": "user_provided",
+      "parse_status": "human_verified",
+      "notes": "脱敏教学样例"
+    }
+  ],
+  "statements": [
+    {
+      "statement_id": "STMT-001",
+      "field": "未付款金额",
+      "raw_value": "尚未最终核对",
+      "status": "missing",
+      "source_spans": [{"source_id": "SRC-001", "paragraph": 0, "quote": "仍有部分价款未付"}]
+    }
+  ],
+  "controls": {
+    "conflict_check": {"status": "pending", "note": "等待律所冲突检索"},
+    "identity_verification": {"status": "pending"},
+    "deadline_review": {"status": "not_started"},
+    "emergency_measure_review": {"status": "not_started"},
+    "engagement_review": {"status": "not_started"}
+  }
+}
+

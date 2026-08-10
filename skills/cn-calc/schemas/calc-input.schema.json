@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-calc/calc-input.schema.json",
+  "title": "AIOffice 中国律师确定性计算输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "matter",
+    "as_of_date",
+    "input_confirmed_by_lawyer",
+    "benchmarks",
+    "variables",
+    "calculations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matter_id", "matter_name"],
+      "properties": {
+        "matter_id": {"type": "string", "minLength": 1, "maxLength": 80},
+        "matter_name": {"type": "string", "minLength": 1, "maxLength": 120}
+      }
+    },
+    "as_of_date": {"type": "string", "format": "date"},
+    "input_confirmed_by_lawyer": {"const": true},
+    "benchmarks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {"$ref": "#/$defs/benchmark"}
+    },
+    "variables": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 500,
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/decimalVariable"},
+          {"$ref": "#/$defs/rationalVariable"},
+          {"$ref": "#/$defs/dateSpanVariable"}
+        ]
+      }
+    },
+    "calculations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 500,
+      "items": {"$ref": "#/$defs/calculation"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+      "maxLength": 100
+    },
+    "positiveDecimal": {
+      "type": "string",
+      "pattern": "^(0\\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(\\.[0-9]+)?)$",
+      "maxLength": 100
+    },
+    "integer": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)$",
+      "maxLength": 100
+    },
+    "positiveInteger": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$",
+      "maxLength": 100
+    },
+    "sourceIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/identifier"}
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_type",
+        "title",
+        "locator",
+        "quote",
+        "verification_status",
+        "verified_on",
+        "applicability_status"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "source_type": {
+          "enum": [
+            "contract",
+            "statute",
+            "judicial_interpretation",
+            "court_document",
+            "evidence",
+            "official_standard",
+            "lawyer_instruction",
+            "other"
+          ]
+        },
+        "title": {"type": "string", "minLength": 1, "maxLength": 200},
+        "locator": {"type": "string", "minLength": 3, "maxLength": 500},
+        "quote": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "verification_status": {"const": "verified"},
+        "verified_on": {"type": "string", "format": "date"},
+        "applicability_status": {"const": "confirmed_for_calculation"},
+        "notes": {"type": "string", "maxLength": 1000}
+      }
+    },
+    "variableBase": {
+      "type": "object",
+      "required": ["id", "label", "kind", "unit", "source_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "label": {"type": "string", "minLength": 1, "maxLength": 120},
+        "kind": {"type": "string"},
+        "unit": {"type": "string"},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "source_ids": {"$ref": "#/$defs/sourceIds"}
+      }
+    },
+    "decimalVariable": {
+      "allOf": [
+        {"$ref": "#/$defs/variableBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "kind", "value", "unit", "source_ids"],
+          "properties": {
+            "id": {"$ref": "#/$defs/identifier"},
+            "label": {"type": "string", "minLength": 1, "maxLength": 120},
+            "kind": {"const": "decimal"},
+            "value": {"$ref": "#/$defs/decimal"},
+            "unit": {"enum": ["money", "ratio", "day", "month", "year", "count", "other"]},
+            "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+            "source_ids": {"$ref": "#/$defs/sourceIds"}
+          },
+          "allOf": [
+            {
+              "if": {"properties": {"unit": {"const": "money"}}},
+              "then": {"required": ["currency"]},
+              "else": {"not": {"required": ["currency"]}}
+            }
+          ]
+        }
+      ]
+    },
+    "rationalVariable": {
+      "allOf": [
+        {"$ref": "#/$defs/variableBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "label", "kind", "numerator", "denominator", "unit", "source_ids"],
+          "properties": {
+            "id": {"$ref": "#/$defs/identifier"},
+            "label": {"type": "string", "minLength": 1, "maxLength": 120},
+            "kind": {"const": "rational"},
+            "numerator": {"$ref": "#/$defs/integer"},
+            "denominator": {"$ref": "#/$defs/positiveInteger"},
+            "unit": {"enum": ["money", "ratio", "day", "month", "year", "count", "other"]},
+            "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+            "source_ids": {"$ref": "#/$defs/sourceIds"}
+          },
+          "allOf": [
+            {
+              "if": {"properties": {"unit": {"const": "money"}}},
+              "then": {"required": ["currency"]},
+              "else": {"not": {"required": ["currency"]}}
+            }
+          ]
+        }
+      ]
+    },
+    "dateSpanVariable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "start_date",
+        "end_date",
+        "include_start",
+        "include_end",
+        "unit",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "label": {"type": "string", "minLength": 1, "maxLength": 120},
+        "kind": {"const": "date_span"},
+        "start_date": {"type": "string", "format": "date"},
+        "end_date": {"type": "string", "format": "date"},
+        "include_start": {"type": "boolean"},
+        "include_end": {"type": "boolean"},
+        "unit": {"const": "calendar_day"},
+        "source_ids": {"$ref": "#/$defs/sourceIds"}
+      }
+    },
+    "calculation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "category",
+        "formula",
+        "result_type",
+        "rounding",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "label": {"type": "string", "minLength": 1, "maxLength": 120},
+        "category": {"enum": ["principal", "interest", "period", "fee", "damages", "deduction", "total", "other"]},
+        "formula": {"type": "string", "minLength": 1, "maxLength": 512},
+        "result_type": {"enum": ["money", "quantity"]},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "unit": {"type": "string", "minLength": 1, "maxLength": 40},
+        "rounding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["quantum", "mode"],
+          "properties": {
+            "quantum": {"$ref": "#/$defs/positiveDecimal"},
+            "mode": {"enum": ["HALF_UP", "HALF_EVEN", "DOWN", "UP", "FLOOR", "CEILING"]}
+          }
+        },
+        "source_ids": {"$ref": "#/$defs/sourceIds"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"result_type": {"const": "money"}}},
+          "then": {"required": ["currency"], "not": {"required": ["unit"]}},
+          "else": {"required": ["unit"], "not": {"required": ["currency"]}}
+        }
+      ]
+    }
+  }
+}

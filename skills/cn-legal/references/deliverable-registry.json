@@ -1,0 +1,397 @@
+{
+  "registry_version": "1.0",
+  "deliverables": [
+    {
+      "id": "case-assessment",
+      "aliases": [
+        "争议评估",
+        "案件分析",
+        "案件中立分析报告"
+      ],
+      "skill": "cn-case-analysis",
+      "generator": "scripts/build_analysis.py",
+      "artifact_kind": "internal_workpaper",
+      "native_artifacts": [
+        "analysis.normalized.json",
+        "analysis-derived.json",
+        "validation.json",
+        "案件中立分析报告.md"
+      ],
+      "docx_supported": false,
+      "renderer_pending": true,
+      "renderer_pending_note": "需为 cn-case-analysis 补 DOCX 渲染器（用户要求所有文档类 skill 一律 DOCX 交付）"
+    },
+    {
+      "id": "contract-review",
+      "aliases": [
+        "合同修订",
+        "合同审查",
+        "合同审查报告"
+      ],
+      "skill": "cn-contract-review",
+      "generator": "scripts/review_contract.py",
+      "artifact_kind": "internal_workpaper",
+      "native_artifacts": [
+        "*.json",
+        "*.md"
+      ],
+      "docx_supported": false,
+      "renderer_pending": true,
+      "renderer_pending_note": "需为 cn-contract-review 补 DOCX 渲染器（用户要求所有文档类 skill 一律 DOCX 交付）"
+    },
+    {
+      "id": "pre-delivery-review",
+      "aliases": [
+        "交付前核验报告",
+        "终检报告",
+        "文书终检报告"
+      ],
+      "skill": "cn-verify",
+      "generator": "scripts/verify_document.py",
+      "artifact_kind": "audit_report",
+      "native_artifacts": [
+        "review-report.json",
+        "review-report.md"
+      ],
+      "docx_supported": false
+    },
+    {
+      "id": "authorization-document-selector",
+      "aliases": [
+        "授权委托书",
+        "民事授权委托书",
+        "授权委托书（民事）"
+      ],
+      "variant_required": true,
+      "variant_options": [
+        "民事授权委托书（律师）",
+        "民事授权委托书（近亲属）",
+        "民事授权委托书（单位工作人员）"
+      ],
+      "skill": "",
+      "generator": "",
+      "artifact_kind": "formal_docx_selector",
+      "native_artifacts": [],
+      "docx_supported": true
+    },
+    {
+      "id": "civil-lawyer-power-attorney",
+      "aliases": [
+        "民事授权委托书（律师）",
+        "律师授权委托书",
+        "授权委托书（民事-特别授权）"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "civil-power-attorney",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "civil-relative-power-attorney",
+      "aliases": [
+        "民事授权委托书（近亲属）",
+        "近亲属授权委托书"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "civil-relative-power-attorney",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "civil-organization-employee-power-attorney",
+      "aliases": [
+        "民事授权委托书（单位工作人员）",
+        "公司员工授权委托书",
+        "单位工作人员授权委托书"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "civil-organization-employee-power-attorney",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "legal-representative-certificate",
+      "aliases": [
+        "法定代表人身份证明书",
+        "法定代表人证明书"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "legal-representative-certificate",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "organization-employee-certificate",
+      "aliases": [
+        "公司员工身份证明书",
+        "工作人员身份证明书",
+        "单位工作人员身份证明书"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "organization-employee-certificate",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "civil-complaint",
+      "aliases": [
+        "民事起诉状",
+        "起诉状"
+      ],
+      "skill": "cn-complaint",
+      "generator": "scripts/build_complaint.py",
+      "artifact_kind": "court_document_draft",
+      "native_artifacts": [
+        "complaint.json",
+        "民事起诉状-待复核.md",
+        "validation.json"
+      ],
+      "docx_supported": true,
+      "render_skill": "cn-complaint",
+      "renderer": "scripts/render_docx.py",
+      "docx_artifact": "民事起诉状.docx",
+      "delivery_dir": "01-民事起诉状"
+    },
+    {
+      "id": "lawyer-letter",
+      "aliases": [
+        "律师函",
+        "催款律师函"
+      ],
+      "skill": "cn-legal-letter",
+      "generator": "scripts/build_letter.py",
+      "artifact_kind": "external_document_draft",
+      "native_artifacts": [
+        "legal-letter.json",
+        "律师函审查底稿.md"
+      ],
+      "docx_supported": false,
+      "renderer_pending": true,
+      "renderer_pending_note": "需为 cn-legal-letter 补 DOCX 渲染器（用户要求所有文档类 skill 一律 DOCX 交付）"
+    },
+    {
+      "id": "property-preservation-application",
+      "aliases": [
+        "财产保全申请书",
+        "诉讼财产保全申请书",
+        "诉前财产保全申请书"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "property-preservation-application",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "04-财产保全申请书"
+    },
+    {
+      "id": "evidence-list",
+      "aliases": [
+        "证据目录",
+        "证据清单",
+        "证据目录与证据清单"
+      ],
+      "skill": "cn-evidence-map",
+      "generator": "scripts/build_evidence_map.py",
+      "artifact_kind": "court_document_draft",
+      "native_artifacts": [
+        "evidence-map.json",
+        "validation.json",
+        "evidence-matrix.csv",
+        "证据映射报告.md"
+      ],
+      "docx_supported": true,
+      "render_skill": "cn-evidence-catalog",
+      "renderer": "scripts/render_evidence_catalog.py",
+      "docx_artifact": "证据目录-叙述式.docx",
+      "delivery_dir": "02-证据目录",
+      "render_input_note": "渲染器输入为 evidence-catalog-input.json，需由 cn-evidence-map 产物转换（BUG-A 第④项，衔接契约）",
+      "docx_artifacts": [
+        "证据目录-叙述式.docx",
+        "证据目录.docx",
+        "证据清单.docx"
+      ],
+      "default_note": "默认叙述式（多地法院明确要求，禁止表格）；表格版（证据目录/证据清单）仅备选"
+    },
+    {
+      "id": "evidence-preservation-application",
+      "aliases": [
+        "证据保全申请书",
+        "证据保全申请书及保全文书套件"
+      ],
+      "skill": "cn-applications",
+      "generator": "scripts/build_application.py",
+      "artifact_kind": "court_document_workpaper",
+      "native_artifacts": [
+        "application-workpaper.json",
+        "程序申请工作底稿.md"
+      ],
+      "docx_supported": false,
+      "renderer_pending": true,
+      "renderer_pending_note": "需为 cn-applications 补 DOCX 渲染器（用户要求所有文档类 skill 一律 DOCX 交付）"
+    },
+    {
+      "id": "first-instance-agent-submission",
+      "aliases": [
+        "一审代理词",
+        "代理词",
+        "民事代理词"
+      ],
+      "skill": "cn-hearing",
+      "generator": "scripts/build_hearing.py",
+      "artifact_kind": "court_document_workpaper",
+      "native_artifacts": [
+        "hearing-workbook.json",
+        "庭前庭审准备矩阵.md",
+        "一审代理词（草稿）-原告代理人.md"
+      ],
+      "docx_supported": true,
+      "render_skill": "cn-hearing",
+      "renderer": "scripts/render_docx.py",
+      "docx_artifact": "一审代理词.docx",
+      "delivery_dir": "03-一审代理词"
+    },
+    {
+      "id": "defense-matrix",
+      "aliases": [
+        "答辩状",
+        "民事答辩状"
+      ],
+      "skill": "cn-defense",
+      "generator": "scripts/build_defense.py",
+      "artifact_kind": "court_document_draft",
+      "native_artifacts": [
+        "defense.json",
+        "民事答辩状-待复核.md",
+        "validation.json"
+      ],
+      "docx_supported": true,
+      "render_skill": "cn-defense",
+      "renderer": "scripts/render_docx.py",
+      "docx_artifact": "民事答辩状.docx",
+      "delivery_dir": "03-民事答辩状"
+    },
+    {
+      "id": "appeal-review",
+      "aliases": [
+        "上诉状",
+        "民事上诉状"
+      ],
+      "skill": "cn-appeal",
+      "generator": "scripts/build_appeal_review.py",
+      "artifact_kind": "court_document_draft",
+      "native_artifacts": [
+        "appeal-review.json",
+        "上诉审查工作底稿.md",
+        "上诉状（草稿）-上诉人蓝湾置业.md"
+      ],
+      "docx_supported": true,
+      "render_skill": "cn-appeal",
+      "renderer": "scripts/render_docx.py",
+      "docx_artifact": "上诉状.docx",
+      "delivery_dir": "06-上诉与执行"
+    },
+    {
+      "id": "civil-engagement",
+      "aliases": [
+        "委托代理合同",
+        "委托代理合同（一般代理）"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "civil-engagement",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "civil-risk-engagement",
+      "aliases": [
+        "委托代理合同（风险代理）"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "civil-risk-engagement",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "05-授权委托与委托代理合同"
+    },
+    {
+      "id": "enforcement-application",
+      "aliases": [
+        "执行申请书",
+        "强制执行申请书"
+      ],
+      "skill": "cn-procedure",
+      "generator": "scripts/fill_templates.py",
+      "template_id": "enforcement-application",
+      "artifact_kind": "formal_docx",
+      "native_artifacts": [
+        "generation-manifest.json",
+        "*.docx"
+      ],
+      "docx_supported": true,
+      "delivery_dir": "06-上诉与执行"
+    },
+    {
+      "id": "construction-contract-draft",
+      "aliases": [
+        "建设工程施工合同",
+        "施工合同"
+      ],
+      "skill": "cn-contract-draft",
+      "generator": "scripts/build_contract_draft.py",
+      "artifact_kind": "transaction_draft",
+      "native_artifacts": [
+        "contract-draft.json",
+        "建设工程施工合同-工作底稿.md"
+      ],
+      "docx_supported": true,
+      "render_skill": "cn-contract-draft",
+      "renderer": "scripts/render_docx.py",
+      "docx_artifact": "建设工程施工合同.docx",
+      "delivery_dir": "07-合同"
+    }
+  ]
+}

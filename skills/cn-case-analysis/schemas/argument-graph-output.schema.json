@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-case-analysis/argument-graph-output.schema.json",
+  "type": "object",
+  "required": ["schema_version", "graph_id", "analysis_id", "matter_id", "validation_state", "argument_state", "nodes", "edges", "topological_layers", "unsupported_conclusions", "unanswered_attacks", "hypothesis_tests", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "graph_id": {"type": "string"},
+    "analysis_id": {"type": "string"},
+    "matter_id": {"type": "string"},
+    "validation_state": {"const": "machine_checked"},
+    "argument_state": {"const": "lawyer_review_required"},
+    "nodes": {"type": "array", "items": {"type": "object"}},
+    "edges": {"type": "array", "items": {"type": "object"}},
+    "topological_layers": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}},
+    "unsupported_conclusions": {"type": "array", "items": {"type": "string"}},
+    "unanswered_attacks": {"type": "array", "items": {"type": "object"}},
+    "hypothesis_tests": {"type": "array", "items": {"type": "object"}},
+    "limitations": {"type": "array", "minItems": 3, "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "matter": {
+    "matter_id": "MAT-ARB-001",
+    "title": "甲方与乙方设备采购仲裁（教学脱敏）",
+    "as_of_date": "2026-07-18"
+  },
+  "arbitration_agreement": {
+    "source_id": "SRC-CONTRACT-001",
+    "exact_text": "因本合同引起的争议提交中国国际经济贸易仲裁委员会，按申请时有效规则在北京仲裁。",
+    "party_ids": ["PARTY-A", "PARTY-B"],
+    "institution_name_as_written": "中国国际经济贸易仲裁委员会",
+    "seat_as_written": "北京",
+    "scope_as_written": "因本合同引起的争议",
+    "review_status": "human_checked",
+    "conflicts": []
+  },
+  "institution": {
+    "institution_id": "INST-CIETAC",
+    "name": "中国国际经济贸易仲裁委员会",
+    "official_url": "https://www.cietac.org/",
+    "source_version": "机构官网快照-2026-07-18（教学输入）",
+    "verified_on": "2026-07-18",
+    "selection_status": "confirmed",
+    "selection_basis": "仲裁协议机构名称原文与律师核对记录"
+  },
+  "authorities": [
+    {
+      "authority_id": "RULE-CIETAC-INPUT-001",
+      "kind": "arbitration_rule",
+      "title": "当事人输入的仲裁规则官方文本",
+      "official_url": "https://www.cietac.org/",
+      "version": "申请时版本（教学输入，使用前逐条复核）",
+      "verified_on": "2026-07-18",
+      "effect_status": "effective",
+      "applicability_status": "confirmed",
+      "applies_basis": "仲裁协议的动态版本约定及律师核对记录"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "kind": "claim",
+      "claimant_party_id": "PARTY-A",
+      "respondent_party_ids": ["PARTY-B"],
+      "request": "请求支付剩余货款，具体金额以律师复核计算底稿为准",
+      "amount": 180000,
+      "currency": "CNY",
+      "fact_ids": ["FACT-DELIVERY-001", "FACT-NONPAYMENT-001"],
+      "evidence_ids": ["EV-CONTRACT-001", "EV-DELIVERY-001"],
+      "authority_ids": ["RULE-CIETAC-INPUT-001"],
+      "review_status": "human_checked"
+    },
+    {
+      "claim_id": "CCLM-001",
+      "kind": "counterclaim",
+      "claimant_party_id": "PARTY-B",
+      "respondent_party_ids": ["PARTY-A"],
+      "request": "反请求质量问题损失，事实和金额仍待逐项举证",
+      "amount": 40000,
+      "currency": "CNY",
+      "fact_ids": ["FACT-QUALITY-001"],
+      "evidence_ids": ["EV-INSPECTION-001"],
+      "authority_ids": ["RULE-CIETAC-INPUT-001"],
+      "review_status": "human_checked"
+    }
+  ],
+  "jurisdiction_objections": [
+    {
+      "objection_id": "JUR-001",
+      "raised_by": "PARTY-B",
+      "issue": "反请求是否超出仲裁协议范围",
+      "basis": "合同仲裁条款原文与反请求事实的关联性待仲裁庭审查",
+      "evidence_ids": ["EV-CONTRACT-001", "EV-INSPECTION-001"],
+      "authority_ids": ["RULE-CIETAC-INPUT-001"],
+      "review_status": "human_checked"
+    }
+  ],
+  "arbitrator_disclosures": [
+    {
+      "disclosure_id": "DISC-001",
+      "arbitrator_ref": "ARB-REF-001",
+      "disclosed_fact": "仲裁员披露一项已公开的过往专业交流事项（教学脱敏）",
+      "source_id": "SRC-DISCLOSURE-001",
+      "assessment_status": "human_assessed",
+      "response_plan": "由律师核对事实、规则和当事人意见后决定是否作出程序反应"
+    }
+  ],
+  "evidence": [
+    {"evidence_id": "EV-CONTRACT-001", "name": "脱敏采购合同", "source_id": "SRC-CONTRACT-001", "proof_purpose": "证明合同及仲裁条款的明示文本", "review_status": "human_checked"},
+    {"evidence_id": "EV-DELIVERY-001", "name": "脱敏交付记录", "source_id": "SRC-DELIVERY-001", "proof_purpose": "证明交付事实，真实性和关联性仍待仲裁庭审查", "review_status": "human_checked"},
+    {"evidence_id": "EV-INSPECTION-001", "name": "脱敏检验记录", "source_id": "SRC-INSPECTION-001", "proof_purpose": "证明乙方主张的质量事实，不代表已采信", "review_status": "human_checked"}
+  ],
+  "schedule": [
+    {
+      "event_id": "SCH-001",
+      "label": "提交仲裁申请工作副本",
+      "date": "2026-07-30",
+      "date_basis": "当事人确认的内部工作日期，非脚本计算的法定期限",
+      "source_ref": "INST-CIETAC",
+      "review_status": "human_checked"
+    },
+    {
+      "event_id": "SCH-002",
+      "label": "按程序令提交第一轮证据",
+      "date": "2026-08-20",
+      "date_basis": "已核对程序令中的明示日期（教学脱敏）",
+      "source_ref": "RULE-CIETAC-INPUT-001",
+      "review_status": "human_checked"
+    }
+  ]
+}

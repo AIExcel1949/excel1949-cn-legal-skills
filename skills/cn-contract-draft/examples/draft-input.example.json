@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MAT-CONTRACT-001",
+  "document_title": "系统维护服务合同（工作底稿）",
+  "review_context": {
+    "representation": "委托方",
+    "representation_status": "confirmed",
+    "jurisdiction": "中华人民共和国大陆地区",
+    "jurisdiction_status": "confirmed"
+  },
+  "transaction_checklist": [
+    {"item_id": "CHK-SCOPE", "label": "服务范围", "required": true, "status": "confirmed"},
+    {"item_id": "CHK-PRICE", "label": "服务费用", "required": true, "status": "confirmed"}
+  ],
+  "parties": [
+    {"party_id": "PTY-A", "name": "甲公司", "role": "委托方", "confirmation_status": "confirmed"},
+    {"party_id": "PTY-B", "name": "乙公司", "role": "服务方", "confirmation_status": "confirmed"}
+  ],
+  "commercial_terms": [
+    {"term_id": "TERM-SCOPE", "term_key": "service_scope", "label": "服务内容", "value": "乙公司为甲公司提供系统维护服务", "confirmation_status": "confirmed", "source_ref": "会议纪要-001"},
+    {"term_id": "TERM-PRICE", "term_key": "service_fee", "label": "服务费用", "value": "人民币壹万元", "confirmation_status": "confirmed", "source_ref": "交易清单-001"}
+  ],
+  "risk_allocations": [
+    {"risk_id": "RISK-ACCESS", "topic": "系统访问权限", "allocation": "甲公司按已确认人员名单开通最小必要权限", "confirmation_status": "confirmed", "source_ref": "会议纪要-001"}
+  ],
+  "definitions": [
+    {"definition_id": "DEF-SYSTEM", "term": "系统", "meaning": "甲公司在附件一列明的业务系统", "confirmation_status": "confirmed"}
+  ],
+  "authority_records": [
+    {"record_id": "AUTH-CIVIL-CODE", "title": "中华人民共和国民法典", "source_url": "https://www.moj.gov.cn/pub/sfbgw/zwgkztzl/2025nianzhuanti/2025mfdxcy/2025mfdxcy_mfdql/202505/t20250507_518708.html", "effect_status": "effective", "verification_status": "verified", "full_text_checked": true, "applicability_status": "confirmed"}
+  ],
+  "clause_plan": [
+    {"clause_id": "CLAUSE-SCOPE", "heading": "服务内容", "term_ids": ["TERM-SCOPE"], "risk_ids": ["RISK-ACCESS"], "definition_ids": ["DEF-SYSTEM"], "authority_ids": ["AUTH-CIVIL-CODE"]},
+    {"clause_id": "CLAUSE-PRICE", "heading": "服务费用", "term_ids": ["TERM-PRICE"], "risk_ids": [], "definition_ids": [], "authority_ids": []}
+  ]
+}
+

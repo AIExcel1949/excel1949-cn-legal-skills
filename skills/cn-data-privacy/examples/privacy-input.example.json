@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "matter": {
+    "matter_id": "MAT-PRIVACY-2026-001",
+    "title": "某在线课程平台个人信息保护审查",
+    "as_of_date": "2026-07-18",
+    "jurisdiction_scope": "中国境内个人信息处理活动及涉及境外技术支持的候选出境场景"
+  },
+  "sources": [
+    {"source_id": "SRC-NOTICE", "source_kind": "privacy_notice", "source_locator": "测试版隐私告知第1段", "original_text": "测试版隐私告知说明：为创建账号和提供课程服务，平台收集联系方式、登录记录与学习进度。", "sha256": "68f62f46194f51017616a30b6eac6d8257dd6216e6391c780e71c365d7186cdc", "verification_status": "source_checked", "verified_on": "2026-07-17"},
+    {"source_id": "SRC-INVENTORY", "source_kind": "system_inventory", "source_locator": "脱敏系统盘点表第1行", "original_text": "系统盘点表记载：联系方式存储于境内客户系统，登录日志同步至境外技术支持平台，保存期限尚待确认。", "sha256": "a247b12bb4ad4e7b7c92abd5e2c5f71f2003b04fb2d1870ed2d96f8e1d4a8df8", "verification_status": "lawyer_verified", "verified_on": "2026-07-18"},
+    {"source_id": "SRC-PROCESSOR", "source_kind": "contract", "source_locator": "脱敏技术服务协议第4条", "original_text": "技术服务协议约定服务商按照平台书面指令处理账号与日志数据，但未附删除证明流程。", "sha256": "c04c1b8f3914b0bee0bf85e4d9a91781871aa89aa211c7ff2d3987dca1376b6f", "verification_status": "source_checked", "verified_on": "2026-07-17"},
+    {"source_id": "SRC-INCIDENT", "source_kind": "incident_record", "source_locator": "2026年7月16日脱敏事件工单", "original_text": "事件记录：2026年7月16日发现测试环境访问权限配置异常，尚未确认是否存在未授权访问。", "sha256": "6cb9140dcd4a4f0d1f35f3de00cd69bce25b1c5c82c1fc21f1cf515d166d9fc2", "verification_status": "source_checked", "verified_on": "2026-07-18"},
+    {"source_id": "SRC-PIA", "source_kind": "impact_assessment", "source_locator": "《个人信息保护影响评估草稿》首页", "original_text": "影响评估草稿列出账号服务、日志分析与境外技术支持场景，风险和措施仍待业务、安全与律师复核。", "sha256": "88fa20464a3af2191d080dbf0cae0e6e16175f39dac5bed89425d67d021bf831", "verification_status": "unverified", "verified_on": null},
+    {"source_id": "SRC-REQUEST", "source_kind": "request_record", "source_locator": "2026年7月17日脱敏用户请求工单", "original_text": "用户甲某于2026年7月17日提出删除账号资料的请求，身份核验和法定保存要求尚未审查。", "sha256": "8529e35a14edd3e74b623683cde823266918e8cb4a22406e681f0a8330bf2f59", "verification_status": "source_checked", "verified_on": "2026-07-18"},
+    {"source_id": "SRC-GUARDIAN", "source_kind": "consent_record", "source_locator": "脱敏监护人同意记录样本", "original_text": "监护人同意记录样本显示已勾选儿童账号服务条款，但告知版本号和时间戳仍待系统核对。", "sha256": "bb3176548ba1d533019b1897a70036eb341a20d2902b8275cdccc4f0863d96b4", "verification_status": "source_checked", "verified_on": "2026-07-18"}
+  ],
+  "authority_ids": ["PRV-PIPL", "PRV-DATA-SECURITY", "PRV-CYBERSECURITY-2026", "PRV-NETWORK-DATA-REG", "PRV-COMPLIANCE-AUDIT", "PRV-INCIDENT-REPORT", "PRV-MINORS", "PRV-CHILDREN", "PRV-CROSSBORDER", "PRV-EXPORT-ASSESSMENT", "PRV-SCC", "PRV-CERTIFICATION"],
+  "data_inventory": [
+    {"data_item_id": "DAT-CONTACT", "label": "联系方式", "classification_candidates": ["personal_information"], "source_ids": ["SRC-NOTICE", "SRC-INVENTORY"], "systems": ["境内客户系统"], "retention_statement": "账号服务期间与服务结束后必要期限，具体期限待复核。", "deletion_state": "task_candidate"},
+    {"data_item_id": "DAT-LOGIN", "label": "登录日志", "classification_candidates": ["personal_information", "unknown"], "source_ids": ["SRC-NOTICE", "SRC-INVENTORY"], "systems": ["境内客户系统", "境外技术支持平台"], "retention_statement": "现有盘点未确认统一保存期限。", "deletion_state": "unknown"},
+    {"data_item_id": "DAT-CHILD", "label": "儿童账号与学习进度", "classification_candidates": ["personal_information", "sensitive_personal_information", "child_under_14"], "source_ids": ["SRC-NOTICE", "SRC-GUARDIAN"], "systems": ["境内学习系统"], "retention_statement": "课程服务期限和法定或约定争议处理期限待律师复核。", "deletion_state": "legal_hold_candidate"}
+  ],
+  "processing_activities": [
+    {
+      "activity_id": "ACT-ACCOUNT",
+      "name": "账号与课程服务",
+      "purpose": "创建账号、提供课程、记录学习进度与处理用户请求。",
+      "data_item_ids": ["DAT-CONTACT", "DAT-CHILD"],
+      "subject_groups": ["成年用户", "不满十四周岁未成年人候选"],
+      "collection_channels": ["注册页面", "学习过程"],
+      "legal_basis_candidates": ["consent", "contract_necessity", "separate_consent"],
+      "notice_status": "partial",
+      "consent_status": "partial",
+      "sensitive_context": {"candidate_present": true, "specific_purpose": "为未成年人账号提供学习进度功能。", "necessity_note": "还需逐字段核对最小必要性。", "separate_consent_status": "partial"},
+      "minor_context": {"candidate_present": true, "age_group_candidates": ["under_14", "unknown"], "guardian_consent_status": "partial"},
+      "recipients": [{"recipient_id": "RCP-DOMESTIC", "name_or_role": "境内课程系统服务商", "relationship_candidate": "entrusted_processing", "contract_status": "partial", "source_ids": ["SRC-PROCESSOR"]}],
+      "cross_border": {"involved": false, "destinations": [], "mechanism_candidates": ["not_applicable"], "quantity_note": "本活动暂不记录为出境。", "important_data_candidate": false},
+      "retention_plan": "保存期限与删除触发条件待业务和律师确认。",
+      "high_impact_candidate": true
+    },
+    {
+      "activity_id": "ACT-LOG-SUPPORT",
+      "name": "日志分析与境外技术支持",
+      "purpose": "分析登录异常并处理技术故障。",
+      "data_item_ids": ["DAT-LOGIN"],
+      "subject_groups": ["平台用户"],
+      "collection_channels": ["系统自动记录"],
+      "legal_basis_candidates": ["contract_necessity", "consent", "other_pending"],
+      "notice_status": "partial",
+      "consent_status": "unknown",
+      "sensitive_context": {"candidate_present": false, "specific_purpose": null, "necessity_note": null, "separate_consent_status": "not_applicable_candidate"},
+      "minor_context": {"candidate_present": false, "age_group_candidates": ["unknown"], "guardian_consent_status": "not_applicable_candidate"},
+      "recipients": [{"recipient_id": "RCP-OVERSEAS", "name_or_role": "境外技术支持服务商", "relationship_candidate": "unknown", "contract_status": "partial", "source_ids": ["SRC-PROCESSOR", "SRC-INVENTORY"]}],
+      "cross_border": {"involved": true, "destinations": ["境外某地区"], "mechanism_candidates": ["exemption_candidate", "standard_contract", "certification", "unknown"], "quantity_note": "人数、数据条数、敏感类型与统计口径尚待核对。", "important_data_candidate": false},
+      "retention_plan": "境外保存地点、期限与删除证明机制待复核。",
+      "high_impact_candidate": true
+    }
+  ],
+  "pia_records": [
+    {
+      "pia_id": "PIA-001",
+      "activity_ids": ["ACT-ACCOUNT", "ACT-LOG-SUPPORT"],
+      "trigger_candidates": ["sensitive_information", "minor_information", "entrusted_or_shared", "cross_border", "high_impact"],
+      "necessity_assessment": "已列出账号服务、日志分析和技术支持目的，仍需逐数据项核对最小必要性。",
+      "impact_description": "候选影响包括账号控制、未成年人权益、境外接收方控制能力与安全事件响应。",
+      "risk_items": ["告知与同意记录不完整", "境外接收方关系和出境路径尚未确定", "保存期限和删除证明机制尚未核实"],
+      "safeguards": ["限制测试环境访问权限", "补充接收方合同和监督记录", "完成字段级必要性复核"],
+      "conclusion_state": "lawyer_review_pending"
+    }
+  ],
+  "incidents": [
+    {
+      "incident_id": "INC-001",
+      "observed_facts": "测试环境访问权限配置异常，影响范围、是否发生未授权访问及数据类型均在调查中。",
+      "source_ids": ["SRC-INCIDENT"],
+      "severity_candidate": "unknown",
+      "response_tasks": [
+        {"task_id": "TSK-CONTAIN", "action_type": "contain", "description": "由安全团队按授权人工核对并限制异常访问权限。", "execution_status": "in_progress_manual", "human_approval_required": true},
+        {"task_id": "TSK-PRESERVE", "action_type": "preserve_evidence", "description": "保全日志、权限变更记录和影响范围调查结果。", "execution_status": "planned", "human_approval_required": true},
+        {"task_id": "TSK-NOTIFY-ASSESS", "action_type": "assess_notification", "description": "由律师与安全负责人核对事件类型、级别、通知主体、时限和内容。", "execution_status": "planned", "human_approval_required": true},
+        {"task_id": "TSK-DRAFT", "action_type": "draft_notification", "description": "仅在完成法律研判和组织授权后准备通知草案，不自动发送。", "execution_status": "planned", "human_approval_required": true}
+      ]
+    }
+  ],
+  "individual_requests": [
+    {"request_id": "REQ-DELETE-001", "request_type": "delete", "source_ids": ["SRC-REQUEST"], "task_description": "先核验请求人身份、数据范围、系统分布、保存义务和法律保留候选，再由授权人人工处理。", "task_state": "pending_identity_check", "auto_execute": false}
+  ]
+}

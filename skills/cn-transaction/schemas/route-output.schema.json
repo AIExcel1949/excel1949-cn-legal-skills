@@ -1,0 +1,3 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://aioffice.example/schemas/cn-transaction/route-output.schema.json","type":"object","required":["schema_version","task_id","skills","blockers","blocked","artifact_state"],"properties":{"schema_version":{"const":"1.0"},"task_id":{"type":"string"},"skills":{"type":"array","uniqueItems":true,"items":{"type":"string"}},"blockers":{"type":"array","items":{"type":"string"}},"blocked":{"type":"boolean"},"artifact_state":{"const":"lawyer_review_required"}},"additionalProperties":false
+}

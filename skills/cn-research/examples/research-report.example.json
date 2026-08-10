@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "report_id": "REPORT-DEMO-001",
+  "task": {
+    "schema_version": "1.0",
+    "task_id": "RESEARCH-DEMO-002",
+    "matter_id": "MATTER-DEMO-001",
+    "cutoff_date": "2026-07-18",
+    "procedure": "法律检索基础设施测试",
+    "jurisdiction": "中国大陆",
+    "case_stage": "测试",
+    "research_questions": [
+      {
+        "question_id": "Q-001",
+        "question": "国家法律法规数据库页面是否可以作为后续法规原文检索入口？",
+        "known_facts": ["测试人员已打开该官方网站"],
+        "missing_facts": [],
+        "search_both_sides": true
+      }
+    ],
+    "source_types": ["legislation"],
+    "preferred_tools": []
+  },
+  "search_log": [
+    {
+      "searched_at": "2026-07-18T09:00:00+08:00",
+      "tool": "官方网页人工核验",
+      "query": "国家法律法规数据库",
+      "filters": {},
+      "result_count": 1,
+      "status": "success",
+      "note": "仅用于验证 Skill 数据链路，不形成实体法律结论。"
+    }
+  ],
+  "records": [
+    {
+      "record_id": "SRC-001",
+      "record_type": "other",
+      "title": "国家法律法规数据库",
+      "issuing_body_or_court": "全国人大常委会办公厅",
+      "effect_status": "not_applicable",
+      "source_url": "https://flk.npc.gov.cn/",
+      "retrieved_at": "2026-07-18T09:00:00+08:00",
+      "verification_status": "verified",
+      "full_text_checked": true,
+      "exact_quotes": [
+        {
+          "quote": "国家法律法规数据库",
+          "locator": "页面标题"
+        }
+      ],
+      "relevance": "用于验证法规检索入口和报告生成链路。",
+      "similarities": [],
+      "differences": [],
+      "limitations": ["未检索任何具体法律问题。"]
+    }
+  ],
+  "findings": [
+    {
+      "question_id": "Q-001",
+      "conclusion": "已确认该页面可作为法规原文检索入口之一；具体法律问题仍须逐项打开原文并核验效力。",
+      "supporting_record_ids": ["SRC-001"],
+      "counterpoints": ["单一入口不能替代制定机关、公报版本和修改废止决定的交叉核验。"],
+      "confidence": "high",
+      "lawyer_review_notes": ["本示例不包含实体法律意见。"]
+    }
+  ],
+  "limitations": ["本示例只测试来源、验证、报告和 DOCX 品牌流程。"],
+  "state": "lawyer_review_required"
+}

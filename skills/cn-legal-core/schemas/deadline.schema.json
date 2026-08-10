@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/deadline.schema.json",
+  "type": "object",
+  "required": ["deadline_id", "trigger_event", "rule", "status"],
+  "properties": {
+    "deadline_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "trigger_event": {"type": "string", "minLength": 1},
+    "trigger_date": {"type": "string", "format": "date"},
+    "rule": {"type": "string", "minLength": 1},
+    "period": {"type": "string"},
+    "calculated_date": {"type": "string", "format": "date"},
+    "exceptions": {"type": "array", "items": {"type": "string"}},
+    "status": {"enum": ["blocked", "provisional", "confirmed", "expired"]}
+  },
+  "additionalProperties": false
+}
+

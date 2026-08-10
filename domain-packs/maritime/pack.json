@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "maritime",
+  "title": "Maritime Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "船舶、海上货物运输、海事赔偿、共同海损、保险和涉外因素的事实整理",
+      "提单、电子运输记录、货损和责任主体材料清单"
+    ],
+    "excluded": [
+      "适用法、海事责任限制、共同海损理算或涉外管辖的自动结论"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-MARITIME-2025",
+      "title": "中华人民共和国海商法（2025年修订，自2026年5月1日起施行）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/202510/t20251028_449061.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-MARITIME-TEMPORAL-2026",
+      "title": "最高人民法院关于适用《中华人民共和国海商法》时间效力的若干规定（法释〔2026〕8号）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.court.gov.cn/zixun/xiangqing/498581.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "carriage_documents",
+      "label": "运输与单证",
+      "questions": [
+        "托运人、承运人、实际承运人、收货人和货物链如何？",
+        "提单或电子运输记录的签发、背书、控制和交付如何？"
+      ],
+      "fact_fields": [
+        "运输主体",
+        "船舶航次",
+        "货物与包装",
+        "运输单证"
+      ],
+      "evidence_prompts": [
+        "合同、提单、电子记录和舱单",
+        "订舱、交接、装卸和交付记录"
+      ],
+      "calculation_hooks": [
+        "运费、滞期费和货值台账"
+      ],
+      "deadline_hooks": [
+        "装卸、交付、通知和时效节点候选"
+      ],
+      "prohibitions": [
+        "不得仅凭单证抬头确定全部合同和物权关系"
+      ]
+    },
+    {
+      "issue_key": "casualty_damage",
+      "label": "海事事故与损害",
+      "questions": [
+        "事故时间地点、船舶状态、参与方和救助处置如何？",
+        "货损、碰撞、污染、保险和第三方原因的证据链是什么？"
+      ],
+      "fact_fields": [
+        "事故经过",
+        "船舶与人员",
+        "损害项目",
+        "保险与救助"
+      ],
+      "evidence_prompts": [
+        "航海日志、VDR、AIS和海事调查材料",
+        "检验报告、货物证据和保险理赔材料"
+      ],
+      "calculation_hooks": [
+        "仅将人工确认的损失、救助和责任限制参数转交 cn-calc 生成候选台账"
+      ],
+      "deadline_hooks": [
+        "海事请求保全和特别时效节点候选"
+      ],
+      "prohibitions": [
+        "不得自动确定碰撞责任比例、适用法或责任限制金额"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交",
+    "不得自动发送通知、海事声明、理赔、保全或诉讼申请，不得向任何外部系统提交",
+    "不得自动扣船、处分货物、执行共同海损理算或实施其他外部操作"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "国际公约、海事司法解释和港航规则变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-MARITIME-001",
+      "prompt": "进口货物到港后发现湿损，提单、保险单和检验时间存在差异。",
+      "expected_questions": [
+        "运输、单证、交付和检验的完整时间线是什么？",
+        "货物装运前状态、包装、航程和仓储如何？"
+      ],
+      "forbidden_inferences": [
+        "不得自动认定承运人责任",
+        "不得自动选择适用法或时效"
+      ]
+    }
+  ],
+  "title_zh": "海商海事业务包"
+}

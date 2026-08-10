@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-case-analysis/reasoning-graph.schema.json",
+  "type": "object",
+  "required": ["schema_version", "analysis_id", "matter_id", "source_sha256", "graph_status", "conclusion_status", "nodes", "edges"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "analysis_id": {"type": "string", "minLength": 3},
+    "matter_id": {"type": "string", "minLength": 3},
+    "source_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "graph_status": {"const": "derived_from_explicit_links"},
+    "conclusion_status": {"const": "not_generated"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["node_id", "node_type", "label", "working_status"],
+        "properties": {
+          "node_id": {"type": "string", "minLength": 3},
+          "node_type": {"enum": ["party", "claim", "fact", "issue", "evidence", "authority", "position", "element", "risk", "research"]},
+          "label": {"type": "string", "minLength": 1},
+          "working_status": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["edge_id", "from_id", "to_id", "relation", "basis"],
+        "properties": {
+          "edge_id": {"type": "string", "minLength": 3},
+          "from_id": {"type": "string", "minLength": 3},
+          "to_id": {"type": "string", "minLength": 3},
+          "relation": {"enum": ["sub_issue_of", "examines_claim", "position_on", "stated_by", "cites_fact", "cites_evidence", "cites_authority", "element_of", "burden_recorded_for", "linked_fact", "linked_evidence", "linked_authority", "risk_on", "research_for"]},
+          "basis": {"const": "explicit_input_reference"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

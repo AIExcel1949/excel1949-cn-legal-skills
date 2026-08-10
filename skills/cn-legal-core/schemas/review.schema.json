@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/review.schema.json",
+  "type": "object",
+  "required": ["review_id", "artifact_id", "blockers", "warnings", "state"],
+  "properties": {
+    "review_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "artifact_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "human_confirmations": {"type": "array", "items": {"type": "object"}},
+    "state": {"$ref": "common.schema.json#/$defs/artifact_state"},
+    "reviewed_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

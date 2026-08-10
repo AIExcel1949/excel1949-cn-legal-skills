@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-admin-litigation/input.schema.json",
+  "title": "中国行政诉讼工作台输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "as_of_date", "parties", "documents", "administrative_act", "procedure_events", "service_events", "authorities", "actionability_candidates", "jurisdiction_candidates", "reconsideration_precondition_candidates", "filing_deadline_rules", "evidence", "claims", "requested_actions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "parties": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["party_id", "name_masked", "role", "qualification_status"],
+        "properties": {
+          "party_id": {"type": "string", "pattern": "^PARTY-[A-Za-z0-9._-]+$"},
+          "name_masked": {"type": "string", "minLength": 1},
+          "role": {"enum": ["administrative_body", "relative", "third_party", "other"]},
+          "qualification_status": {"enum": ["unreviewed", "candidate", "lawyer_reviewed"]}
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["document_id", "title", "source_file"],
+        "properties": {
+          "document_id": {"type": "string", "pattern": "^DOC-[A-Za-z0-9._-]+$"},
+          "title": {"type": "string", "minLength": 1},
+          "source_file": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "administrative_act": {
+      "type": "object", "additionalProperties": false,
+      "required": ["act_id", "act_type_verbatim", "content_verbatim", "issuing_body_party_id", "relative_party_ids", "act_date", "document_ids"],
+      "properties": {
+        "act_id": {"type": "string", "pattern": "^ACT-[A-Za-z0-9._-]+$"},
+        "act_type_verbatim": {"type": "string", "minLength": 1},
+        "content_verbatim": {"type": "string", "minLength": 1},
+        "issuing_body_party_id": {"type": "string"},
+        "relative_party_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "act_date": {"type": ["string", "null"], "format": "date"},
+        "document_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+      }
+    },
+    "procedure_events": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["event_id", "event_type", "description_verbatim", "event_date", "document_ids", "status"],
+        "properties": {
+          "event_id": {"type": "string", "pattern": "^EVENT-[A-Za-z0-9._-]+$"},
+          "event_type": {"type": "string", "minLength": 1},
+          "description_verbatim": {"type": "string", "minLength": 1},
+          "event_date": {"type": ["string", "null"], "format": "date"},
+          "document_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "status": {"enum": ["recorded", "disputed", "missing", "unknown"]}
+        }
+      }
+    },
+    "service_events": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["service_id", "recipient_party_id", "method_verbatim", "service_date", "document_ids", "status"],
+        "properties": {
+          "service_id": {"type": "string", "pattern": "^SERVICE-[A-Za-z0-9._-]+$"},
+          "recipient_party_id": {"type": "string"},
+          "method_verbatim": {"type": "string", "minLength": 1},
+          "service_date": {"type": ["string", "null"], "format": "date"},
+          "document_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "status": {"enum": ["recorded", "disputed", "missing", "unknown"]}
+        }
+      }
+    },
+    "authorities": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["authority_id", "title", "source_url", "verified_at", "effect_status"],
+        "properties": {
+          "authority_id": {"type": "string", "pattern": "^AUTH-[A-Za-z0-9._-]+$"},
+          "title": {"type": "string", "minLength": 1},
+          "source_url": {"type": "string", "format": "uri"},
+          "verified_at": {"type": "string", "format": "date"},
+          "effect_status": {"enum": ["effective", "amended", "repealed", "unknown"]}
+        }
+      }
+    },
+    "actionability_candidates": {"$ref": "#/$defs/legal_candidates"},
+    "jurisdiction_candidates": {"$ref": "#/$defs/legal_candidates"},
+    "reconsideration_precondition_candidates": {"$ref": "#/$defs/legal_candidates"},
+    "filing_deadline_rules": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["rule_id", "rule_text_verbatim", "start_event_ids", "candidate_due_date", "authority_ids", "status"],
+        "properties": {
+          "rule_id": {"type": "string", "pattern": "^RULE-[A-Za-z0-9._-]+$"},
+          "rule_text_verbatim": {"type": "string", "minLength": 1},
+          "start_event_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "candidate_due_date": {"type": ["string", "null"], "format": "date"},
+          "authority_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "status": {"enum": ["candidate", "research_required", "lawyer_reviewed"]}
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["evidence_id", "name", "document_ids", "fact_statement", "authenticity", "legality", "relevance"],
+        "properties": {
+          "evidence_id": {"type": "string", "pattern": "^EVID-[A-Za-z0-9._-]+$"},
+          "name": {"type": "string", "minLength": 1},
+          "document_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "fact_statement": {"type": "string", "minLength": 1},
+          "authenticity": {"enum": ["unreviewed", "supported", "disputed", "unknown"]},
+          "legality": {"enum": ["unreviewed", "supported", "disputed", "unknown"]},
+          "relevance": {"enum": ["unreviewed", "supported", "disputed", "unknown"]}
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["claim_id", "text_verbatim", "target_act_id", "authority_ids", "status"],
+        "properties": {
+          "claim_id": {"type": "string", "pattern": "^CLAIM-[A-Za-z0-9._-]+$"},
+          "text_verbatim": {"type": "string", "minLength": 1},
+          "target_act_id": {"type": "string"},
+          "authority_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "status": {"enum": ["user_provided", "lawyer_reviewed"]}
+        }
+      }
+    },
+    "requested_actions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "legal_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["candidate_id", "statement", "authority_ids", "status"],
+        "properties": {
+          "candidate_id": {"type": "string", "pattern": "^CAND-[A-Za-z0-9._-]+$"},
+          "statement": {"type": "string", "minLength": 1},
+          "authority_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "status": {"enum": ["candidate", "research_required", "lawyer_reviewed"]}
+        }
+      }
+    }
+  }
+}

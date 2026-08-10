@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-case-analysis/argument-graph.schema.json",
+  "type": "object",
+  "required": ["schema_version", "graph_id", "analysis_id", "matter_id", "nodes", "edges", "hypothesis_tests"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "graph_id": {"$ref": "#/$defs/id"},
+    "analysis_id": {"$ref": "#/$defs/id"},
+    "matter_id": {"$ref": "#/$defs/id"},
+    "nodes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+    "hypothesis_tests": {"type": "array", "items": {"$ref": "#/$defs/hypothesis_test"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "id_array": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "node": {
+      "type": "object",
+      "required": ["node_id", "issue_id", "node_type", "statement", "status", "fact_ids", "evidence_ids", "authority_ids", "confidence", "confidence_source"],
+      "properties": {
+        "node_id": {"$ref": "#/$defs/id"},
+        "issue_id": {"$ref": "#/$defs/id"},
+        "node_type": {"enum": ["proposition", "rule", "fact_premise", "inference", "conclusion", "objection", "rebuttal", "alternative_hypothesis"]},
+        "statement": {"type": "string", "minLength": 1},
+        "status": {"enum": ["declared", "ai_proposed", "lawyer_confirmed", "rejected"]},
+        "fact_ids": {"$ref": "#/$defs/id_array"},
+        "evidence_ids": {"$ref": "#/$defs/id_array"},
+        "authority_ids": {"$ref": "#/$defs/id_array"},
+        "confidence": {"enum": ["unassessed", "low", "medium", "high"]},
+        "confidence_source": {"enum": ["not_scored", "declared_by_user", "lawyer_assessed"]},
+        "source_note": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {"if": {"properties": {"confidence": {"const": "unassessed"}}, "required": ["confidence"]}, "then": {"properties": {"confidence_source": {"const": "not_scored"}}}},
+        {"if": {"properties": {"status": {"const": "lawyer_confirmed"}}, "required": ["status"]}, "then": {"required": ["source_note"]}}
+      ],
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": ["edge_id", "from_node_id", "to_node_id", "relation", "status"],
+      "properties": {
+        "edge_id": {"$ref": "#/$defs/id"},
+        "from_node_id": {"$ref": "#/$defs/id"},
+        "to_node_id": {"$ref": "#/$defs/id"},
+        "relation": {"enum": ["supports", "attacks", "qualifies", "depends_on", "defeats"]},
+        "status": {"enum": ["declared", "ai_proposed", "lawyer_confirmed", "rejected"]}
+      },
+      "additionalProperties": false
+    },
+    "hypothesis_test": {
+      "type": "object",
+      "required": ["test_id", "hypothesis_node_id", "supporting_node_ids", "contradicting_node_ids", "falsification_conditions", "missing_information"],
+      "properties": {
+        "test_id": {"$ref": "#/$defs/id"},
+        "hypothesis_node_id": {"$ref": "#/$defs/id"},
+        "supporting_node_ids": {"$ref": "#/$defs/id_array"},
+        "contradicting_node_ids": {"$ref": "#/$defs/id_array"},
+        "falsification_conditions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "missing_information": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

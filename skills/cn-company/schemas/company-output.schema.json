@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-company/company-output.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "as_of_date", "input_sha256", "company_snapshot", "authority_register", "charter_versions", "shareholder_register", "governance_person_register", "charter_gate", "agenda_authority_map", "task_matrix", "global_blockers", "warnings", "resolution_validity_determined", "external_submission_performed", "artifact_state"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "company_snapshot": {"type": "object"},
+    "authority_register": {"type": "array", "items": {"type": "object"}},
+    "charter_versions": {"type": "array", "items": {"type": "object"}},
+    "shareholder_register": {"type": "array", "items": {"type": "object"}},
+    "governance_person_register": {"type": "array", "items": {"type": "object"}},
+    "charter_gate": {
+      "type": "object",
+      "required": ["status", "confirmed_current_ids", "blockers"],
+      "properties": {
+        "status": {"enum": ["ready_for_lawyer_review", "blocked"]},
+        "confirmed_current_ids": {"type": "array", "items": {"type": "string"}},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "agenda_authority_map": {"type": "array", "items": {"type": "object"}},
+    "task_matrix": {"type": "array", "items": {"type": "object"}},
+    "global_blockers": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "resolution_validity_determined": {"const": false},
+    "external_submission_performed": {"const": false},
+    "artifact_state": {"const": "lawyer_review_required"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-case-analysis/analysis-derived.schema.json",
+  "type": "object",
+  "required": ["schema_version", "analysis_id", "matter_id", "cause_of_action_status", "final_outcome_status", "frame_coverage", "issue_tree", "element_matrix", "party_positions", "risks", "pending_confirmations", "research_items", "lawyer_judgments", "domain_packs"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "analysis_id": {"type": "string"},
+    "matter_id": {"type": "string"},
+    "cause_of_action_status": {"const": "not_selected_by_skill"},
+    "final_outcome_status": {"const": "lawyer_independent_judgment_required"},
+    "frame_coverage": {
+      "type": "object",
+      "required": ["claim_right", "defense", "procedure"],
+      "properties": {"claim_right": {"type": "boolean"}, "defense": {"type": "boolean"}, "procedure": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "issue_tree": {"type": "array", "items": {"type": "object"}},
+    "element_matrix": {"type": "array", "items": {"type": "object"}},
+    "party_positions": {"type": "array", "items": {"type": "object"}},
+    "risks": {"type": "array", "items": {"type": "object"}},
+    "pending_confirmations": {"type": "array", "items": {"type": "object"}},
+    "research_items": {"type": "array", "items": {"type": "object"}},
+    "lawyer_judgments": {"type": "array", "items": {"type": "object"}},
+    "domain_packs": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": false
+}

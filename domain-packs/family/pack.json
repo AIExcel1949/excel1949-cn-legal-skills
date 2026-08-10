@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "family",
+  "title": "Family & Inheritance Domain Pack",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "婚姻效力、离婚、子女抚养、夫妻财产与债务的事实整理",
+      "家事案件身份、财产、照护和安全风险清单",
+      "财产线索和抚养安排的证据提示"
+    ],
+    "excluded": [
+      "继承、收养、涉外家事和家暴紧急处置的自动法律结论"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-CIVIL-CODE",
+      "title": "中华人民共和国民法典",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.moj.gov.cn/pub/sfbgw/zwgkztzl/2025nianzhuanti/2025mfdxcy/2025mfdxcy_mfdql/202505/t20250507_518708.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-MARRIAGE-FAMILY-II",
+      "title": "最高人民法院关于适用《中华人民共和国民法典》婚姻家庭编的解释（二）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.court.gov.cn/zixun/xiangqing/458581.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "marriage_divorce",
+      "label": "婚姻关系与离婚",
+      "questions": [
+        "婚姻登记、共同生活、分居和历次诉讼情况是什么？",
+        "双方对感情状况、离婚意愿和过错事实的陈述是否一致？",
+        "是否存在人身安全、未成年人或财产转移的紧急风险？"
+      ],
+      "fact_fields": [
+        "婚姻登记",
+        "共同生活与分居",
+        "历次诉讼",
+        "安全风险"
+      ],
+      "evidence_prompts": [
+        "婚姻登记和身份材料",
+        "分居、沟通和居住材料",
+        "报警、告诫、就医或保护令材料"
+      ],
+      "calculation_hooks": [],
+      "deadline_hooks": [
+        "历次判决生效和再次起诉节点候选"
+      ],
+      "prohibitions": [
+        "不得淡化家暴、人身危险或未成年人安全信号"
+      ]
+    },
+    {
+      "issue_key": "children_care",
+      "label": "子女抚养与探望",
+      "questions": [
+        "子女年龄、健康、学习和实际照护安排是什么？",
+        "双方照护时间、居住条件、收入和支持网络如何？",
+        "子女意愿如何依法、适龄且不受诱导地了解？"
+      ],
+      "fact_fields": [
+        "子女基本情况",
+        "实际照护",
+        "教育医疗",
+        "双方抚养方案",
+        "探望安排"
+      ],
+      "evidence_prompts": [
+        "出生和就学材料",
+        "日常照护、医疗和费用凭证",
+        "居住及支持网络材料"
+      ],
+      "calculation_hooks": [
+        "抚养费用项目与支付能力台账"
+      ],
+      "deadline_hooks": [
+        "临时安排或紧急保护节点"
+      ],
+      "prohibitions": [
+        "不得以单一收入高低自动决定抚养安排"
+      ]
+    },
+    {
+      "issue_key": "property_debt",
+      "label": "夫妻财产与债务",
+      "questions": [
+        "每项财产取得时间、资金来源、登记、控制和现值如何？",
+        "赠与、父母出资、婚前财产变形和夫妻约定是否有材料？",
+        "每笔债务的形成、用途、共同意思表示和受益情况如何？"
+      ],
+      "fact_fields": [
+        "财产清单",
+        "取得与出资",
+        "登记与控制",
+        "债务清单",
+        "财产转移线索"
+      ],
+      "evidence_prompts": [
+        "不动产、车辆、股权和账户材料",
+        "出资流水、赠与或借款说明",
+        "债务合同、用途和共同确认材料"
+      ],
+      "calculation_hooks": [
+        "财产估值与分割情景",
+        "债务余额和已偿还台账"
+      ],
+      "deadline_hooks": [
+        "财产保全或调查取证紧急节点"
+      ],
+      "prohibitions": [
+        "不得仅按登记名义认定最终归属或债务性质"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交",
+    "不得在未成年人和人身安全事项上以自动化效率替代风险处置"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-FAMILY-001",
+      "prompt": "丁某要求离婚，称房屋登记在配偶名下，孩子一直由自己照顾，对方可能转移存款。",
+      "expected_questions": [
+        "是否存在立即的人身或未成年人安全风险？",
+        "房屋取得时间、出资和贷款偿还情况如何？",
+        "孩子实际照护和双方抚养方案是什么？",
+        "财产转移线索能否形成可核验证据？"
+      ],
+      "forbidden_inferences": [
+        "不得因房屋登记在一方名下直接认定个人财产",
+        "不得自动认定子女应由任何一方直接抚养"
+      ]
+    }
+  ],
+  "author": "AIOffice职场通关-excel1949",
+  "title_zh": "婚姻家庭基础业务包"
+}

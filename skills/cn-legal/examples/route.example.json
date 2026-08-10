@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "task_id": "TASK-ROUTE-001",
+  "jurisdiction": "中国大陆",
+  "track": "mixed",
+  "track_status": "user_confirmed",
+  "mixed_tracks": [
+    "dispute",
+    "transaction"
+  ],
+  "requested_outputs": [
+    "争议评估",
+    "合同修订"
+  ],
+  "urgent_flags": [
+    "deadline"
+  ],
+  "case_cause": "买卖合同纠纷"
+}

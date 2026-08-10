@@ -1,0 +1,575 @@
+{
+  "manifest_version": "2.0",
+  "author": "AIOffice职场通关-excel1949",
+  "bundles": {
+    "civil-onboarding": [
+      "civil-firm-letter",
+      "civil-power-attorney",
+      "civil-engagement",
+      "intake-approval"
+    ],
+    "civil-risk-onboarding": [
+      "civil-firm-letter",
+      "civil-power-attorney",
+      "civil-risk-engagement",
+      "intake-approval"
+    ],
+    "criminal-onboarding": [
+      "criminal-firm-letter",
+      "criminal-power-attorney",
+      "criminal-engagement",
+      "criminal-intake-approval"
+    ],
+    "administrative-onboarding": [
+      "administrative-power-attorney",
+      "administrative-engagement",
+      "intake-approval"
+    ],
+    "internal-approval": [
+      "intake-approval",
+      "seal-approval",
+      "closure-approval"
+    ],
+    "legal-advisor": [
+      "legal-advisor"
+    ]
+  },
+  "templates": {
+    "civil-firm-letter": {
+      "path": "01-所函/所函（民事）.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "doc_number",
+        "case_court",
+        "client_name",
+        "opponent_name",
+        "case_cause",
+        "lawyer_name",
+        "firm_name",
+        "sign_date"
+      ]
+    },
+    "criminal-firm-letter": {
+      "path": "01-所函/所函（刑事）.docx",
+      "procedures": [
+        "criminal"
+      ],
+      "required": [
+        "doc_number",
+        "case_court",
+        "client_name",
+        "criminal_subject_name",
+        "case_cause",
+        "lawyer_name",
+        "firm_name",
+        "sign_date"
+      ]
+    },
+    "civil-power-attorney": {
+      "path": "02-授权委托书/授权委托书（民事-特别授权）.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "lawyer_name",
+        "lawyer_license",
+        "firm_name",
+        "authorization_scope_text",
+        "authorization_period",
+        "sign_date"
+      ]
+    },
+    "civil-relative-power-attorney": {
+      "path": "02-授权委托书/授权委托书（民事-亲属关系）.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "agent_name",
+        "agent_id",
+        "agent_phone",
+        "relationship",
+        "authorization_scope_text",
+        "authorization_period",
+        "sign_date"
+      ]
+    },
+    "civil-organization-employee-power-attorney": {
+      "path": "02-授权委托书/授权委托书（民事-单位工作人员）.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "client_credit_code",
+        "client_address",
+        "client_legal_rep",
+        "client_legal_rep_title",
+        "employee_name",
+        "employee_id",
+        "employee_title",
+        "employee_phone",
+        "opponent_name",
+        "case_cause",
+        "authorization_scope_text",
+        "authorization_period",
+        "sign_date"
+      ]
+    },
+    "criminal-power-attorney": {
+      "path": "02-授权委托书/授权委托书（刑事）.docx",
+      "procedures": [
+        "criminal"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "criminal_subject_name",
+        "criminal_role",
+        "case_cause",
+        "lawyer_name",
+        "lawyer_license",
+        "firm_name",
+        "criminal_stages"
+      ]
+    },
+    "administrative-power-attorney": {
+      "path": "02-授权委托书/授权委托书（行政）.docx",
+      "procedures": [
+        "administrative"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "lawyer_name",
+        "lawyer_license",
+        "firm_name",
+        "authorization_scope_text",
+        "authorization_period",
+        "sign_date"
+      ]
+    },
+    "civil-engagement": {
+      "path": "03-委托代理合同/委托代理合同（民事-一般代理）.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "case_court",
+        "litigation_stage",
+        "disputed_amount",
+        "lawyer_name",
+        "firm_name",
+        "firm_address",
+        "firm_phone",
+        "fee_amount",
+        "fee_amount_cn",
+        "fee_payment_terms",
+        "case_expense_terms"
+      ]
+    },
+    "civil-risk-engagement": {
+      "path": "03-委托代理合同/委托代理合同（民事-风险代理）.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "case_court",
+        "litigation_stage",
+        "disputed_amount",
+        "lawyer_name",
+        "firm_name",
+        "firm_address",
+        "firm_phone",
+        "risk_agency_confirmed",
+        "risk_fee_terms",
+        "case_expense_terms"
+      ]
+    },
+    "criminal-engagement": {
+      "path": "03-委托代理合同/委托代理合同（刑事）.docx",
+      "procedures": [
+        "criminal"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "criminal_subject_name",
+        "criminal_role",
+        "criminal_stages",
+        "case_cause",
+        "lawyer_name",
+        "firm_name",
+        "firm_address",
+        "firm_phone",
+        "fee_amount",
+        "fee_amount_cn",
+        "fee_payment_terms",
+        "case_expense_terms"
+      ]
+    },
+    "administrative-engagement": {
+      "path": "03-委托代理合同/委托代理合同（行政）.docx",
+      "procedures": [
+        "administrative"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "case_court",
+        "litigation_stage",
+        "disputed_amount",
+        "lawyer_name",
+        "firm_name",
+        "firm_address",
+        "firm_phone",
+        "fee_amount",
+        "fee_amount_cn",
+        "fee_payment_terms",
+        "case_expense_terms"
+      ]
+    },
+    "enforcement-engagement": {
+      "path": "03-委托代理合同/委托代理合同（执行）.docx",
+      "procedures": [
+        "enforcement"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "case_cause",
+        "case_court",
+        "execution_basis",
+        "disputed_amount",
+        "lawyer_name",
+        "firm_name",
+        "firm_address",
+        "firm_phone",
+        "fee_amount",
+        "fee_amount_cn",
+        "fee_payment_terms",
+        "case_expense_terms"
+      ]
+    },
+    "legal-advisor": {
+      "path": "04-法律顾问合同/法律顾问合同（常年）.docx",
+      "procedures": [
+        "nonlitigation"
+      ],
+      "required": [
+        "client_name",
+        "client_id",
+        "client_address",
+        "client_phone",
+        "firm_name",
+        "firm_address",
+        "firm_phone",
+        "lawyer_name",
+        "service_start_date",
+        "service_end_date",
+        "onsite_count",
+        "onsite_hours",
+        "annual_fee",
+        "annual_fee_cn"
+      ]
+    },
+    "intake-approval": {
+      "path": "05-审批表/审批表-收案.docx",
+      "procedures": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ],
+      "required": [
+        "case_cause",
+        "opponent_name",
+        "disputed_amount",
+        "lawyer_name",
+        "fee_amount"
+      ]
+    },
+    "criminal-intake-approval": {
+      "path": "05-审批表/审批表-收案（刑事）.docx",
+      "procedures": [
+        "criminal"
+      ],
+      "required": [
+        "case_cause",
+        "criminal_subject_name",
+        "client_name",
+        "lawyer_name",
+        "fee_amount",
+        "principal_relationship"
+      ]
+    },
+    "seal-approval": {
+      "path": "05-审批表/审批表-用章.docx",
+      "procedures": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ],
+      "required": [
+        "apply_date",
+        "lawyer_name",
+        "case_cause",
+        "case_number"
+      ]
+    },
+    "closure-approval": {
+      "path": "05-审批表/审批表-结案.docx",
+      "procedures": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ],
+      "required": [
+        "case_cause",
+        "case_number",
+        "lawyer_name",
+        "accept_date",
+        "close_date",
+        "outstanding_amount"
+      ]
+    },
+    "approval-summary": {
+      "path": "05-审批表/审批表-三合一.docx",
+      "procedures": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ],
+      "required": [
+        "case_cause",
+        "lawyer_name",
+        "fee_amount",
+        "case_number",
+        "close_date",
+        "outstanding_amount"
+      ]
+    },
+    "protective-order-application": {
+      "path": "加强版/03-当事人端申请书/人身保护令申请书.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "client_identity_description",
+        "opponent_name",
+        "opponent_identity_description",
+        "additional_protective_measures",
+        "domestic_violence_facts",
+        "protection_evidence"
+      ]
+    },
+    "change-claims-application": {
+      "path": "加强版/03-当事人端申请书/变更诉讼请求申请书.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "case_cause",
+        "case_number",
+        "original_claims",
+        "new_claims",
+        "change_reason"
+      ],
+      "case_number_placeholder": "（立案后填写）",
+      "placeholder_fields": [
+        "case_number"
+      ]
+    },
+    "enforcement-application": {
+      "path": "加强版/03-当事人端申请书/强制执行申请书.docx",
+      "procedures": [
+        "civil",
+        "enforcement"
+      ],
+      "required": [
+        "client_name",
+        "lawyer_name",
+        "firm_name",
+        "lawyer_license",
+        "opponent_name",
+        "execution_basis",
+        "judgment_court",
+        "case_cause",
+        "case_number",
+        "judgment_effective_date",
+        "judgment_main_text",
+        "execution_claims",
+        "preservation_status",
+        "property_clues"
+      ],
+      "case_number_placeholder": "（立案后填写）",
+      "placeholder_fields": [
+        "case_number"
+      ]
+    },
+    "withdrawal-application": {
+      "path": "加强版/03-当事人端申请书/撤诉申请书.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "case_cause",
+        "case_number",
+        "filing_date",
+        "withdraw_reason",
+        "fee_refund_request"
+      ],
+      "case_number_placeholder": "（立案后填写）",
+      "placeholder_fields": [
+        "case_number"
+      ]
+    },
+    "property-preservation-application": {
+      "path": "加强版/03-当事人端申请书/财产保全申请书.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "case_court",
+        "client_name",
+        "client_identity_description",
+        "client_address",
+        "client_phone",
+        "opponent_name",
+        "opponent_identity_description",
+        "opponent_address",
+        "opponent_phone",
+        "preservation_amount",
+        "preservation_request",
+        "preservation_necessity",
+        "property_clues",
+        "security_method",
+        "attachments",
+        "sign_date"
+      ]
+    },
+    "release-preservation-application": {
+      "path": "加强版/03-当事人端申请书/解除保全申请书.docx",
+      "procedures": [
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "opponent_name",
+        "case_number",
+        "preservation_ruling_number",
+        "release_scope",
+        "release_reason"
+      ]
+    },
+    "online-enforcement-search-application": {
+      "path": "加强版/03-当事人端申请书/网络查控申请书.docx",
+      "procedures": [
+        "enforcement",
+        "civil"
+      ],
+      "required": [
+        "client_name",
+        "opponent_name",
+        "case_cause",
+        "case_number",
+        "execution_basis",
+        "bank_accounts",
+        "real_estate_clues",
+        "vehicle_clues",
+        "other_assets_clues",
+        "execution_necessity"
+      ]
+    },
+    "legal-representative-certificate": {
+      "path": "加强版/04-身份证明/法定代表人身份证明书.docx",
+      "procedures": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ],
+      "required": [
+        "client_name",
+        "client_credit_code",
+        "client_address",
+        "client_legal_rep",
+        "client_legal_rep_id",
+        "client_legal_rep_title",
+        "sign_date"
+      ]
+    },
+    "organization-employee-certificate": {
+      "path": "加强版/04-身份证明/公司员工身份证明书.docx",
+      "procedures": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ],
+      "required": [
+        "client_name",
+        "client_credit_code",
+        "employee_name",
+        "employee_id",
+        "employee_title",
+        "opponent_name",
+        "case_cause",
+        "sign_date"
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/issue.schema.json",
+  "type": "object",
+  "required": ["issue_id", "question", "status"],
+  "properties": {
+    "issue_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "question": {"type": "string", "minLength": 1},
+    "status": {"enum": ["open", "partially_supported", "supported", "disputed", "blocked"]},
+    "element_ids": {"type": "array", "items": {"type": "string"}},
+    "burden_of_proof": {"type": "string"},
+    "party_positions": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": false
+}
+

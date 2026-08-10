@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-applications/application-input.schema.json",
+  "title": "程序申请工作底稿输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "application_id", "as_of_date", "application_type", "procedural_stage", "sources", "requested_relief", "supporting_facts", "materials", "authorities", "urgency", "deadline_review", "security_review", "external_action_requested"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "minLength": 3},
+    "application_id": {"type": "string", "minLength": 3},
+    "as_of_date": {"type": "string", "format": "date"},
+    "application_type": {"enum": ["property_preservation", "evidence_preservation", "investigation_order", "appraisal", "extension", "suspension", "recusal", "other"]},
+    "application_type_note": {"type": "string"},
+    "procedural_stage": {"type": "string", "minLength": 1},
+    "tribunal": {"type": ["string", "null"]},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "requested_relief": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourced_statement"}},
+    "supporting_facts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourced_statement"}},
+    "materials": {"type": "array", "items": {"$ref": "#/$defs/material"}},
+    "authorities": {"type": "array", "items": {"$ref": "#/$defs/authority"}},
+    "urgency": {
+      "type": "object", "additionalProperties": false, "required": ["level", "reasons"],
+      "properties": {"level": {"enum": ["unknown", "routine", "urgent", "critical"]}, "reasons": {"type": "array", "items": {"$ref": "#/$defs/sourced_statement"}}}
+    },
+    "deadline_review": {"$ref": "#/$defs/special_review"},
+    "security_review": {"$ref": "#/$defs/special_review"},
+    "external_action_requested": {"type": "boolean"}
+  },
+  "$defs": {
+    "source": {"type": "object", "additionalProperties": false, "required": ["source_id", "file_name", "sha256"], "properties": {"source_id": {"type": "string", "minLength": 3}, "file_name": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
+    "basis": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["basis_type", "source_id", "quote", "locator"], "properties": {"basis_type": {"const": "source_span"}, "source_id": {"type": "string", "minLength": 1}, "quote": {"type": "string", "minLength": 1}, "locator": {"type": "string", "minLength": 1}}},
+        {"type": "object", "additionalProperties": false, "required": ["basis_type", "confirmed_at", "confirmation_note"], "properties": {"basis_type": {"const": "user_confirmed"}, "confirmed_at": {"type": "string", "format": "date-time"}, "confirmation_note": {"type": "string", "minLength": 1}}}
+      ]
+    },
+    "sourced_statement": {"type": "object", "additionalProperties": false, "required": ["statement_id", "text", "basis"], "properties": {"statement_id": {"type": "string", "minLength": 3}, "text": {"type": "string", "minLength": 1}, "basis": {"$ref": "#/$defs/basis"}}},
+    "material": {"type": "object", "additionalProperties": false, "required": ["material_id", "name", "status"], "properties": {"material_id": {"type": "string", "minLength": 3}, "name": {"type": "string", "minLength": 1}, "status": {"enum": ["available", "missing", "to_verify"]}, "source_id": {"type": ["string", "null"]}, "note": {"type": "string"}}},
+    "authority": {"type": "object", "additionalProperties": false, "required": ["authority_id", "title", "effect_status", "verified_at", "source_url"], "properties": {"authority_id": {"type": "string", "minLength": 3}, "title": {"type": "string", "minLength": 1}, "effect_status": {"enum": ["effective", "amended", "repealed", "unknown"]}, "verified_at": {"type": "string", "format": "date"}, "source_url": {"type": "string", "format": "uri"}}},
+    "special_review": {"type": "object", "additionalProperties": false, "required": ["status", "conclusion", "authority_ids"], "properties": {"status": {"enum": ["unverified", "verified"]}, "conclusion": {"type": ["string", "null"]}, "authority_ids": {"type": "array", "items": {"type": "string"}}}}
+  }
+}

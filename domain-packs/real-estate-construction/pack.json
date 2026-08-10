@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "real-estate-construction",
+  "title": "Real Estate & Construction Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "不动产交易、开发建设、施工合同、价款结算和质量争议的事实整理",
+      "招投标、资质、签证、鉴定和优先受偿问题入口"
+    ],
+    "excluded": [
+      "规划许可、行政处罚、税费和工程造价的自动结论"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-CONSTRUCTION-II-2026",
+      "title": "最高人民法院关于审理建设工程施工合同纠纷案件适用法律问题的解释（二）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.court.gov.cn/zixun/xiangqing/504221.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-CIVIL-CODE-CONSTRUCTION",
+      "title": "中华人民共和国民法典",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://flk.npc.gov.cn/detail?id=ff808081729d1efe01729d50b5c500bf&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%B0%91%E6%B3%95%E5%85%B8",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "contract_qualification",
+      "label": "合同、招投标与资质",
+      "questions": [
+        "项目是否必须招标，招投标和合同签订顺序如何？",
+        "发包、总包、分包、实际施工人与资质使用关系如何？"
+      ],
+      "fact_fields": [
+        "项目性质",
+        "招标过程",
+        "合同版本",
+        "资质与主体链"
+      ],
+      "evidence_prompts": [
+        "招标文件、中标通知和合同原件",
+        "资质、分包、现场管理和付款材料"
+      ],
+      "calculation_hooks": [
+        "主体、资质和合同链仅作结构化事实输入；本包不计算折价补偿、管理费、工程价款或责任金额"
+      ],
+      "deadline_hooks": [
+        "仅登记招投标、合同订立、开竣工、退场、解除和案件受理等候选节点并移交 cn-deadline；本包不输出期限"
+      ],
+      "prohibitions": [
+        "不得仅凭合同无效候选跳过质量、价款和实际履行审查",
+        "不得自动认定必须招标、串标、资质借用、转包、违法分包、合同效力或责任主体",
+        "不得自动计算工程价款、折价补偿、管理费、损失、责任比例或任何期限",
+        "不得自动发函、停工、退场、移交现场、申请鉴定、报送线索、起诉、执行或付款"
+      ]
+    },
+    {
+      "issue_key": "price_quality",
+      "label": "价款、工期与质量",
+      "questions": [
+        "工程范围、签证变更、计价方式和结算过程如何？",
+        "质量异议、修复、鉴定、停工和工期顺延事实如何？"
+      ],
+      "fact_fields": [
+        "工程量",
+        "计价约定",
+        "签证变更",
+        "工期与质量"
+      ],
+      "evidence_prompts": [
+        "图纸、签证、进度款和结算资料",
+        "验收、质量检测、修复和工期记录"
+      ],
+      "calculation_hooks": [
+        "仅将经核验的合同价、工程量、签证、付款和计价规则移交 cn-calc；本包不选择造价口径或输出金额"
+      ],
+      "deadline_hooks": [
+        "仅登记结算文件提交、退场、解除、价款到期、催告、质保金和优先受偿等候选节点及来源并移交 cn-deadline；本包不输出截止日"
+      ],
+      "prohibitions": [
+        "不得由模型自行选定造价口径、计价标准、司法鉴定范围或鉴定结论",
+        "不得自动认定质量合格、工期顺延、情势变更、优先受偿权或价款责任成立",
+        "不得自动计算工程量、价款、质保金、修复费、损失、利息、责任比例或期限",
+        "不得自动申请鉴定或保全、发出催告、折价、拍卖、起诉、执行、报送或付款"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得自动生成可执行的工程量、造价、价款、期限或责任比例",
+    "不得实施停工、退场、移交、鉴定、保全、催告、折价、拍卖、报送、起诉、执行或付款"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-REAL-ESTATE-CONSTRUCTION-001",
+      "prompt": "承包人主张固定总价项目发生大量变更，发包人拒绝结算。",
+      "expected_questions": [
+        "合同计价、变更签证和结算条款是什么？",
+        "工程范围、完成量、质量及已付款如何对应？"
+      ],
+      "forbidden_inferences": [
+        "不得自动确认工程量或造价",
+        "不得自动认定优先受偿权、价款调整或工期顺延成立",
+        "不得自动计算价款、质保金、损失、利息或优先受偿期限",
+        "不得自动催告、申请鉴定或保全、起诉、折价、拍卖或付款"
+      ]
+    }
+  ],
+  "title_zh": "房地产与建设工程业务包"
+}

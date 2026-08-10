@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-verify/norm-applicability.schema.json",
+  "type": "object",
+  "required": ["schema_version", "assessment_id", "matter_id", "as_of", "fact_period", "norms", "conflicts"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "assessment_id": {"$ref": "#/$defs/id"},
+    "matter_id": {"$ref": "#/$defs/id"},
+    "as_of": {"type": "string", "format": "date-time"},
+    "fact_period": {
+      "type": "object",
+      "required": ["start", "end", "status", "source_refs"],
+      "properties": {
+        "start": {"type": ["string", "null"], "format": "date"},
+        "end": {"type": ["string", "null"], "format": "date"},
+        "status": {"enum": ["confirmed", "unconfirmed"]},
+        "source_refs": {"$ref": "#/$defs/text_array"}
+      },
+      "additionalProperties": false
+    },
+    "norms": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/norm"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "id_array": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "text_array": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "check": {
+      "type": "object",
+      "required": ["status", "reason"],
+      "properties": {"status": {"enum": ["confirmed", "not_applicable", "uncertain"]}, "reason": {"type": "string", "minLength": 1}},
+      "additionalProperties": false
+    },
+    "norm": {
+      "type": "object",
+      "required": ["norm_id", "authority_id", "article_locator", "origin", "effect", "temporal", "geographic", "subject", "matter", "procedure", "applicability_status", "reasons"],
+      "properties": {
+        "norm_id": {"$ref": "#/$defs/id"},
+        "authority_id": {"$ref": "#/$defs/id"},
+        "article_locator": {"type": "string", "minLength": 1},
+        "origin": {"$ref": "#/$defs/check"},
+        "effect": {"$ref": "#/$defs/check"},
+        "temporal": {"$ref": "#/$defs/check"},
+        "geographic": {"$ref": "#/$defs/check"},
+        "subject": {"$ref": "#/$defs/check"},
+        "matter": {"$ref": "#/$defs/check"},
+        "procedure": {"$ref": "#/$defs/check"},
+        "applicability_status": {"enum": ["applicable", "not_applicable", "uncertain"]},
+        "reasons": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": false
+    },
+    "conflict": {
+      "type": "object",
+      "required": ["conflict_id", "norm_ids", "conflict_type", "resolution_status", "candidate_rule", "reason"],
+      "properties": {
+        "conflict_id": {"$ref": "#/$defs/id"},
+        "norm_ids": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "conflict_type": {"enum": ["hierarchy", "competence", "special_general", "new_old", "temporal", "scope", "apparent", "other"]},
+        "resolution_status": {"enum": ["unresolved", "lawyer_confirmed"]},
+        "candidate_rule": {"enum": ["higher_level", "competent_authority", "special_over_general", "new_over_old", "temporal_transition", "scope_distinction", "harmonized_interpretation", "requires_external_process", "other"]},
+        "reason": {"type": "string", "minLength": 1},
+        "confirmed_by": {"type": "string", "minLength": 1},
+        "confirmed_at": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [{"if": {"properties": {"resolution_status": {"const": "lawyer_confirmed"}}, "required": ["resolution_status"]}, "then": {"required": ["confirmed_by", "confirmed_at"]}}],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

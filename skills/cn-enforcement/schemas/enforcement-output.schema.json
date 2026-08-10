@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-enforcement/enforcement-output.schema.json",
+  "title": "执行审查输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "enforcement_id", "artifact_state", "basis_audit", "party_audit", "performance_audit", "amount_bypass_audit", "property_clue_audit", "measure_candidate_audit", "procedure_node_audit", "review_items", "source_record"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "enforcement_id": {"type": "string"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "basis_audit": {"type": "object"}, "party_audit": {"type": "array"}, "performance_audit": {"type": "array"},
+    "amount_bypass_audit": {"type": "array", "items": {"type": "object", "required": ["amount_id", "display_value", "text_sha256", "calculation_artifact_id", "artifact_sha256", "locator", "recalculated"], "properties": {"amount_id": {"type": "string"}, "display_value": {"type": "string"}, "text_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "calculation_artifact_id": {"type": "string"}, "artifact_sha256": {"type": "string"}, "locator": {"type": "string"}, "recalculated": {"const": false}}}},
+    "property_clue_audit": {"type": "array", "items": {"type": "object", "required": ["clue_id", "description", "reported_verification_status", "classification", "status"], "properties": {"clue_id": {"type": "string"}, "description": {"type": "string"}, "reported_verification_status": {"type": "string"}, "classification": {"const": "clue_only_not_confirmed_property"}, "status": {"const": "lawyer_review_required"}}}},
+    "measure_candidate_audit": {"type": "array", "items": {"type": "object", "required": ["candidate_id", "measure_type", "status", "external_action_performed"], "properties": {"candidate_id": {"type": "string"}, "measure_type": {"type": "string"}, "status": {"const": "lawyer_review_required"}, "external_action_performed": {"const": false}}}},
+    "procedure_node_audit": {"type": "array", "items": {"type": "object"}},
+    "review_items": {"type": "array", "items": {"type": "object", "required": ["item_id", "question", "status"], "properties": {"item_id": {"type": "string"}, "question": {"type": "string"}, "status": {"const": "lawyer_review_required"}}}},
+    "source_record": {"type": "object"}
+  }
+}

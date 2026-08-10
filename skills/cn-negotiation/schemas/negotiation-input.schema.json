@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-negotiation/negotiation-input.schema.json",
+  "title": "中国律师谈判安全工作台输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter", "internal_strategy", "external_workspace"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matter_id", "title", "as_of_date"],
+      "properties": {
+        "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "as_of_date": {"type": "string", "format": "date"}
+      }
+    },
+    "internal_strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectives", "authorization", "bottom_lines", "batna", "issue_priorities", "evaluation_criteria", "proposal_assessments", "ethical_confirmation"],
+      "properties": {
+        "objectives": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["objective_id", "description"],
+            "properties": {
+              "objective_id": {"type": "string", "pattern": "^OBJ-[A-Za-z0-9_-]{1,40}$"},
+              "description": {"type": "string", "minLength": 4, "maxLength": 500}
+            }
+          }
+        },
+        "authorization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["confirmed_by_client", "confirmed_at", "scope_notes", "monetary_limits", "authorized_commitment_keys", "prohibited_commitments"],
+          "properties": {
+            "confirmed_by_client": {"type": "boolean"},
+            "confirmed_at": {"type": ["string", "null"], "format": "date"},
+            "scope_notes": {"type": "string", "minLength": 4, "maxLength": 1000},
+            "monetary_limits": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["issue_id", "direction", "amount", "currency"],
+                "properties": {
+                  "issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+                  "direction": {"enum": ["receive_at_least", "pay_at_most"]},
+                  "amount": {"type": "number", "minimum": 0},
+                  "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}
+                }
+              }
+            },
+            "authorized_commitment_keys": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{1,63}$"}
+            },
+            "prohibited_commitments": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 2, "maxLength": 300}
+            }
+          }
+        },
+        "bottom_lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["issue_id", "description"],
+            "properties": {
+              "issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+              "description": {"type": "string", "minLength": 4, "maxLength": 500}
+            }
+          }
+        },
+        "batna": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["scenario_id", "description", "assumptions"],
+            "properties": {
+              "scenario_id": {"type": "string", "pattern": "^BAT-[A-Za-z0-9_-]{1,40}$"},
+              "description": {"type": "string", "minLength": 4, "maxLength": 800},
+              "assumptions": {"type": "array", "items": {"type": "string", "minLength": 2, "maxLength": 400}}
+            }
+          }
+        },
+        "issue_priorities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["issue_id", "priority", "reason"],
+            "properties": {
+              "issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+              "priority": {"type": "integer", "minimum": 1, "maximum": 5},
+              "reason": {"type": "string", "minLength": 4, "maxLength": 500}
+            }
+          }
+        },
+        "evaluation_criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["criterion_id", "label", "weight"],
+            "properties": {
+              "criterion_id": {"type": "string", "pattern": "^CRT-[A-Za-z0-9_-]{1,40}$"},
+              "label": {"type": "string", "minLength": 1, "maxLength": 100},
+              "weight": {"type": "integer", "minimum": 1, "maximum": 100}
+            }
+          }
+        },
+        "proposal_assessments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["proposal_id", "scores", "internal_notes"],
+            "properties": {
+              "proposal_id": {"type": "string", "pattern": "^PRO-[A-Za-z0-9_-]{1,40}$"},
+              "scores": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["criterion_id", "score", "reason"],
+                  "properties": {
+                    "criterion_id": {"type": "string", "pattern": "^CRT-[A-Za-z0-9_-]{1,40}$"},
+                    "score": {"type": "integer", "minimum": 0, "maximum": 100},
+                    "reason": {"type": "string", "minLength": 2, "maxLength": 500}
+                  }
+                }
+              },
+              "internal_notes": {"type": "string", "minLength": 2, "maxLength": 1000}
+            }
+          }
+        },
+        "ethical_confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["truthful_facts_only", "no_deception", "no_coercive_manipulation"],
+          "properties": {
+            "truthful_facts_only": {"const": true},
+            "no_deception": {"const": true},
+            "no_coercive_manipulation": {"const": true}
+          }
+        }
+      }
+    },
+    "external_workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["external_reference", "disclosure_review", "issues", "proposals", "meeting_minutes"],
+      "properties": {
+        "external_reference": {"type": "string", "minLength": 1, "maxLength": 80},
+        "disclosure_review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reviewed_for_internal_leaks", "reviewed_by_role"],
+          "properties": {
+            "reviewed_for_internal_leaks": {"const": true},
+            "reviewed_by_role": {"enum": ["lawyer", "client_and_lawyer"]}
+          }
+        },
+        "issues": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["issue_id", "label", "public_position", "questions"],
+            "properties": {
+              "issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+              "label": {"type": "string", "minLength": 1, "maxLength": 100},
+              "public_position": {"type": "string", "minLength": 2, "maxLength": 1000},
+              "questions": {"type": "array", "items": {"type": "string", "minLength": 2, "maxLength": 300}}
+            }
+          }
+        },
+        "proposals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["proposal_id", "label", "terms", "public_rationale", "conditional_exchanges", "requires_client_confirmation"],
+            "properties": {
+              "proposal_id": {"type": "string", "pattern": "^PRO-[A-Za-z0-9_-]{1,40}$"},
+              "label": {"type": "string", "minLength": 1, "maxLength": 100},
+              "terms": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["issue_id", "offer_text", "status"],
+                  "properties": {
+                    "issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+                    "offer_text": {"type": "string", "minLength": 2, "maxLength": 1000},
+                    "status": {"enum": ["proposed", "tentative"]}
+                  }
+                }
+              },
+              "public_rationale": {"type": "string", "minLength": 2, "maxLength": 1000},
+              "conditional_exchanges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["exchange_id", "give_issue_id", "give_text", "receive_issue_id", "receive_text", "condition_text"],
+                  "properties": {
+                    "exchange_id": {"type": "string", "pattern": "^EXC-[A-Za-z0-9_-]{1,40}$"},
+                    "give_issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+                    "give_text": {"type": "string", "minLength": 2, "maxLength": 500},
+                    "receive_issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+                    "receive_text": {"type": "string", "minLength": 2, "maxLength": 500},
+                    "condition_text": {"type": "string", "minLength": 2, "maxLength": 500}
+                  }
+                }
+              },
+              "requires_client_confirmation": {"type": "boolean"}
+            }
+          }
+        },
+        "meeting_minutes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["meeting_id", "meeting_date", "participant_roles", "discussion", "tentative_items", "next_steps"],
+          "properties": {
+            "meeting_id": {"type": "string", "pattern": "^MTG-[A-Za-z0-9_-]{1,40}$"},
+            "meeting_date": {"type": "string", "format": "date"},
+            "participant_roles": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 80}},
+            "discussion": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["issue_id", "summary"],
+                "properties": {
+                  "issue_id": {"type": "string", "pattern": "^ISS-[A-Za-z0-9_-]{1,40}$"},
+                  "summary": {"type": "string", "minLength": 2, "maxLength": 1000}
+                }
+              }
+            },
+            "tentative_items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["item_id", "summary", "status"],
+                "properties": {
+                  "item_id": {"type": "string", "pattern": "^TMP-[A-Za-z0-9_-]{1,40}$"},
+                  "summary": {"type": "string", "minLength": 2, "maxLength": 800},
+                  "status": {"enum": ["pending", "confirmed", "rejected"]}
+                }
+              }
+            },
+            "next_steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["action", "owner_role", "due_date", "status"],
+                "properties": {
+                  "action": {"type": "string", "minLength": 2, "maxLength": 500},
+                  "owner_role": {"type": "string", "minLength": 1, "maxLength": 80},
+                  "due_date": {"type": ["string", "null"], "format": "date"},
+                  "status": {"enum": ["pending", "completed"]}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

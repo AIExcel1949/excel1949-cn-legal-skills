@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-admin-litigation/output.schema.json",
+  "title": "中国行政诉讼工作台输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "as_of_date", "review_state", "external_action_state", "conclusion_states", "parties", "documents", "administrative_act", "procedure_events", "service_events", "authorities", "actionability_candidates", "jurisdiction_candidates", "reconsideration_precondition_candidates", "filing_deadline_rules", "evidence", "claims", "claim_conservation", "human_escalations", "prohibitions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "review_state": {"const": "lawyer_review_required"},
+    "external_action_state": {"const": "not_performed"},
+    "conclusion_states": {
+      "type": "object", "additionalProperties": false,
+      "required": ["actionability", "jurisdiction", "reconsideration_precondition", "filing_deadline"],
+      "properties": {
+        "actionability": {"const": "not_determined_by_skill"},
+        "jurisdiction": {"const": "not_determined_by_skill"},
+        "reconsideration_precondition": {"const": "not_determined_by_skill"},
+        "filing_deadline": {"const": "not_determined_by_skill"}
+      }
+    },
+    "parties": {"type": "array"},
+    "documents": {"type": "array"},
+    "administrative_act": {"type": "object"},
+    "procedure_events": {"type": "array"},
+    "service_events": {"type": "array"},
+    "authorities": {"type": "array"},
+    "actionability_candidates": {"type": "array"},
+    "jurisdiction_candidates": {"type": "array"},
+    "reconsideration_precondition_candidates": {"type": "array"},
+    "filing_deadline_rules": {"type": "array"},
+    "evidence": {"type": "array"},
+    "claims": {"type": "array"},
+    "claim_conservation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_count", "output_count", "verbatim_preserved"],
+      "properties": {"input_count": {"type": "integer", "minimum": 0}, "output_count": {"type": "integer", "minimum": 0}, "verbatim_preserved": {"const": true}}
+    },
+    "human_escalations": {"type": "array", "items": {"type": "object", "required": ["escalation_id", "severity", "reason", "related_ids"], "properties": {"escalation_id": {"type": "string"}, "severity": {"enum": ["high", "critical"]}, "reason": {"type": "string"}, "related_ids": {"type": "array", "items": {"type": "string"}}}}},
+    "prohibitions": {"type": "array", "minItems": 6, "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-diligence/diligence-output.schema.json",
+  "title": "中国法律尽调复核底稿",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "mode", "jurisdiction", "data_room_cutoff", "artifact_state", "transaction_assessment", "documents", "material_requests", "fact_findings", "legal_findings", "exceptions", "red_flags", "not_provided_materials", "management_representations", "authorities", "blockers", "warnings"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "mode": {"enum": ["production", "training_fixture"]}, "jurisdiction": {"type": "string"}, "data_room_cutoff": {"type": "string", "format": "date-time"},
+    "artifact_state": {"const": "lawyer_review_required"}, "transaction_assessment": {"const": "not_performed"},
+    "documents": {"type": "array"}, "material_requests": {"type": "array"}, "fact_findings": {"type": "array"}, "legal_findings": {"type": "array"}, "exceptions": {"type": "array"}, "red_flags": {"type": "array"}, "not_provided_materials": {"type": "array"}, "management_representations": {"type": "array"}, "authorities": {"type": "array"},
+    "blockers": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}, "warnings": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+  }
+}

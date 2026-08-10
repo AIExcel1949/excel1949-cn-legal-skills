@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-deadline/deadline-output.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "as_of_date", "input_sha256", "results"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["deadline_id", "label", "status", "timezone", "operative_date", "rule_id", "rule_source_id", "deadline_time", "steps", "exceptions", "warnings", "blockers"],
+        "properties": {
+          "deadline_id": {"type": "string"},
+          "label": {"type": "string"},
+          "status": {"enum": ["calculated", "blocked"]},
+          "timezone": {"type": "string"},
+          "operative_date": {"type": "string", "format": "date"},
+          "rule_id": {"type": "string"},
+          "rule_source_id": {"type": "string"},
+          "deadline_date": {"type": "string", "format": "date"},
+          "deadline_at": {"type": "string", "format": "date-time"},
+          "deadline_time": {"type": "string"},
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["sequence", "operation", "detail", "source_id"],
+              "properties": {
+                "sequence": {"type": "integer", "minimum": 1},
+                "operation": {"type": "string"},
+                "input_date": {"type": "string", "format": "date"},
+                "output_date": {"type": "string", "format": "date"},
+                "detail": {"type": "string"},
+                "source_id": {"type": "string"}
+              },
+              "additionalProperties": false
+            }
+          },
+          "exceptions": {"type": "array", "items": {"type": "string"}},
+          "warnings": {"type": "array", "items": {"type": "string"}},
+          "blockers": {"type": "array", "items": {"type": "string"}}
+        },
+        "allOf": [
+          {"if": {"properties": {"status": {"const": "calculated"}}}, "then": {"required": ["deadline_date", "deadline_at"]}},
+          {"if": {"properties": {"status": {"const": "blocked"}}}, "then": {"not": {"anyOf": [{"required": ["deadline_date"]}, {"required": ["deadline_at"]}]}}}
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

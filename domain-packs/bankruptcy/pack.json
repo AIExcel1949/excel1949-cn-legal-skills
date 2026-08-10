@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "bankruptcy",
+  "title": "Bankruptcy & Restructuring Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "破产申请、债权申报、资产负债、撤销追回、重整和分配事项整理",
+      "债务人、债权人、管理人和担保关系的材料清单"
+    ],
+    "excluded": [
+      "自动判断破产原因、清偿顺位、表决结果或重整可行性"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-BANKRUPTCY",
+      "title": "中华人民共和国企业破产法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf63c7c0343&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%BC%81%E4%B8%9A%E7%A0%B4%E4%BA%A7%E6%B3%95",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-BANKRUPTCY-JI-1",
+      "title": "最高人民法院关于适用《中华人民共和国企业破产法》若干问题的规定（一）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://gongbao.court.gov.cn/Details/3d2d4ab54101faca18768de8d15e87.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-BANKRUPTCY-JI-2",
+      "title": "最高人民法院关于适用《中华人民共和国企业破产法》若干问题的规定（二）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://gongbao.court.gov.cn/Details/a8cf0deff0d638a2fad2bc64677f6f.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-BANKRUPTCY-JI-3",
+      "title": "最高人民法院关于适用《中华人民共和国企业破产法》若干问题的规定（三）",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://pccz.court.gov.cn/pcajxxw/pcFlfg/flfgxq?id=5437373E35A5ACC13981864FB88845B8",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "filing_claims",
+      "label": "申请与债权申报",
+      "questions": [
+        "申请主体、到期债务、资产负债和清偿状态有何材料？",
+        "每笔债权的本金、性质、担保、诉讼执行和申报状态如何？"
+      ],
+      "fact_fields": [
+        "申请主体",
+        "资产负债",
+        "债权台账",
+        "担保与执行"
+      ],
+      "evidence_prompts": [
+        "财务报表、催收和执行材料",
+        "合同、判决、担保和申报凭证"
+      ],
+      "calculation_hooks": [
+        "仅将经核验的本金、利息停止计算时点、抵扣、担保和计算规则移交 cn-calc；本包不确认债权金额、性质或顺位"
+      ],
+      "deadline_hooks": [
+        "仅登记申请受理、债权申报、审查异议、会议等候选节点和法院文书中的明确日期并移交 cn-deadline；本包不输出法定期限"
+      ],
+      "prohibitions": [
+        "不得因一次未清偿、终本裁定或单份财务材料即认定具备破产原因",
+        "不得自动确认债权、担保效力、债权性质、优先顺位或抵销权成立",
+        "不得自动计算债权、利息、清偿额、表决额、清偿率或申报异议期限",
+        "不得自动提交破产申请或债权申报、代为表决、签署文件、处分财产、分配或付款"
+      ]
+    },
+    {
+      "issue_key": "estate_reorganization",
+      "label": "债务人财产与重整",
+      "questions": [
+        "受理前交易、关联关系、偏颇清偿和财产去向如何？",
+        "经营价值、融资、分组表决和清偿情景的输入是否可核验？"
+      ],
+      "fact_fields": [
+        "受理前交易",
+        "关联关系",
+        "财产变动",
+        "经营与重整假设"
+      ],
+      "evidence_prompts": [
+        "银行流水、总账和重大合同",
+        "资产评估、经营数据和重整方案版本"
+      ],
+      "calculation_hooks": [
+        "仅将经律师确认的资产、债权、分组和情景规则移交 cn-calc；本包不生成清偿方案、估值、清偿率或可行性结论"
+      ],
+      "deadline_hooks": [
+        "仅登记受理前交易、管理人知悉、撤销追回、重整计划提交和表决等候选节点并移交 cn-deadline；本包不输出期限"
+      ],
+      "prohibitions": [
+        "不得自动认定交易可撤销、无效、偏颇清偿、关联关系、追回权或重整方案可行",
+        "不得自动确定财产归属、债权分组、表决结果、强裁条件、清偿顺位或管理人责任",
+        "不得自动计算估值、追回金额、清偿金额、清偿率、表决额、责任比例或任何期限",
+        "不得自动追收、处分资产、发出通知、提交方案、代为表决、申请批准、执行分配或付款"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得自动生成可执行的债权金额、估值、清偿率、表决结果、期限或责任比例",
+    "不得实施申请、申报、通知、表决、追收、处分、签署、提交重整计划、分配或付款"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-BANKRUPTCY-001",
+      "prompt": "供应商拟对长期欠款企业申请破产，但只掌握一份生效判决和终本裁定。",
+      "expected_questions": [
+        "债务人主体和住所地如何核验？",
+        "到期债务、执行状态和其他资产负债材料有哪些？"
+      ],
+      "forbidden_inferences": [
+        "不得仅凭终本裁定认定全部破产要件",
+        "不得自动确定债权性质和顺位",
+        "不得自动计算债权金额、利息、清偿率或申报期限",
+        "不得自动提交破产申请、债权申报、发出通知、表决或付款"
+      ]
+    }
+  ],
+  "title_zh": "破产重整与清算业务包"
+}

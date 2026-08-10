@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-enforcement/enforcement-input.schema.json",
+  "title": "执行审查输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "enforcement_id", "sources", "authorities", "execution_basis", "parties", "performance_records", "amount_references", "property_clues", "measure_candidates", "procedure_nodes", "external_action_requested"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"$ref": "#/$defs/id"}, "enforcement_id": {"$ref": "#/$defs/id"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "authorities": {"type": "array", "items": {"$ref": "#/$defs/authority"}},
+    "execution_basis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["basis_id", "basis_type", "citation", "effect_review", "obligations"],
+      "properties": {
+        "basis_id": {"$ref": "#/$defs/id"}, "basis_type": {"enum": ["judgment", "ruling", "mediation_statement", "arbitral_award", "notarial_instrument", "other", "unknown"]},
+        "citation": {"$ref": "#/$defs/citation"},
+        "effect_review": {"type": "object", "additionalProperties": false, "required": ["status", "conclusion", "citation"], "properties": {"status": {"enum": ["unverified", "verified_by_lawyer"]}, "conclusion": {"type": ["string", "null"]}, "citation": {"oneOf": [{"$ref": "#/$defs/citation"}, {"type": "null"}]}}},
+        "obligations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/obligation"}}
+      }
+    },
+    "parties": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/party"}},
+    "performance_records": {"type": "array", "items": {"$ref": "#/$defs/performance"}},
+    "amount_references": {"type": "array", "items": {"$ref": "#/$defs/amount"}},
+    "property_clues": {"type": "array", "items": {"$ref": "#/$defs/property_clue"}},
+    "measure_candidates": {"type": "array", "items": {"$ref": "#/$defs/measure"}},
+    "procedure_nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "external_action_requested": {"const": false}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "source": {"type": "object", "additionalProperties": false, "required": ["source_id", "file_name", "sha256"], "properties": {"source_id": {"$ref": "#/$defs/id"}, "file_name": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}},
+    "authority": {"type": "object", "additionalProperties": false, "required": ["authority_id", "title", "official_url", "verified_on", "effect_status"], "properties": {"authority_id": {"$ref": "#/$defs/id"}, "title": {"type": "string", "minLength": 1}, "official_url": {"type": "string", "format": "uri"}, "verified_on": {"type": "string", "format": "date"}, "effect_status": {"enum": ["effective", "partly_effective", "unknown"]}}},
+    "citation": {"type": "object", "additionalProperties": false, "required": ["source_id", "locator"], "properties": {"source_id": {"$ref": "#/$defs/id"}, "locator": {"type": "string", "minLength": 1}}},
+    "obligation": {"type": "object", "additionalProperties": false, "required": ["obligation_id", "verbatim_text", "creditor_party_id", "debtor_party_id", "citation"], "properties": {"obligation_id": {"$ref": "#/$defs/id"}, "verbatim_text": {"type": "string", "minLength": 1}, "creditor_party_id": {"$ref": "#/$defs/id"}, "debtor_party_id": {"$ref": "#/$defs/id"}, "citation": {"$ref": "#/$defs/citation"}}},
+    "party": {"type": "object", "additionalProperties": false, "required": ["party_id", "name", "role", "citation"], "properties": {"party_id": {"$ref": "#/$defs/id"}, "name": {"type": "string", "minLength": 1}, "role": {"enum": ["applicant_candidate", "respondent_candidate", "other"]}, "citation": {"$ref": "#/$defs/citation"}}},
+    "performance": {"type": "object", "additionalProperties": false, "required": ["record_id", "obligation_id", "status", "description", "citation"], "properties": {"record_id": {"$ref": "#/$defs/id"}, "obligation_id": {"$ref": "#/$defs/id"}, "status": {"enum": ["fulfilled", "unfulfilled", "disputed", "unknown"]}, "description": {"type": "string", "minLength": 1}, "citation": {"$ref": "#/$defs/citation"}}},
+    "amount": {"type": "object", "additionalProperties": false, "required": ["amount_id", "label", "display_value", "calculation_artifact_id", "artifact_sha256", "locator"], "properties": {"amount_id": {"$ref": "#/$defs/id"}, "label": {"type": "string", "minLength": 1}, "display_value": {"type": "string", "minLength": 1}, "calculation_artifact_id": {"$ref": "#/$defs/id"}, "artifact_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "locator": {"type": "string", "minLength": 1}}},
+    "property_clue": {"type": "object", "additionalProperties": false, "required": ["clue_id", "clue_type", "description", "citation", "reported_verification_status"], "properties": {"clue_id": {"$ref": "#/$defs/id"}, "clue_type": {"enum": ["bank_account", "real_property", "vehicle", "equity", "receivable", "movable_property", "other"]}, "description": {"type": "string", "minLength": 1}, "citation": {"$ref": "#/$defs/citation"}, "reported_verification_status": {"enum": ["unverified", "user_reported", "document_supported", "officially_confirmed"]}}},
+    "measure": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "measure_type", "reason", "basis_citations"], "properties": {"candidate_id": {"$ref": "#/$defs/id"}, "measure_type": {"enum": ["inquiry", "seizure", "freeze", "withholding", "transfer", "auction", "restriction", "other"]}, "reason": {"type": "string", "minLength": 1}, "basis_citations": {"type": "array", "items": {"$ref": "#/$defs/citation"}}}},
+    "rule_input": {"type": "object", "additionalProperties": false, "required": ["rule_id", "authority_id", "locator", "rule_text"], "properties": {"rule_id": {"$ref": "#/$defs/id"}, "authority_id": {"$ref": "#/$defs/id"}, "locator": {"type": "string", "minLength": 1}, "rule_text": {"type": "string", "minLength": 1}}},
+    "node": {"type": "object", "additionalProperties": false, "required": ["node_id", "node_type", "trigger_facts", "rule_inputs", "lawyer_deadline_conclusion"], "properties": {"node_id": {"$ref": "#/$defs/id"}, "node_type": {"enum": ["execution_objection", "reconsideration", "change_or_add_party", "other"]}, "trigger_facts": {"type": "array", "items": {"$ref": "#/$defs/citation"}}, "rule_inputs": {"type": "array", "items": {"$ref": "#/$defs/rule_input"}}, "lawyer_deadline_conclusion": {"type": ["string", "null"]}}}
+  }
+}

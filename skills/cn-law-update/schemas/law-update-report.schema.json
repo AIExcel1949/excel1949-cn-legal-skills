@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-law-update/law-update-report.schema.json",
+  "type": "object",
+  "required": ["report_version", "analysis_id", "mode", "title", "subject_type", "jurisdiction", "comparison_date", "versions", "summary", "changes", "affected_artifacts", "impacted_skills", "impacted_templates", "impacted_prior_conclusions", "source_blockers", "warnings", "gate"],
+  "properties": {
+    "report_version": {"const": "1.0"},
+    "analysis_id": {"type": "string"},
+    "mode": {"enum": ["production", "training_fixture"]},
+    "title": {"type": "string"},
+    "subject_type": {"type": "string"},
+    "jurisdiction": {"type": "string"},
+    "comparison_date": {"type": "string", "format": "date"},
+    "versions": {
+      "type": "object",
+      "required": ["old", "new"],
+      "properties": {
+        "old": {"$ref": "#/$defs/versionSummary"},
+        "new": {"$ref": "#/$defs/versionSummary"}
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["change_count", "added", "removed", "modified", "unchanged", "affected_artifact_count"],
+      "properties": {
+        "change_count": {"type": "integer", "minimum": 0},
+        "added": {"type": "integer", "minimum": 0},
+        "removed": {"type": "integer", "minimum": 0},
+        "modified": {"type": "integer", "minimum": 0},
+        "unchanged": {"type": "integer", "minimum": 0},
+        "affected_artifact_count": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["change_id", "change_type", "unit_id", "old_locator", "new_locator", "old_text", "new_text", "diff_operations", "proposed_change_categories", "category_status", "unit_mappings"],
+        "properties": {
+          "change_id": {"type": "string", "pattern": "^chg-[a-f0-9]{16}$"},
+          "change_type": {"enum": ["added", "removed", "modified"]},
+          "unit_id": {"type": "string"},
+          "old_locator": {"type": ["string", "null"]},
+          "new_locator": {"type": ["string", "null"]},
+          "old_text": {"type": ["string", "null"]},
+          "new_text": {"type": ["string", "null"]},
+          "diff_operations": {"type": "array", "items": {"type": "object"}},
+          "proposed_change_categories": {"type": "array", "items": {"type": "string"}},
+          "category_status": {"enum": ["pending_human_review", "not_classified"]},
+          "unit_mappings": {"type": "array", "items": {"type": "object"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "affected_artifacts": {"type": "array", "items": {"type": "object"}},
+    "impacted_skills": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "impacted_templates": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "impacted_prior_conclusions": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "source_blockers": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "review_record": {"type": ["object", "null"]},
+    "gate": {
+      "type": "object",
+      "required": ["status", "reasons", "production_files_modified", "automatic_production_update_allowed"],
+      "properties": {
+        "status": {"enum": ["blocked", "training_only", "pending_human_review", "pending_no_change_confirmation", "review_rejected", "approved_for_manual_update"]},
+        "reasons": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "production_files_modified": {"const": false},
+        "automatic_production_update_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "versionSummary": {
+      "type": "object",
+      "required": ["version_id", "title", "effect_status", "verified_on", "effective_from", "text_sha256", "source"],
+      "properties": {
+        "version_id": {"type": "string"},
+        "title": {"type": "string"},
+        "effect_status": {"type": "string"},
+        "verified_on": {"type": "string", "format": "date"},
+        "effective_from": {"type": ["string", "null"], "format": "date"},
+        "text_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "source": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

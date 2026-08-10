@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "opinion-demo-001",
+  "mode": "training_fixture",
+  "jurisdiction": "中华人民共和国境内（教学示例）",
+  "as_of_date": "2026-07-18",
+  "questions": [
+    {"question_id": "question-demo-001", "text": "在所列教学事实和假设下，某项内部程序是否已满足教学规则甲的要求？"}
+  ],
+  "facts": [
+    {"fact_id": "fact-demo-001", "statement": "脱敏教学决议材料载有同意某事项的文字。", "status": "confirmed", "source_spans": [{"source_id": "source-demo-001", "locator": "第2页决议事项一", "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}]},
+    {"fact_id": "fact-demo-002", "statement": "两份脱敏教学材料对会议日期记载不一致。", "status": "conflicted", "source_spans": [{"source_id": "source-demo-002", "locator": "第1页日期栏", "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}]}
+  ],
+  "assumptions": [
+    {"assumption_id": "assumption-demo-001", "statement": "提交审查的决议文本为完整版本。", "critical": true, "status": "unconfirmed"}
+  ],
+  "limitations": [
+    {"limitation_id": "limitation-demo-001", "statement": "本教学底稿未核验签字真伪，也未覆盖意见时点后的事实变化。"}
+  ],
+  "authorities": [
+    {"authority_id": "authority-demo-001", "title": "教学用虚构规则甲", "issuing_body": "教学测试机关", "official_url": "https://example.invalid/official/demo-rule", "verified_on": "2026-07-18", "effect_status": "effective", "verification_status": "verified_official", "locator": "第十条", "text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}
+  ],
+  "propositions": [
+    {"proposition_id": "proposition-demo-001", "question_id": "question-demo-001", "stance": "supporting", "statement": "决议文字可作为程序已经启动的支持性材料，但仍需核验完整性。", "fact_ids": ["fact-demo-001"], "authority_ids": ["authority-demo-001"]},
+    {"proposition_id": "proposition-demo-002", "question_id": "question-demo-001", "stance": "adverse", "statement": "会议日期冲突和文本完整性未确认可能影响程序事实认定。", "fact_ids": ["fact-demo-002"], "authority_ids": ["authority-demo-001"]}
+  ],
+  "conclusion_drafts": [
+    {"conclusion_id": "conclusion-demo-001", "question_id": "question-demo-001", "statement": "现有材料不足以形成正式结论；如日期冲突消除且完整性假设获确认，再由律师复核程序是否满足。", "fact_ids": ["fact-demo-001", "fact-demo-002"], "authority_ids": ["authority-demo-001"], "dependency_assumption_ids": ["assumption-demo-001"], "conditions": ["核对会议日期原始记录", "确认决议文本完整性"]}
+  ]
+}

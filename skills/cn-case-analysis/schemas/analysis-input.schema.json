@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-case-analysis/analysis-input.schema.json",
+  "type": "object",
+  "required": ["schema_version", "analysis_id", "matter_id", "analysis_perspective", "as_of_date", "parties", "claims", "facts", "issues", "evidence", "authorities", "issue_analyses", "pending_confirmations", "lawyer_judgments", "domain_packs"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "analysis_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+    "matter_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+    "analysis_perspective": {"const": "neutral"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "analysis_objective": {"type": "string", "minLength": 1},
+    "parties": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/party.schema.json"}},
+    "claims": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/claim.schema.json"}},
+    "facts": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/fact-ledger.schema.json"}},
+    "issues": {"type": "array", "minItems": 1, "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/issue.schema.json"}},
+    "evidence": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/evidence.schema.json"}},
+    "authorities": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/authority.schema.json"}},
+    "issue_analyses": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/issue_analysis"}},
+    "pending_confirmations": {"type": "array", "items": {"$ref": "#/$defs/pending_confirmation"}},
+    "lawyer_judgments": {"type": "array", "items": {"$ref": "#/$defs/lawyer_judgment"}},
+    "domain_packs": {"type": "array", "items": {"$ref": "#/$defs/domain_pack"}}
+  },
+  "$defs": {
+    "id_array": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"}
+    },
+    "position": {
+      "type": "object",
+      "required": ["position_id", "party_id", "position_type", "statement", "fact_ids", "evidence_ids", "authority_ids"],
+      "properties": {
+        "position_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "party_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "position_type": {"enum": ["assertion", "denial", "alternative", "reservation"]},
+        "statement": {"type": "string", "minLength": 1},
+        "fact_ids": {"$ref": "#/$defs/id_array"},
+        "evidence_ids": {"$ref": "#/$defs/id_array"},
+        "authority_ids": {"$ref": "#/$defs/id_array"}
+      },
+      "additionalProperties": false
+    },
+    "element": {
+      "type": "object",
+      "required": ["element_id", "name", "order", "status", "burden_party_ids", "fact_ids", "evidence_ids", "authority_ids", "opposing_arguments", "working_note"],
+      "properties": {
+        "element_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "name": {"type": "string", "minLength": 1},
+        "order": {"type": "integer", "minimum": 1},
+        "status": {"enum": ["supported", "partially_supported", "unsupported", "disputed", "missing", "not_applicable", "research_required", "lawyer_judgment_required"]},
+        "burden_party_ids": {"$ref": "#/$defs/id_array"},
+        "fact_ids": {"$ref": "#/$defs/id_array"},
+        "evidence_ids": {"$ref": "#/$defs/id_array"},
+        "authority_ids": {"$ref": "#/$defs/id_array"},
+        "opposing_arguments": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "working_note": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "risk": {
+      "type": "object",
+      "required": ["risk_id", "risk_type", "level", "description", "related_ids", "next_action"],
+      "properties": {
+        "risk_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "risk_type": {"enum": ["fact_gap", "evidence_gap", "authority_gap", "procedure_uncertainty", "legal_uncertainty", "strategy_choice"]},
+        "level": {"enum": ["high", "medium", "low", "unknown"]},
+        "description": {"type": "string", "minLength": 1},
+        "related_ids": {"$ref": "#/$defs/id_array"},
+        "next_action": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "research_item": {
+      "type": "object",
+      "required": ["research_id", "question", "reason", "priority", "status"],
+      "properties": {
+        "research_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "question": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "priority": {"enum": ["high", "medium", "low"]},
+        "status": {"enum": ["open", "in_progress", "verified"]}
+      },
+      "additionalProperties": false
+    },
+    "issue_analysis": {
+      "type": "object",
+      "required": ["issue_id", "parent_issue_id", "frame", "order", "claim_ids", "positions", "elements", "risks", "research_items"],
+      "properties": {
+        "issue_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "parent_issue_id": {"oneOf": [{"type": "null"}, {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"}]},
+        "frame": {"enum": ["claim_right", "defense", "procedure"]},
+        "order": {"type": "integer", "minimum": 1},
+        "claim_ids": {"$ref": "#/$defs/id_array"},
+        "positions": {"type": "array", "items": {"$ref": "#/$defs/position"}},
+        "elements": {"type": "array", "items": {"$ref": "#/$defs/element"}},
+        "risks": {"type": "array", "items": {"$ref": "#/$defs/risk"}},
+        "research_items": {"type": "array", "items": {"$ref": "#/$defs/research_item"}}
+      },
+      "additionalProperties": false
+    },
+    "pending_confirmation": {
+      "type": "object",
+      "required": ["confirmation_id", "question", "related_fact_ids", "blocking"],
+      "properties": {
+        "confirmation_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "question": {"type": "string", "minLength": 1},
+        "related_fact_ids": {"$ref": "#/$defs/id_array"},
+        "blocking": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "lawyer_judgment": {
+      "type": "object",
+      "required": ["judgment_id", "question", "status"],
+      "properties": {
+        "judgment_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "question": {"type": "string", "minLength": 1},
+        "status": {"enum": ["pending", "provided"]},
+        "content": {"type": "string", "minLength": 1},
+        "reviewed_by": {"type": "string", "minLength": 1},
+        "reviewed_at": {"type": "string", "format": "date-time"}
+      },
+      "allOf": [{"if": {"properties": {"status": {"const": "provided"}}, "required": ["status"]}, "then": {"required": ["content", "reviewed_by", "reviewed_at"]}}],
+      "additionalProperties": false
+    },
+    "domain_pack": {
+      "type": "object",
+      "required": ["pack_id", "version", "loaded_reference_ids"],
+      "properties": {
+        "pack_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "version": {"type": "string", "minLength": 1},
+        "loaded_reference_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

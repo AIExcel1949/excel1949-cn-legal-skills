@@ -1,0 +1,389 @@
+{
+ "schema_version": "1.0",
+ "control_owner": "cn-legal",
+ "resident_role": "matter-lead",
+ "max_recommended_active_roles": 3,
+ "roles": [
+  {
+   "role_id": "matter-lead",
+   "display_name": "案件总控",
+   "description": "唯一常驻角色，负责范围、授权、交付物、路径、依赖、人工门禁和最终汇总，不代替专业起草或独立终检。",
+   "prompt_file": "expert-team/roles/matter-lead.md",
+   "claude_preload_skills": [
+    "cn-legal"
+   ],
+   "skill_allowlist": [
+    "cn-legal",
+    "cn-legal-core",
+    "cn-intake",
+    "cn-matter",
+    "cn-dispute",
+    "cn-transaction",
+    "cn-compliance"
+   ],
+   "modes": [
+    "orchestrate"
+   ],
+   "spawn_policy": "resident",
+   "independence_group": "control",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite",
+    "WebSearch",
+    "WebFetch"
+   ]
+  },
+  {
+   "role_id": "source-counsel",
+   "display_name": "法源核验专家",
+   "description": "核验法规、司法解释、案例、版本、时点和适用范围，只交付可回查法源卡，不替起草专家决定策略。",
+   "prompt_file": "expert-team/roles/source-counsel.md",
+   "claude_preload_skills": [
+    "cn-research"
+   ],
+   "skill_allowlist": [
+    "cn-research",
+    "cn-law-update"
+   ],
+   "modes": [
+    "authority",
+    "case",
+    "update"
+   ],
+   "spawn_policy": "phase_once",
+   "independence_group": "research",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite",
+    "WebSearch",
+    "WebFetch"
+   ]
+  },
+  {
+   "role_id": "fact-evidence-analyst",
+   "display_name": "事实证据分析专家",
+   "description": "整理事实来源、时间轴、争点、证据映射、金额和期限旁路计算，不认定证据三性、事实真伪或案件胜败。",
+   "prompt_file": "expert-team/roles/fact-evidence-analyst.md",
+   "claude_preload_skills": [
+    "cn-case-analysis",
+    "cn-evidence-catalog"
+   ],
+   "skill_allowlist": [
+    "cn-timeline",
+    "cn-case-analysis",
+    "cn-evidence",
+    "cn-evidence-map",
+    "cn-calc",
+    "cn-deadline",
+    "cn-evidence-catalog"
+   ],
+   "modes": [
+    "facts",
+    "timeline",
+    "evidence",
+    "calculation",
+    "deadline"
+   ],
+   "spawn_policy": "phase_once",
+   "independence_group": "facts",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite"
+   ]
+  },
+  {
+   "role_id": "civil-dispute-counsel",
+   "display_name": "民商事争议专家",
+   "description": "按诉讼阶段起草民商事诉辩、程序、庭审、调解、上诉和执行材料，不自行决定案由、管辖、诉请或授权。",
+   "prompt_file": "expert-team/roles/civil-dispute-counsel.md",
+   "claude_preload_skills": [
+    "cn-dispute"
+   ],
+   "skill_allowlist": [
+    "cn-dispute",
+    "cn-complaint",
+    "cn-defense",
+    "cn-element-pleading",
+    "cn-applications",
+    "cn-procedure",
+    "cn-hearing",
+    "cn-mediation",
+    "cn-appeal",
+    "cn-enforcement"
+   ],
+   "modes": [
+    "pleading",
+    "procedure",
+    "hearing",
+    "settlement",
+    "appeal",
+    "enforcement"
+   ],
+   "spawn_policy": "per_phase",
+   "independence_group": "drafting",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite"
+   ]
+  },
+  {
+   "role_id": "special-proceedings-counsel",
+   "display_name": "特殊程序专家",
+   "description": "分别处理仲裁、刑事辩护或行政诉讼；一次实例只能选择一种模式，重大程序判断必须升级人工确认。",
+   "prompt_file": "expert-team/roles/special-proceedings-counsel.md",
+   "claude_preload_skills": [
+    "cn-arbitration",
+    "cn-criminal-defense",
+    "cn-admin-litigation"
+   ],
+   "skill_allowlist": [
+    "cn-arbitration",
+    "cn-criminal-defense",
+    "cn-admin-litigation"
+   ],
+   "modes": [
+    "arbitration",
+    "criminal",
+    "administrative"
+   ],
+   "spawn_policy": "per_phase",
+   "independence_group": "drafting",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite"
+   ]
+  },
+  {
+   "role_id": "transaction-counsel",
+   "display_name": "交易非诉专家",
+   "description": "处理合同、尽调、法律意见、律师函、谈判、公司治理和并购，不替客户确认商业条款、交易结构或签署版本。",
+   "prompt_file": "expert-team/roles/transaction-counsel.md",
+   "claude_preload_skills": [
+    "cn-transaction"
+   ],
+   "skill_allowlist": [
+    "cn-transaction",
+    "cn-contract-draft",
+    "cn-contract-review",
+    "cn-diligence",
+    "cn-legal-opinion",
+    "cn-legal-letter",
+    "cn-negotiation",
+    "cn-company",
+    "cn-ma"
+   ],
+   "modes": [
+    "contract",
+    "diligence",
+    "opinion",
+    "letter",
+    "negotiation",
+    "governance",
+    "ma"
+   ],
+   "spawn_policy": "per_phase",
+   "independence_group": "drafting",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite"
+   ]
+  },
+  {
+   "role_id": "compliance-counsel",
+   "display_name": "企业合规专家",
+   "description": "处理综合合规、劳动用工和数据合规，只列示有依据的差距与风险候选，不把候选写成确定违法。",
+   "prompt_file": "expert-team/roles/compliance-counsel.md",
+   "claude_preload_skills": [
+    "cn-compliance"
+   ],
+   "skill_allowlist": [
+    "cn-compliance",
+    "cn-compliance-review",
+    "cn-employment",
+    "cn-data-privacy"
+   ],
+   "modes": [
+    "general",
+    "employment",
+    "data"
+   ],
+   "spawn_policy": "per_phase",
+   "independence_group": "drafting",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite"
+   ]
+  },
+  {
+   "role_id": "independent-reviewer",
+   "display_name": "独立交付审校专家",
+   "description": "以 fresh context 逐件核验事实、法源、模板、哈希、DOCX 属性和阻断项，只输出审校报告，不直接修改起草产物。",
+   "prompt_file": "expert-team/roles/independent-reviewer.md",
+   "claude_preload_skills": [
+    "cn-verify"
+   ],
+   "skill_allowlist": [
+    "cn-verify",
+    "cn-legal-core"
+   ],
+   "modes": [
+    "artifact-review",
+    "docx-review",
+    "delivery-review"
+   ],
+   "spawn_policy": "per_artifact",
+   "independence_group": "review",
+   "reasoning_effort": "high",
+   "claude_tools": [
+    "Read",
+    "Write",
+    "Bash",
+    "Grep",
+    "Glob",
+    "Skill",
+    "Task",
+    "TodoWrite"
+   ]
+  }
+ ],
+ "skill_role_map": {
+  "cn-legal": "matter-lead",
+  "cn-legal-core": "matter-lead",
+  "cn-intake": "matter-lead",
+  "cn-matter": "matter-lead",
+  "cn-dispute": "civil-dispute-counsel",
+  "cn-transaction": "transaction-counsel",
+  "cn-compliance": "compliance-counsel",
+  "cn-research": "source-counsel",
+  "cn-law-update": "source-counsel",
+  "cn-timeline": "fact-evidence-analyst",
+  "cn-case-analysis": "fact-evidence-analyst",
+  "cn-evidence": "fact-evidence-analyst",
+  "cn-evidence-map": "fact-evidence-analyst",
+  "cn-calc": "fact-evidence-analyst",
+  "cn-deadline": "fact-evidence-analyst",
+  "cn-complaint": "civil-dispute-counsel",
+  "cn-defense": "civil-dispute-counsel",
+  "cn-element-pleading": "civil-dispute-counsel",
+  "cn-applications": "civil-dispute-counsel",
+  "cn-procedure": "civil-dispute-counsel",
+  "cn-hearing": "civil-dispute-counsel",
+  "cn-mediation": "civil-dispute-counsel",
+  "cn-appeal": "civil-dispute-counsel",
+  "cn-enforcement": "civil-dispute-counsel",
+  "cn-arbitration": "special-proceedings-counsel",
+  "cn-criminal-defense": "special-proceedings-counsel",
+  "cn-admin-litigation": "special-proceedings-counsel",
+  "cn-contract-draft": "transaction-counsel",
+  "cn-contract-review": "transaction-counsel",
+  "cn-diligence": "transaction-counsel",
+  "cn-legal-opinion": "transaction-counsel",
+  "cn-legal-letter": "transaction-counsel",
+  "cn-negotiation": "transaction-counsel",
+  "cn-company": "transaction-counsel",
+  "cn-ma": "transaction-counsel",
+  "cn-compliance-review": "compliance-counsel",
+  "cn-employment": "compliance-counsel",
+  "cn-data-privacy": "compliance-counsel",
+  "cn-verify": "independent-reviewer",
+  "cn-evidence-catalog": "fact-evidence-analyst"
+ },
+ "skill_mode_map": {
+  "cn-legal": "orchestrate",
+  "cn-legal-core": "orchestrate",
+  "cn-intake": "orchestrate",
+  "cn-matter": "orchestrate",
+  "cn-research": "authority",
+  "cn-law-update": "update",
+  "cn-timeline": "timeline",
+  "cn-case-analysis": "facts",
+  "cn-evidence": "evidence",
+  "cn-evidence-map": "evidence",
+  "cn-calc": "calculation",
+  "cn-deadline": "deadline",
+  "cn-dispute": "pleading",
+  "cn-complaint": "pleading",
+  "cn-defense": "pleading",
+  "cn-element-pleading": "pleading",
+  "cn-applications": "procedure",
+  "cn-procedure": "procedure",
+  "cn-hearing": "hearing",
+  "cn-mediation": "settlement",
+  "cn-appeal": "appeal",
+  "cn-enforcement": "enforcement",
+  "cn-arbitration": "arbitration",
+  "cn-criminal-defense": "criminal",
+  "cn-admin-litigation": "administrative",
+  "cn-transaction": "contract",
+  "cn-contract-draft": "contract",
+  "cn-contract-review": "contract",
+  "cn-diligence": "diligence",
+  "cn-legal-opinion": "opinion",
+  "cn-legal-letter": "letter",
+  "cn-negotiation": "negotiation",
+  "cn-company": "governance",
+  "cn-ma": "ma",
+  "cn-compliance": "general",
+  "cn-compliance-review": "general",
+  "cn-employment": "employment",
+  "cn-data-privacy": "data",
+  "cn-verify": "artifact-review",
+  "cn-evidence-catalog": "deliver"
+ }
+}

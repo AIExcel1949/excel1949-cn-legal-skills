@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "matter-demo-001",
+  "mode": "training_fixture",
+  "jurisdiction": "中华人民共和国境内（教学示例）",
+  "data_room_cutoff": "2026-07-18T10:00:00+08:00",
+  "documents": [
+    {
+      "document_id": "doc-demo-001",
+      "file_name": "甲公司章程（脱敏教学件）.pdf",
+      "source_locator": "教学数据室/公司治理/001",
+      "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "hash_verified": true,
+      "received_at": "2026-07-17T16:00:00+08:00",
+      "spans": [
+        {"span_id": "span-demo-001", "locator": "第2页第3条", "excerpt": "甲公司登记资本信息见本条。"},
+        {"span_id": "span-demo-002", "locator": "第6页第12条", "excerpt": "重大事项依章程约定履行内部决策程序。"}
+      ]
+    },
+    {
+      "document_id": "doc-demo-002",
+      "file_name": "管理层书面回复（脱敏教学件）.pdf",
+      "source_locator": "教学数据室/问答/002",
+      "content_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "hash_verified": true,
+      "received_at": "2026-07-18T09:00:00+08:00",
+      "spans": [
+        {"span_id": "span-demo-003", "locator": "第1页问题2", "excerpt": "管理层陈述不存在未披露的重大合同。"}
+      ]
+    }
+  ],
+  "material_requests": [
+    {"request_id": "request-demo-001", "description": "请提供重大合同清单及文本。", "status": "partial", "related_document_ids": [], "note": "仅收到清单，文本尚待补充。"},
+    {"request_id": "request-demo-002", "description": "请提供现行公司章程。", "status": "provided", "related_document_ids": ["doc-demo-001"]}
+  ],
+  "management_representations": [
+    {"representation_id": "representation-demo-001", "statement": "管理层陈述不存在未披露的重大合同。", "confirmation_status": "written_confirmed", "source_spans": [{"document_id": "doc-demo-002", "span_id": "span-demo-003"}]}
+  ],
+  "authorities": [
+    {"authority_id": "authority-demo-001", "title": "教学用虚构规则甲", "issuing_body": "教学测试机关", "official_url": "https://example.invalid/official/demo-rule", "verified_on": "2026-07-18", "effect_status": "effective", "locator": "第十条", "text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "verification_status": "verified_official"}
+  ],
+  "findings": [
+    {"finding_id": "finding-demo-001", "kind": "fact", "title": "章程载有内部决策程序", "statement": "教学章程材料载有重大事项内部决策程序条款。", "source_spans": [{"document_id": "doc-demo-001", "span_id": "span-demo-002"}], "authority_ids": [], "priority": "medium"},
+    {"finding_id": "finding-demo-002", "kind": "legal", "title": "内部决策程序需进一步比对", "statement": "章程条款与教学规则之间的适用关系需由律师复核。", "source_spans": [{"document_id": "doc-demo-001", "span_id": "span-demo-002"}], "authority_ids": ["authority-demo-001"], "priority": "high"},
+    {"finding_id": "finding-demo-003", "kind": "exception", "title": "重大合同资料不完整", "statement": "截至截止时间仅有合同清单，未见全部合同文本。", "source_spans": [{"document_id": "doc-demo-002", "span_id": "span-demo-003"}], "authority_ids": [], "priority": "high"},
+    {"finding_id": "finding-demo-004", "kind": "red_flag", "title": "管理层陈述尚待独立核验", "statement": "有关重大合同完整性的管理层陈述尚缺独立材料交叉验证。", "source_spans": [{"document_id": "doc-demo-002", "span_id": "span-demo-003"}], "authority_ids": [], "priority": "critical"}
+  ]
+}

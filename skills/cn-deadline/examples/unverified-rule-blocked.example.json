@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MATTER-DEMO-002",
+  "as_of_date": "2026-07-18",
+  "calendars": [],
+  "deadlines": [
+    {
+      "deadline_id": "DL-DEMO-002",
+      "label": "待核验的程序期限",
+      "timezone": "Asia/Shanghai",
+      "event": {
+        "event_id": "EVT-DEMO-002",
+        "event_type": "脱敏文书签收",
+        "operative_date": "2026-07-10",
+        "operative_date_basis": "尚未完成送达证据核验。",
+        "evidence_locator": "evidence/service-record-demo-002.pdf#page=1",
+        "confirmed_by_human": false
+      },
+      "rule": {
+        "rule_id": "RULE-DEMO-002",
+        "name": "待核验规则示例",
+        "calculation": {
+          "method": "counted_days",
+          "count": 10,
+          "day_kind": "calendar",
+          "include_operative_date": false
+        },
+        "non_working_expiry": "keep",
+        "deadline_time": "23:59:59",
+        "source": {
+          "source_id": "SRC-RULE-DEMO-002",
+          "authority_type": "other",
+          "title": "未核验的口头转述",
+          "document_locator": "待查找原文",
+          "quote": "转述称期限可能为十日。",
+          "effect_status": "unknown",
+          "verified_on": "2026-07-18"
+        }
+      },
+      "adjustments": [],
+      "exceptions": [],
+      "blocking_questions": [
+        "送达方式和实际送达完成日尚未核验。"
+      ]
+    }
+  ]
+}

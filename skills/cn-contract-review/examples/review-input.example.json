@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MAT-REVIEW-001",
+  "review_context": {
+    "representation": "委托方",
+    "representation_status": "confirmed",
+    "jurisdiction": "中华人民共和国大陆地区",
+    "jurisdiction_status": "confirmed",
+    "contract_version": "2026-07-18-脱敏工作副本",
+    "version_status": "confirmed"
+  },
+  "source_contract": {
+    "file_name": "contract-snapshot.example.txt",
+    "sha256": "f9fca3672e174c4cf981c9e2bec7a6acc9a3c416b5f4c11b57dc94ad4aa288d3",
+    "encoding": "utf-8"
+  },
+  "clauses": [
+    {"clause_id": "CLAUSE-001", "heading": "第一条 服务内容", "start_char": 0, "end_char": 24, "original_text": "第一条 服务内容\n甲方委托乙方提供系统维护服务。"},
+    {"clause_id": "CLAUSE-002", "heading": "第二条 服务费", "start_char": 25, "end_char": 44, "original_text": "第二条 服务费\n服务费为人民币壹万元。"}
+  ],
+  "authority_records": [
+    {"record_id": "AUTH-CIVIL-CODE", "title": "中华人民共和国民法典", "source_url": "https://www.moj.gov.cn/pub/sfbgw/zwgkztzl/2025nianzhuanti/2025mfdxcy/2025mfdxcy_mfdql/202505/t20250507_518708.html", "effect_status": "effective", "verification_status": "verified", "full_text_checked": true, "applicability_status": "confirmed"}
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-001",
+      "clause_id": "CLAUSE-001",
+      "basis_type": "drafting",
+      "issue": "服务范围仅作概括描述，具体系统清单尚未在该条定位。",
+      "risk": {"level": "medium", "expression": "potential"},
+      "source_refs": ["clause:CLAUSE-001"],
+      "authority_ids": [],
+      "suggestion": "由业务人员确认系统清单后，在附件中逐项列明并建立版本号。",
+      "delta": {"operation": "comment", "target_text": "", "proposed_text": "请确认附件系统清单及版本号。"}
+    },
+    {
+      "finding_id": "FIND-002",
+      "clause_id": "CLAUSE-002",
+      "basis_type": "commercial",
+      "issue": "该条未呈现已确认的付款节点。",
+      "risk": {"level": "medium", "expression": "needs_verification"},
+      "source_refs": ["clause:CLAUSE-002"],
+      "authority_ids": [],
+      "suggestion": "待双方确认付款节点后，再补充到服务费条款。",
+      "delta": {"operation": "insert_after", "target_text": "服务费为人民币壹万元。", "proposed_text": "【待确认付款节点后补充】"}
+    }
+  ]
+}

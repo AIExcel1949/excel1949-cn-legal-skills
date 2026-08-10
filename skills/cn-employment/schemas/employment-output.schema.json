@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-employment/employment-output.schema.json",
+  "title": "劳动用工审查输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "author", "artifact_state", "matter", "input_sha256", "sources", "selected_authorities", "relationship_candidate_matrix", "lifecycle_matrix", "coverage_gaps", "human_decision_queue", "dispute_review", "blockers", "action_controls"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "author": {"const": "AIOffice职场通关-excel1949"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "matter": {"type": "object"},
+    "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "sources": {"type": "array", "items": {"type": "object"}},
+    "selected_authorities": {"type": "array", "items": {"type": "object"}},
+    "relationship_candidate_matrix": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_type", "support_signal_ids", "support_count", "status"],
+        "properties": {
+          "candidate_type": {"type": "string"},
+          "support_signal_ids": {"type": "array", "items": {"type": "string"}},
+          "support_count": {"type": "integer", "minimum": 0},
+          "status": {"const": "candidate_only_no_determination"}
+        }
+      }
+    },
+    "lifecycle_matrix": {"type": "array", "items": {"type": "object"}},
+    "coverage_gaps": {"type": "array", "items": {"type": "string"}},
+    "human_decision_queue": {"type": "array", "items": {"type": "object"}},
+    "dispute_review": {"type": "object"},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "action_controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auto_decide", "auto_notify", "auto_terminate", "auto_submit", "auto_sign", "auto_stamp"],
+      "properties": {
+        "auto_decide": {"const": false},
+        "auto_notify": {"const": false},
+        "auto_terminate": {"const": false},
+        "auto_submit": {"const": false},
+        "auto_sign": {"const": false},
+        "auto_stamp": {"const": false}
+      }
+    }
+  }
+}

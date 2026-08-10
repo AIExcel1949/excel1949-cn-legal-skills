@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/source.schema.json",
+  "type": "object",
+  "required": ["source_id", "file_name", "sha256", "acquisition", "parse_status"],
+  "properties": {
+    "source_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "file_name": {"type": "string", "minLength": 1},
+    "sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "mime_type": {"type": "string"},
+    "acquisition": {"enum": ["user_provided", "official_download", "authorized_export", "other"]},
+    "parse_status": {"enum": ["not_parsed", "parsed", "ocr_unverified", "human_verified", "failed"]},
+    "official_url": {"type": "string", "format": "uri"}
+  },
+  "additionalProperties": false
+}
+

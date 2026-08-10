@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-research/research-record.schema.json",
+  "type": "object",
+  "required": ["record_id", "record_type", "title", "source_url", "retrieved_at", "verification_status", "relevance"],
+  "properties": {
+    "record_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "record_type": {"enum": ["law", "administrative_regulation", "judicial_interpretation", "regulatory_document", "guiding_case", "library_case", "gazette_case", "typical_case", "judgment", "other"]},
+    "title": {"type": "string", "minLength": 1},
+    "issuing_body_or_court": {"type": "string"},
+    "document_number_or_case_number": {"type": "string"},
+    "decision_or_issue_date": {"type": "string", "format": "date"},
+    "effective_from": {"type": "string", "format": "date"},
+    "effect_status": {"enum": ["effective", "amended", "repealed", "not_yet_effective", "not_applicable", "unknown"]},
+    "source_url": {"type": "string", "format": "uri"},
+    "retrieved_at": {"type": "string", "format": "date-time"},
+    "verification_status": {"enum": ["pending", "source_opened", "verified", "failed"]},
+    "full_text_checked": {"type": "boolean"},
+    "exact_quotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["quote", "locator"],
+        "properties": {
+          "quote": {"type": "string", "minLength": 1},
+          "locator": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "relevance": {"type": "string", "minLength": 1},
+    "similarities": {"type": "array", "items": {"type": "string"}},
+    "differences": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
+

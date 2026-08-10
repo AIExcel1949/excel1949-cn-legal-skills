@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-contract-draft/draft-input.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "document_title", "review_context", "transaction_checklist", "parties", "commercial_terms", "risk_allocations", "definitions", "authority_records", "clause_plan"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "document_title": {"type": "string", "minLength": 1},
+    "review_context": {
+      "type": "object",
+      "required": ["representation", "representation_status", "jurisdiction", "jurisdiction_status"],
+      "properties": {
+        "representation": {"type": "string", "minLength": 1},
+        "representation_status": {"enum": ["confirmed", "unconfirmed"]},
+        "jurisdiction": {"type": "string", "minLength": 1},
+        "jurisdiction_status": {"enum": ["confirmed", "unconfirmed"]}
+      },
+      "additionalProperties": false
+    },
+    "transaction_checklist": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["item_id", "label", "required", "status"],
+        "properties": {
+          "item_id": {"$ref": "#/$defs/id"}, "label": {"type": "string", "minLength": 1},
+          "required": {"type": "boolean"}, "status": {"enum": ["confirmed", "missing", "not_applicable"]},
+          "reason": {"type": "string"}
+        }, "additionalProperties": false
+      }
+    },
+    "parties": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/party"}},
+    "commercial_terms": {"type": "array", "items": {"$ref": "#/$defs/term"}},
+    "risk_allocations": {"type": "array", "items": {"$ref": "#/$defs/risk"}},
+    "definitions": {"type": "array", "items": {"$ref": "#/$defs/definition"}},
+    "authority_records": {"type": "array", "items": {"$ref": "#/$defs/authority"}},
+    "clause_plan": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/clause"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "status": {"enum": ["confirmed", "unconfirmed"]},
+    "id_array": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "party": {"type": "object", "required": ["party_id", "name", "role", "confirmation_status"], "properties": {"party_id": {"$ref": "#/$defs/id"}, "name": {"type": "string", "minLength": 1}, "role": {"type": "string", "minLength": 1}, "confirmation_status": {"$ref": "#/$defs/status"}}, "additionalProperties": false},
+    "term": {"type": "object", "required": ["term_id", "term_key", "label", "value", "confirmation_status", "source_ref"], "properties": {"term_id": {"$ref": "#/$defs/id"}, "term_key": {"$ref": "#/$defs/id"}, "label": {"type": "string", "minLength": 1}, "value": {"type": "string", "minLength": 1}, "confirmation_status": {"$ref": "#/$defs/status"}, "source_ref": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "risk": {"type": "object", "required": ["risk_id", "topic", "allocation", "confirmation_status", "source_ref"], "properties": {"risk_id": {"$ref": "#/$defs/id"}, "topic": {"type": "string", "minLength": 1}, "allocation": {"type": "string", "minLength": 1}, "confirmation_status": {"$ref": "#/$defs/status"}, "source_ref": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "definition": {"type": "object", "required": ["definition_id", "term", "meaning", "confirmation_status"], "properties": {"definition_id": {"$ref": "#/$defs/id"}, "term": {"type": "string", "minLength": 1}, "meaning": {"type": "string", "minLength": 1}, "confirmation_status": {"$ref": "#/$defs/status"}}, "additionalProperties": false},
+    "authority": {"type": "object", "required": ["record_id", "title", "source_url", "effect_status", "verification_status", "full_text_checked", "applicability_status"], "properties": {"record_id": {"$ref": "#/$defs/id"}, "title": {"type": "string", "minLength": 1}, "source_url": {"type": "string", "format": "uri"}, "effect_status": {"enum": ["effective", "amended", "repealed", "not_yet_effective", "unknown"]}, "verification_status": {"enum": ["verified", "pending", "failed"]}, "full_text_checked": {"type": "boolean"}, "applicability_status": {"enum": ["confirmed", "unconfirmed", "not_applicable"]}}, "additionalProperties": false},
+    "clause": {"type": "object", "required": ["clause_id", "heading", "term_ids", "risk_ids", "definition_ids", "authority_ids"], "properties": {"clause_id": {"$ref": "#/$defs/id"}, "heading": {"type": "string", "minLength": 1}, "term_ids": {"$ref": "#/$defs/id_array"}, "risk_ids": {"$ref": "#/$defs/id_array"}, "definition_ids": {"$ref": "#/$defs/id_array"}, "authority_ids": {"$ref": "#/$defs/id_array"}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}
+

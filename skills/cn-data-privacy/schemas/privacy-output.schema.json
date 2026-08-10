@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-data-privacy/privacy-output.schema.json",
+  "title": "个人信息保护审查输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "author", "artifact_state", "matter", "input_sha256", "sources", "selected_authorities", "inventory_matrix", "processing_matrix", "pia_matrix", "pia_gaps", "incident_task_queue", "individual_request_queue", "blockers", "action_controls"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "author": {"const": "AIOffice职场通关-excel1949"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "matter": {"type": "object"},
+    "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "sources": {"type": "array", "items": {"type": "object"}},
+    "selected_authorities": {"type": "array", "items": {"type": "object"}},
+    "inventory_matrix": {"type": "array", "items": {"type": "object"}},
+    "processing_matrix": {"type": "array", "items": {"type": "object"}},
+    "pia_matrix": {"type": "array", "items": {"type": "object"}},
+    "pia_gaps": {"type": "array", "items": {"type": "string"}},
+    "incident_task_queue": {"type": "array", "items": {"type": "object"}},
+    "individual_request_queue": {"type": "array", "items": {"type": "object"}},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "action_controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auto_delete", "auto_notify_regulator", "auto_notify_individual", "auto_submit", "auto_transfer_cross_border", "auto_change_system"],
+      "properties": {
+        "auto_delete": {"const": false},
+        "auto_notify_regulator": {"const": false},
+        "auto_notify_individual": {"const": false},
+        "auto_submit": {"const": false},
+        "auto_transfer_cross_border": {"const": false},
+        "auto_change_system": {"const": false}
+      }
+    }
+  }
+}

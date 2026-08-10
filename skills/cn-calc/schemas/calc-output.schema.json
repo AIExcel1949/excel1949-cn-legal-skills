@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-calc/calc-output.schema.json",
+  "title": "AIOffice 中国律师确定性计算输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "lawyer_reviewed",
+    "artifact_role",
+    "engine_version",
+    "generated_at",
+    "canonical_input_sha256",
+    "matter",
+    "as_of_date",
+    "benchmarks",
+    "variables",
+    "calculations",
+    "disclaimer"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "status": {"const": "calculated_unreviewed"},
+    "lawyer_reviewed": {"const": false},
+    "artifact_role": {"const": "sidecar_calculation_report"},
+    "engine_version": {"type": "string"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "canonical_input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "matter": {"type": "object"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "benchmarks": {"type": "array"},
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["id", "label", "kind", "exact_fraction", "source_ids"]
+      }
+    },
+    "calculations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "category",
+          "formula",
+          "result_type",
+          "exact_fraction",
+          "unrounded_decimal_preview",
+          "rounded_value",
+          "rounding",
+          "referenced_values",
+          "source_ids"
+        ],
+        "properties": {
+          "id": {"type": "string"},
+          "label": {"type": "string"},
+          "category": {"type": "string"},
+          "formula": {"type": "string"},
+          "result_type": {"type": "string"},
+          "currency": {"type": "string"},
+          "unit": {"type": "string"},
+          "exact_fraction": {"type": "string", "pattern": "^-?[0-9]+/[1-9][0-9]*$"},
+          "unrounded_decimal_preview": {"type": "string"},
+          "rounded_value": {"type": "string"},
+          "rounding": {"type": "object"},
+          "referenced_values": {"type": "object"},
+          "source_ids": {"type": "array"}
+        }
+      }
+    },
+    "disclaimer": {"type": "string", "minLength": 1}
+  }
+}

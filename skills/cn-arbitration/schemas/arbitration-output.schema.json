@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-arbitration/arbitration-output.schema.json",
+  "title": "中国大陆仲裁工作台输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_state", "matter", "input_sha256", "agreement_review", "institution_review", "authority_review", "claim_register", "jurisdiction_register", "disclosure_register", "evidence_register", "schedule_register", "action_controls", "blockers"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "matter": {"type": "object"},
+    "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "agreement_review": {"type": "object"},
+    "institution_review": {"type": "object"},
+    "authority_review": {"type": "array", "items": {"type": "object"}},
+    "claim_register": {"type": "array", "items": {"type": "object"}},
+    "jurisdiction_register": {"type": "array", "items": {"type": "object"}},
+    "disclosure_register": {"type": "array", "items": {"type": "object"}},
+    "evidence_register": {"type": "array", "items": {"type": "object"}},
+    "schedule_register": {"type": "array", "items": {"type": "object"}},
+    "action_controls": {
+      "type": "object", "additionalProperties": false,
+      "required": ["auto_select_institution", "auto_select_arbitrator", "auto_calculate_deadlines", "auto_send", "auto_sign", "auto_submit"],
+      "properties": {
+        "auto_select_institution": {"const": false},
+        "auto_select_arbitrator": {"const": false},
+        "auto_calculate_deadlines": {"const": false},
+        "auto_send": {"const": false},
+        "auto_sign": {"const": false},
+        "auto_submit": {"const": false}
+      }
+    },
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/element-mapping.schema.json",
+  "title": "传统诉状至要素式诉状映射账本",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source_text_sha256", "case_type", "case_type_human_confirmed", "claims", "elements", "unmapped_segments", "blockers"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "source_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "case_type": {"enum": ["private_lending", "divorce", "sales_contract", "traffic_accident"]},
+    "case_type_human_confirmed": {"type": "boolean"},
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["order", "text_verbatim", "source_start", "source_end", "sha256", "target_field_ids"],
+        "properties": {
+          "order": {"type": "integer", "minimum": 1},
+          "text_verbatim": {"type": "string", "minLength": 1},
+          "source_start": {"type": "integer", "minimum": 0},
+          "source_end": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "target_field_ids": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_id", "section", "label", "status", "value", "source_quote", "source_start", "source_end", "review_note"],
+        "properties": {
+          "field_id": {"type": "string", "minLength": 1},
+          "section": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "status": {"enum": ["provided", "missing", "not_applicable", "conflict"]},
+          "value": {"type": "string"},
+          "source_quote": {"type": "string"},
+          "source_start": {"type": ["integer", "null"], "minimum": 0},
+          "source_end": {"type": ["integer", "null"], "minimum": 0},
+          "review_note": {"type": "string"}
+        }
+      }
+    },
+    "unmapped_segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text_verbatim", "source_start", "source_end", "reviewed"],
+        "properties": {
+          "text_verbatim": {"type": "string", "minLength": 1},
+          "source_start": {"type": "integer", "minimum": 0},
+          "source_end": {"type": "integer", "minimum": 0},
+          "reviewed": {"type": "boolean"}
+        }
+      }
+    },
+    "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}

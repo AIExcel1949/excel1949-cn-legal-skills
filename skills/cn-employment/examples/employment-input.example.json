@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "matter": {
+    "matter_id": "MAT-EMP-2026-001",
+    "title": "某项目用工安排全周期审查",
+    "as_of_date": "2026-07-18",
+    "employment_location": "中国某省某市"
+  },
+  "sources": [
+    {
+      "source_id": "SRC-AGREEMENT",
+      "source_kind": "contract",
+      "source_locator": "《项目合作协议》第1页第2段",
+      "original_text": "某某科技公司与乙某签署《项目合作协议》，约定乙某按项目成果结算服务费。",
+      "sha256": "ade6d7e77c715344438e3e2357cf8c9d61a16f40940a5c082c9f66c78808b523",
+      "verification_status": "source_checked",
+      "verified_on": "2026-07-17"
+    },
+    {
+      "source_id": "SRC-CHAT",
+      "source_kind": "communication",
+      "source_locator": "脱敏工作群导出文件第12页",
+      "original_text": "部门负责人通过工作群每日安排任务，并要求乙某在工作日九时至十八时在线反馈。",
+      "sha256": "1587a13199eec0be4d34ad71b82d142ef8ed30a7669c4dd054ad344f4c6a5584",
+      "verification_status": "source_checked",
+      "verified_on": "2026-07-17"
+    },
+    {
+      "source_id": "SRC-PAY",
+      "source_kind": "payroll",
+      "source_locator": "2026年5月脱敏结算表第1行",
+      "original_text": "2026年5月结算表记载：项目服务费人民币18000元，付款主体为某某科技公司。",
+      "sha256": "50fca4498c1ba34d4f84254b9cb20a1be6b896c56e46fc074f4403db86648be2",
+      "verification_status": "lawyer_verified",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "source_id": "SRC-RULES",
+      "source_kind": "policy",
+      "source_locator": "《员工手册修订稿》首页",
+      "original_text": "员工手册修订稿载明考勤、请假与奖惩规则，文件未附职工讨论、公示或签收记录。",
+      "sha256": "c70f354e650d83ac0f07beba0f9274963f6e2f89d96ec7c0b06d6c2543f26be8",
+      "verification_status": "source_checked",
+      "verified_on": "2026-07-17"
+    },
+    {
+      "source_id": "SRC-ACTION",
+      "source_kind": "communication",
+      "source_locator": "人事部内部任务记录",
+      "original_text": "人事部门拟对乙某作出岗位调整并发送书面通知，现尚未获得客户最终确认。",
+      "sha256": "d49ebf1cb4ec814f574bceabe18f88a7d9b33bf1c7158d722449a69d0fa8147b",
+      "verification_status": "unverified",
+      "verified_on": null
+    },
+    {
+      "source_id": "SRC-DISPUTE",
+      "source_kind": "communication",
+      "source_locator": "2026年7月10日脱敏电子邮件",
+      "original_text": "乙某于2026年7月10日提出工资差额与社会保险问题，双方尚未形成处理结论。",
+      "sha256": "a0e045ae490c9e517867fe74596110f6580bb9e9a5c150bd895ea3ee1408c5b0",
+      "verification_status": "source_checked",
+      "verified_on": "2026-07-18"
+    }
+  ],
+  "relationship_review": {
+    "candidate_types": ["labor_relation", "service_relation", "mixed_or_other"],
+    "signals": [
+      {
+        "signal_id": "SIG-CONTRACT",
+        "dimension": "contract_label",
+        "observation": "现有书面文本使用项目合作与服务费表述。",
+        "source_ids": ["SRC-AGREEMENT"],
+        "supports_candidate_types": ["service_relation", "mixed_or_other"]
+      },
+      {
+        "signal_id": "SIG-CONTROL",
+        "dimension": "management_control",
+        "observation": "存在每日任务安排和固定时段反馈要求。",
+        "source_ids": ["SRC-CHAT"],
+        "supports_candidate_types": ["labor_relation", "mixed_or_other"]
+      },
+      {
+        "signal_id": "SIG-PAY",
+        "dimension": "remuneration",
+        "observation": "由同一公司按月出具结算记录。",
+        "source_ids": ["SRC-PAY"],
+        "supports_candidate_types": ["labor_relation", "service_relation", "mixed_or_other"]
+      }
+    ],
+    "lawyer_question": "结合书面合同与实际履行，可能存在哪些关系类型，还需补充哪些事实？"
+  },
+  "lifecycle_reviews": [
+    {"review_id": "REV-ONBOARD", "category": "recruitment_onboarding", "question": "入职或开始合作时的告知、材料核验和个人信息处理记录是否完整？", "fact_source_ids": ["SRC-AGREEMENT"], "authority_ids": ["EMP-LABOR-LAW", "EMP-LABOR-CONTRACT"], "open_questions": ["还需核对入职告知和材料清单。"], "review_state": "facts_incomplete"},
+    {"review_id": "REV-CONTRACT", "category": "labor_contract", "question": "书面文本名称与实际履行是否一致？", "fact_source_ids": ["SRC-AGREEMENT", "SRC-CHAT", "SRC-PAY"], "authority_ids": ["EMP-LABOR-CONTRACT", "EMP-CONTRACT-REG"], "open_questions": ["补充工作地点、工具和风险承担材料。"], "review_state": "lawyer_review_pending"},
+    {"review_id": "REV-RULES", "category": "work_rules", "question": "制度制定、讨论、协商、公示与签收链条是否有材料支持？", "fact_source_ids": ["SRC-RULES"], "authority_ids": ["EMP-LABOR-CONTRACT", "EMP-SPC-INTERP-1"], "open_questions": ["还需职工讨论和公示证据。"], "review_state": "facts_incomplete"},
+    {"review_id": "REV-PAY", "category": "pay_hours_leave", "question": "报酬、工时、休息与休假记录是否能够相互印证？", "fact_source_ids": ["SRC-CHAT", "SRC-PAY"], "authority_ids": ["EMP-LABOR-LAW", "EMP-WORKING-HOURS", "EMP-ANNUAL-LEAVE"], "open_questions": ["需调取完整考勤、付款和休假记录。"], "review_state": "research_needed"},
+    {"review_id": "REV-SOCIAL", "category": "social_insurance_benefits", "question": "社会保险与福利记录是否完整，应由何种程序处理？", "fact_source_ids": ["SRC-DISPUTE"], "authority_ids": ["EMP-SOCIAL-INSURANCE", "EMP-SPC-INTERP-2"], "open_questions": ["需调取参保与缴费记录并核对当地程序。"], "review_state": "facts_incomplete"},
+    {"review_id": "REV-CHANGE", "category": "change_termination", "question": "拟议岗位调整的事实、合同、制度、协商与授权基础是否完整？", "fact_source_ids": ["SRC-ACTION", "SRC-AGREEMENT", "SRC-RULES"], "authority_ids": ["EMP-LABOR-CONTRACT", "EMP-SPC-INTERP-1"], "open_questions": ["客户尚未确认是否推进任何人事行动。"], "review_state": "lawyer_review_pending"},
+    {"review_id": "REV-EXIT", "category": "exit_handover", "question": "如后续发生离职，交接、结算、证明与档案转移材料应如何准备？", "fact_source_ids": ["SRC-AGREEMENT"], "authority_ids": ["EMP-LABOR-CONTRACT", "EMP-CONTRACT-REG"], "open_questions": ["尚无离职事实，仅作清单预备。"], "review_state": "facts_incomplete"},
+    {"review_id": "REV-DISPUTE", "category": "labor_dispute", "question": "工资与社保问题应当通过何种程序处理，时效和证据有哪些缺口？", "fact_source_ids": ["SRC-DISPUTE", "SRC-PAY"], "authority_ids": ["EMP-DISPUTE-ARBITRATION", "EMP-SPC-INTERP-1", "EMP-SPC-INTERP-2"], "open_questions": ["需确认请求、发生时间、管辖和前置程序。"], "review_state": "research_needed"}
+  ],
+  "proposed_actions": [
+    {
+      "action_id": "ACT-ROLE-CHANGE",
+      "action_type": "change_role",
+      "description": "审查拟议岗位调整的事实、合同、制度、协商和授权基础。",
+      "source_ids": ["SRC-ACTION", "SRC-AGREEMENT", "SRC-RULES"],
+      "adverse_effect_candidate": true,
+      "authorization_status": "pending",
+      "execution_status": "draft"
+    },
+    {
+      "action_id": "ACT-COLLECT",
+      "action_type": "other",
+      "description": "收集考勤、社保和制度公示记录。",
+      "source_ids": ["SRC-CHAT", "SRC-RULES", "SRC-DISPUTE"],
+      "adverse_effect_candidate": false,
+      "authorization_status": "client_confirmed",
+      "execution_status": "task_candidate"
+    }
+  ],
+  "dispute": {
+    "exists": true,
+    "phase_candidate": "internal_grievance",
+    "questions": ["工资差额的组成、发生期间与证据位置是什么？", "社保问题是否可补办，当地行政与仲裁诉讼程序如何衔接？"],
+    "source_ids": ["SRC-DISPUTE", "SRC-PAY"]
+  }
+}

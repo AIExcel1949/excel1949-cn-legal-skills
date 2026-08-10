@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "competition",
+  "title": "Competition & Antitrust Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "垄断协议、滥用市场支配、经营者集中和不正当竞争的事实整理",
+      "市场、竞争关系、通信和经营数据的保全清单"
+    ],
+    "excluded": [
+      "相关市场、支配地位、垄断行为、商业秘密侵权或申报义务的自动认定"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-ANTIMONOPOLY-2022",
+      "title": "中华人民共和国反垄断法（2022年修正）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081818234ccb501829f46c6ac2a5a&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8F%8D%E5%9E%84%E6%96%AD%E6%B3%95&type=",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-AUCL-2025",
+      "title": "中华人民共和国反不正当竞争法（2025年修订）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/202506/t20250627_446247.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-ANTIMONOPOLY-PUBLIC-UTILITIES-GUIDE-2026",
+      "title": "国务院反垄断反不正当竞争委员会关于公用事业领域的反垄断指南",
+      "authority_type": "official_guidance",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fldzfys/art/2026/art_07d961f9da464c13b5030e7c273823c8.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "agreement_dominance",
+      "label": "协议与市场力量",
+      "questions": [
+        "参与者、商品服务、地域、交易层级和竞争关系是什么？",
+        "协议、沟通、价格产量变化和商业理由如何形成？"
+      ],
+      "fact_fields": [
+        "参与主体",
+        "商品地域",
+        "竞争关系",
+        "行为时间线"
+      ],
+      "evidence_prompts": [
+        "合同、会议、邮件和聊天原件",
+        "销量、价格、客户和替代性数据"
+      ],
+      "calculation_hooks": [
+        "市场份额只作为待核验数据"
+      ],
+      "deadline_hooks": [
+        "行为持续期间和调查节点"
+      ],
+      "prohibitions": [
+        "不得仅凭平行行为认定存在垄断协议"
+      ]
+    },
+    {
+      "issue_key": "unfair_competition",
+      "label": "不正当竞争",
+      "questions": [
+        "争议标识、数据、商业秘密或宣传内容的来源和使用方式是什么？",
+        "秘密性、保密措施、竞争关系和损害链有何证据？"
+      ],
+      "fact_fields": [
+        "权益客体",
+        "接触与使用",
+        "保密措施",
+        "市场影响"
+      ],
+      "evidence_prompts": [
+        "载体原件、权限日志和保密制度",
+        "宣传页面、交易数据和客户反馈"
+      ],
+      "calculation_hooks": [
+        "损失和获利候选台账"
+      ],
+      "deadline_hooks": [
+        "知悉侵害和证据保全节点"
+      ],
+      "prohibitions": [
+        "不得自动认定信息构成商业秘密或宣传构成混淆"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交",
+    "不得自动发送通知、投诉、申报、申请或向任何外部系统提交",
+    "不得自动执行调查、搜查、保全、查控或其他外部操作"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "反垄断申报标准、执法规定和行业指南变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-COMPETITION-001",
+      "prompt": "两家经营者同期涨价，客户怀疑存在价格联盟。",
+      "expected_questions": [
+        "经营者之间是否存在可核验沟通？",
+        "成本、需求、政策和独立商业决策材料有哪些？"
+      ],
+      "forbidden_inferences": [
+        "不得从价格同步直接推断合谋",
+        "不得自动界定相关市场"
+      ]
+    }
+  ],
+  "title_zh": "竞争法与反垄断业务包"
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-ma/ma-input.schema.json",
+  "$defs": {
+    "sourceRefs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "dependencies": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "executionItem": {
+      "type": "object",
+      "required": ["item_id", "description", "responsible_party", "benefiting_party", "status", "source_refs", "dependencies", "completion_evidence"],
+      "properties": {
+        "item_id": {"type": "string", "minLength": 3},
+        "description": {"type": "string", "minLength": 1},
+        "responsible_party": {"type": "string"},
+        "benefiting_party": {"type": "string"},
+        "status": {"enum": ["draft", "under_negotiation", "agreed", "pending_evidence", "satisfied", "waived", "not_applicable", "to_be_determined"]},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "dependencies": {"$ref": "#/$defs/dependencies"},
+        "completion_evidence": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["schema_version", "matter_id", "as_of_date", "transaction_name", "purpose", "structure", "authority_sources", "document_sources", "approvals", "conditions_precedent", "representations_warranties", "covenants", "indemnities", "closing_deliverables", "long_stop"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "minLength": 3},
+    "as_of_date": {"type": "string", "format": "date"},
+    "transaction_name": {"type": "string", "minLength": 1},
+    "purpose": {"type": "string", "minLength": 1},
+    "structure": {
+      "type": "object",
+      "required": ["confirmation_status", "structure_label", "transaction_form", "parties", "consideration_description", "valuation_status", "source_refs"],
+      "properties": {
+        "confirmation_status": {"enum": ["user_confirmed", "unconfirmed"]},
+        "structure_label": {"type": "string"},
+        "transaction_form": {"enum": ["equity_transfer", "asset_transfer", "merger", "joint_venture", "restructuring", "other", "undetermined"]},
+        "parties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["party_id", "role", "name"],
+            "properties": {
+              "party_id": {"type": "string", "minLength": 3},
+              "role": {"type": "string", "minLength": 1},
+              "name": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "consideration_description": {"type": "string"},
+        "valuation_status": {"enum": ["user_confirmed", "not_provided", "under_review"]},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"}
+      },
+      "additionalProperties": false
+    },
+    "authority_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "title", "authority_type", "effect_status", "verified_on", "official_url", "locator"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 3},
+          "title": {"type": "string", "minLength": 1},
+          "authority_type": {"enum": ["law", "administrative_regulation", "department_rule", "regulatory_guidance", "other"]},
+          "effect_status": {"enum": ["effective", "effect_unknown", "superseded"]},
+          "verified_on": {"type": "string", "format": "date"},
+          "official_url": {"type": "string", "format": "uri"},
+          "locator": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "document_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "title", "document_status", "locator"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 3},
+          "title": {"type": "string", "minLength": 1},
+          "document_status": {"enum": ["confirmed", "draft", "unverified", "superseded"]},
+          "locator": {"type": "string", "minLength": 1},
+          "file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "approval_type", "description", "determination", "responsible_party", "status", "source_refs", "dependencies", "completion_evidence"],
+        "properties": {
+          "item_id": {"type": "string", "minLength": 3},
+          "approval_type": {"enum": ["corporate", "antitrust", "foreign_investment", "securities", "state_assets", "industry", "data", "other"]},
+          "description": {"type": "string", "minLength": 1},
+          "determination": {"enum": ["required", "not_required", "to_be_determined"]},
+          "responsible_party": {"type": "string"},
+          "status": {"enum": ["not_started", "in_progress", "obtained", "not_applicable", "to_be_determined"]},
+          "source_refs": {"$ref": "#/$defs/sourceRefs"},
+          "dependencies": {"$ref": "#/$defs/dependencies"},
+          "completion_evidence": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "conditions_precedent": {"type": "array", "items": {"$ref": "#/$defs/executionItem"}},
+    "representations_warranties": {"type": "array", "items": {"$ref": "#/$defs/executionItem"}},
+    "covenants": {"type": "array", "items": {"$ref": "#/$defs/executionItem"}},
+    "indemnities": {"type": "array", "items": {"$ref": "#/$defs/executionItem"}},
+    "closing_deliverables": {"type": "array", "items": {"$ref": "#/$defs/executionItem"}},
+    "long_stop": {
+      "type": "object",
+      "required": ["item_id", "rule_status", "rule_text", "explicit_date", "responsible_party", "source_refs", "dependencies"],
+      "properties": {
+        "item_id": {"type": "string", "minLength": 3},
+        "rule_status": {"enum": ["user_confirmed", "unconfirmed", "not_agreed"]},
+        "rule_text": {"type": "string"},
+        "explicit_date": {"type": ["string", "null"], "format": "date"},
+        "responsible_party": {"type": "string"},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "dependencies": {"$ref": "#/$defs/dependencies"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

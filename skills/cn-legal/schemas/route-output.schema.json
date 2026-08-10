@@ -1,0 +1,382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal/route-output.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "project_root",
+    "case_root",
+    "routes",
+    "mandatory_skills",
+    "requested_deliverables",
+    "execution_steps",
+    "runtime_profile",
+    "orchestration_mode",
+    "fallback_mode",
+    "control_owner",
+    "deliverable_registry_sha256",
+    "procedure_template_manifest_sha256",
+    "expert_registry_sha256",
+    "quality_gates_sha256",
+    "blockers",
+    "escalations",
+    "blocked",
+    "artifact_state",
+    "plan_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "project_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "routes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "cn-dispute",
+          "cn-transaction",
+          "cn-compliance"
+        ]
+      }
+    },
+    "mandatory_skills": {
+      "const": [
+        "cn-intake",
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ]
+    },
+    "requested_deliverables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "requested_output",
+          "deliverable_id",
+          "skill",
+          "generator",
+          "artifact_kind",
+          "delivery_format",
+          "expected_artifacts",
+          "output_dir",
+          "status"
+        ],
+        "properties": {
+          "requested_output": {
+            "type": "string"
+          },
+          "deliverable_id": {
+            "type": "string"
+          },
+          "skill": {
+            "type": "string"
+          },
+          "generator": {
+            "type": "string"
+          },
+          "template_id": {
+            "type": "string"
+          },
+          "artifact_kind": {
+            "type": "string"
+          },
+          "delivery_format": {
+            "enum": [
+              "source_native",
+              "docx"
+            ]
+          },
+          "expected_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "output_dir": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "blocked"
+            ]
+          },
+          "variant_options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "docx_supported": {
+            "type": "boolean"
+          },
+          "render_skill": {
+            "type": "string"
+          },
+          "renderer": {
+            "type": "string"
+          },
+          "docx_artifact": {
+            "type": "string"
+          },
+          "delivery_dir": {
+            "type": "string"
+          },
+          "blocker": {
+            "type": "string"
+          },
+          "docx_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "execution_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "step_id",
+          "skill",
+          "kind",
+          "depends_on",
+          "output_dir",
+          "executor",
+          "allowed_write_root",
+          "role_id",
+          "role_mode",
+          "spawn_policy",
+          "selected_skills",
+          "required_gates_before",
+          "produced_gates",
+          "independence_group",
+          "role_prompt_sha256"
+        ],
+        "properties": {
+          "step_id": {
+            "type": "string"
+          },
+          "skill": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "gate",
+              "analysis",
+              "child_router",
+              "generator",
+              "final_gate",
+              "orchestrator_audit",
+              "render",
+              "package"
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "output_dir": {
+            "type": "string"
+          },
+          "executor": {
+            "enum": [
+              "main_router",
+              "dynamic_subagent",
+              "declared_subagent",
+              "runtime_subagent"
+            ]
+          },
+          "allowed_write_root": {
+            "type": "string"
+          },
+          "authorized_deliverable_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "authorized_template_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "role_id": {
+            "enum": [
+              "matter-lead",
+              "source-counsel",
+              "fact-evidence-analyst",
+              "civil-dispute-counsel",
+              "special-proceedings-counsel",
+              "transaction-counsel",
+              "compliance-counsel",
+              "independent-reviewer"
+            ]
+          },
+          "role_mode": {
+            "type": "string",
+            "minLength": 1
+          },
+          "spawn_policy": {
+            "enum": [
+              "resident",
+              "phase_once",
+              "per_phase",
+              "per_artifact"
+            ]
+          },
+          "selected_skills": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "required_gates_before": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "pattern": "^G[0-7]-"
+            }
+          },
+          "produced_gates": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "pattern": "^G[0-7]-"
+            }
+          },
+          "independence_group": {
+            "enum": [
+              "control",
+              "research",
+              "facts",
+              "drafting",
+              "review"
+            ]
+          },
+          "role_prompt_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "renderer": {
+            "type": [
+              "string",
+              "object",
+              "null"
+            ]
+          },
+          "docx_artifact": {
+            "type": [
+              "string",
+              "object",
+              "null"
+            ]
+          },
+          "delivery_dirs": {
+            "type": [
+              "string",
+              "object",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "runtime_profile": {
+      "enum": [
+        "codex_app",
+        "claude_code",
+        "openclaw",
+        "portable_serial"
+      ]
+    },
+    "orchestration_mode": {
+      "enum": [
+        "codex_app_dynamic_experts",
+        "claude_code_declared_experts",
+        "openclaw_runtime_experts",
+        "main_router_serial"
+      ]
+    },
+    "fallback_mode": {
+      "const": "serial_same_plan"
+    },
+    "control_owner": {
+      "const": "cn-legal"
+    },
+    "deliverable_registry_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "procedure_template_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "expert_registry_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "quality_gates_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "escalations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blocked": {
+      "type": "boolean"
+    },
+    "artifact_state": {
+      "const": "lawyer_review_required"
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "domain_pack": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "按案由匹配的领域业务包名；未匹配为 null"
+    },
+    "domain_guidance": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MAT-ADMIN-001",
+  "as_of_date": "2026-07-18",
+  "parties": [
+    {"party_id": "PARTY-body", "name_masked": "某市行政机关", "role": "administrative_body", "qualification_status": "candidate"},
+    {"party_id": "PARTY-relative", "name_masked": "甲", "role": "relative", "qualification_status": "candidate"}
+  ],
+  "documents": [
+    {"document_id": "DOC-decision", "title": "行政决定书工作副本", "source_file": "脱敏-行政决定书.pdf"},
+    {"document_id": "DOC-service", "title": "送达材料工作副本", "source_file": "脱敏-送达材料.pdf"}
+  ],
+  "administrative_act": {
+    "act_id": "ACT-001",
+    "act_type_verbatim": "行政决定",
+    "content_verbatim": "行政决定书载明对甲作出某项行政处理。",
+    "issuing_body_party_id": "PARTY-body",
+    "relative_party_ids": ["PARTY-relative"],
+    "act_date": "2026-06-20",
+    "document_ids": ["DOC-decision"]
+  },
+  "procedure_events": [
+    {"event_id": "EVENT-act-made", "event_type": "act_made", "description_verbatim": "行政决定书载明作出日期为二〇二六年六月二十日。", "event_date": "2026-06-20", "document_ids": ["DOC-decision"], "status": "recorded"},
+    {"event_id": "EVENT-service-candidate", "event_type": "service_candidate", "description_verbatim": "当事人陈述于二〇二六年六月二十五日前后收到材料，准确日期待核验。", "event_date": null, "document_ids": ["DOC-service"], "status": "disputed"}
+  ],
+  "service_events": [
+    {"service_id": "SERVICE-001", "recipient_party_id": "PARTY-relative", "method_verbatim": "材料记载为邮寄送达，签收凭证待核验", "service_date": null, "document_ids": ["DOC-service"], "status": "disputed"}
+  ],
+  "authorities": [
+    {"authority_id": "AUTH-all", "title": "中华人民共和国行政诉讼法官方文本", "source_url": "https://www.npc.gov.cn/", "verified_at": "2026-07-18", "effect_status": "unknown"}
+  ],
+  "actionability_candidates": [
+    {"candidate_id": "CAND-actionability", "statement": "该行政行为是否属于人民法院行政诉讼受案范围，须结合行为性质和现行法源由律师判断。", "authority_ids": ["AUTH-all"], "status": "research_required"}
+  ],
+  "jurisdiction_candidates": [
+    {"candidate_id": "CAND-jurisdiction", "statement": "地域及级别管辖均待结合行政主体、行为地点和现行规则核验。", "authority_ids": ["AUTH-all"], "status": "candidate"}
+  ],
+  "reconsideration_precondition_candidates": [
+    {"candidate_id": "CAND-reconsideration", "statement": "是否存在复议前置要求须由律师依据具体行政行为类型和现行法源判断。", "authority_ids": ["AUTH-all"], "status": "research_required"}
+  ],
+  "filing_deadline_rules": [
+    {"rule_id": "RULE-filing-001", "rule_text_verbatim": "起诉期限规则须由律师从已核验官方法源逐条录入并核对适用情形。", "start_event_ids": ["EVENT-service-candidate"], "candidate_due_date": null, "authority_ids": ["AUTH-all"], "status": "research_required"}
+  ],
+  "evidence": [
+    {"evidence_id": "EVID-decision", "name": "行政决定书工作副本", "document_ids": ["DOC-decision"], "fact_statement": "用于核验行政行为作出主体、内容和文书载明日期。", "authenticity": "unreviewed", "legality": "unreviewed", "relevance": "supported"}
+  ],
+  "claims": [
+    {"claim_id": "CLAIM-001", "text_verbatim": "请求依法撤销被诉行政行为。", "target_act_id": "ACT-001", "authority_ids": ["AUTH-all"], "status": "user_provided"}
+  ],
+  "requested_actions": []
+}

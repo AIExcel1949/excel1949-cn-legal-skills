@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-law-update/law-update-input.schema.json",
+  "type": "object",
+  "required": ["analysis_id", "mode", "title", "subject_type", "jurisdiction", "comparison_date", "old_version", "new_version", "monitored_artifacts"],
+  "properties": {
+    "analysis_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "mode": {"enum": ["production", "training_fixture"]},
+    "title": {"type": "string", "minLength": 1, "maxLength": 300},
+    "subject_type": {"enum": ["law", "administrative_regulation", "judicial_interpretation", "department_rule", "local_regulation", "regulatory_document", "court_rule", "official_form", "template", "prior_conclusion", "other"]},
+    "jurisdiction": {"type": "string", "minLength": 1, "maxLength": 100},
+    "comparison_date": {"type": "string", "format": "date"},
+    "old_version": {"$ref": "#/$defs/version"},
+    "new_version": {"$ref": "#/$defs/version"},
+    "unit_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["old_unit_ids", "new_unit_ids", "mapping_type", "note"],
+        "properties": {
+          "old_unit_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "new_unit_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "mapping_type": {"enum": ["renumbered", "split", "merged", "reorganized"]},
+          "note": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "monitored_artifacts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "impact_claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/impactClaim"}
+    },
+    "review_record": {"$ref": "#/$defs/reviewRecord"}
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["url", "source_tier", "retrieved_at", "issuer", "document_number"],
+      "properties": {
+        "url": {"type": "string", "format": "uri"},
+        "source_tier": {"enum": ["official_primary", "official_republication", "other_traceable", "training_fixture"]},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "issuer": {"type": "string", "minLength": 1},
+        "document_number": {"type": "string"},
+        "page_title": {"type": "string"},
+        "conflict_note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "unit": {
+      "type": "object",
+      "required": ["unit_id", "locator", "text"],
+      "properties": {
+        "unit_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+        "locator": {"type": "string", "minLength": 1, "maxLength": 300},
+        "text": {"type": "string", "minLength": 1},
+        "proposed_change_categories": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["scope", "definition", "procedure", "deadline", "evidence", "remedy", "authority", "form_or_template", "transition", "citation", "other"]}
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": {
+      "type": "object",
+      "required": ["version_id", "title", "effect_status", "verified_on", "effective_from", "full_text_checked", "text_basis", "text_sha256", "source", "units"],
+      "properties": {
+        "version_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,127}$"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 300},
+        "effect_status": {"enum": ["effective", "amended", "repealed", "not_yet_effective", "unknown"]},
+        "verified_on": {"type": "string", "format": "date"},
+        "effective_from": {"type": ["string", "null"], "format": "date"},
+        "full_text_checked": {"type": "boolean"},
+        "text_basis": {"enum": ["official_full_text", "official_attachment", "verified_official_scan", "training_fixture"]},
+        "text_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "source": {"$ref": "#/$defs/source"},
+        "units": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/unit"}}
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["artifact_id", "artifact_type", "name", "production", "uses_unit_ids", "uses_terms"],
+      "properties": {
+        "artifact_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$"},
+        "artifact_type": {"enum": ["skill", "template", "checklist", "prior_conclusion", "knowledge_pack", "workflow", "other"]},
+        "name": {"type": "string", "minLength": 1, "maxLength": 300},
+        "skill_name": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "path_label": {"type": "string", "maxLength": 500},
+        "production": {"type": "boolean"},
+        "uses_unit_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "uses_terms": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 2}}
+      },
+      "additionalProperties": false
+    },
+    "impactClaim": {
+      "type": "object",
+      "required": ["unit_id", "artifact_id", "impact_level", "reason", "review_status"],
+      "properties": {
+        "unit_id": {"type": "string"},
+        "artifact_id": {"type": "string"},
+        "impact_level": {"enum": ["critical", "high", "medium", "low", "unknown"]},
+        "reason": {"type": "string", "minLength": 1},
+        "recommended_manual_action": {"type": "string"},
+        "review_status": {"enum": ["pending", "confirmed", "rejected"]}
+      },
+      "additionalProperties": false
+    },
+    "reviewRecord": {
+      "type": "object",
+      "required": ["reviewer", "reviewer_role", "reviewed_at", "decision", "checklist"],
+      "properties": {
+        "reviewer": {"type": "string", "minLength": 1},
+        "reviewer_role": {"type": "string", "minLength": 1},
+        "reviewed_at": {"type": "string", "format": "date-time"},
+        "decision": {"enum": ["approved_manual_update", "rejected", "needs_more_information"]},
+        "note": {"type": "string"},
+        "checklist": {
+          "type": "object",
+          "required": ["official_text_compared", "effect_status_verified", "transitional_rules_checked", "all_impacts_reviewed", "manual_update_plan_approved"],
+          "properties": {
+            "official_text_compared": {"type": "boolean"},
+            "effect_status_verified": {"type": "boolean"},
+            "transitional_rules_checked": {"type": "boolean"},
+            "all_impacts_reviewed": {"type": "boolean"},
+            "manual_update_plan_approved": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

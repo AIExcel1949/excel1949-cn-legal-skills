@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MAT-2026-ENF-001",
+  "enforcement_id": "ENF-2026-001",
+  "sources": [
+    {"source_id": "SRC-BASIS", "file_name": "脱敏生效文书.pdf", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    {"source_id": "SRC-PERFORMANCE", "file_name": "履行记录.pdf", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    {"source_id": "SRC-CLUE", "file_name": "财产线索说明.txt", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}
+  ],
+  "authorities": [
+    {"authority_id": "AUTH-PROC", "title": "执行程序规则待核验条款", "official_url": "https://www.court.gov.cn/", "verified_on": "2026-07-18", "effect_status": "unknown"}
+  ],
+  "execution_basis": {
+    "basis_id": "BASIS-001",
+    "basis_type": "judgment",
+    "citation": {"source_id": "SRC-BASIS", "locator": "全文"},
+    "effect_review": {"status": "unverified", "conclusion": null, "citation": null},
+    "obligations": [
+      {"obligation_id": "OBL-001", "verbatim_text": "乙公司向甲公司履行裁判主文载明的给付义务。", "creditor_party_id": "PTY-APPLICANT", "debtor_party_id": "PTY-RESPONDENT", "citation": {"source_id": "SRC-BASIS", "locator": "主文第1项"}}
+    ]
+  },
+  "parties": [
+    {"party_id": "PTY-APPLICANT", "name": "甲公司", "role": "applicant_candidate", "citation": {"source_id": "SRC-BASIS", "locator": "首部"}},
+    {"party_id": "PTY-RESPONDENT", "name": "乙公司", "role": "respondent_candidate", "citation": {"source_id": "SRC-BASIS", "locator": "首部"}}
+  ],
+  "performance_records": [
+    {"record_id": "PERF-001", "obligation_id": "OBL-001", "status": "disputed", "description": "甲公司称乙公司仅履行部分义务，乙公司对余额有异议。", "citation": {"source_id": "SRC-PERFORMANCE", "locator": "第1页"}}
+  ],
+  "amount_references": [
+    {"amount_id": "AMT-001", "label": "待执行金额", "display_value": "人民币某金额（脱敏示例）", "calculation_artifact_id": "CALC-2026-001", "artifact_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "locator": "calculation-result.json#/summary/total"}
+  ],
+  "property_clues": [
+    {"clue_id": "CLUE-001", "clue_type": "receivable", "description": "甲公司称乙公司可能对丙公司享有应收账款。", "citation": {"source_id": "SRC-CLUE", "locator": "第1段"}, "reported_verification_status": "user_reported"}
+  ],
+  "measure_candidates": [
+    {"candidate_id": "MEA-001", "measure_type": "inquiry", "reason": "待律师核验是否需要就应收账款线索提出查询申请。", "basis_citations": [{"source_id": "SRC-CLUE", "locator": "第1段"}]}
+  ],
+  "procedure_nodes": [
+    {"node_id": "NODE-OBJ-001", "node_type": "execution_objection", "trigger_facts": [{"source_id": "SRC-PERFORMANCE", "locator": "第1页"}], "rule_inputs": [{"rule_id": "RULE-OBJ-001", "authority_id": "AUTH-PROC", "locator": "待核验条款", "rule_text": "本示例不写入具体期限，应由律师核验官方原文。"}], "lawyer_deadline_conclusion": null}
+  ],
+  "external_action_requested": false
+}

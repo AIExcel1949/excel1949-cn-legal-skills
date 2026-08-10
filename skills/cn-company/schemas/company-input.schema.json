@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-company/company-input.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "as_of_date", "purpose", "company", "authority_sources", "charter_versions", "shareholders", "governance_persons", "agenda_items", "governance_actions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "minLength": 3},
+    "as_of_date": {"type": "string", "format": "date"},
+    "purpose": {"type": "string", "minLength": 1},
+    "company": {
+      "type": "object",
+      "required": ["company_id", "name", "company_type", "jurisdiction", "registration_status", "registration_verified_on", "registration_source_ref"],
+      "properties": {
+        "company_id": {"type": "string", "minLength": 3},
+        "name": {"type": "string", "minLength": 1},
+        "company_type": {"enum": ["limited_liability", "joint_stock", "listed_company", "other"]},
+        "jurisdiction": {"type": "string", "minLength": 1},
+        "registration_status": {"type": "string", "minLength": 1},
+        "registration_verified_on": {"type": "string", "format": "date"},
+        "registration_source_ref": {"type": "string", "minLength": 1},
+        "registered_capital_description": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "authority_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "title", "source_type", "effect_status", "verified_on", "locator"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 3},
+          "title": {"type": "string", "minLength": 1},
+          "source_type": {"enum": ["law", "administrative_regulation", "department_rule", "charter", "rules_of_procedure", "registry_record", "other"]},
+          "effect_status": {"enum": ["effective", "effect_unknown", "confirmed_current", "historical", "draft"]},
+          "verified_on": {"type": "string", "format": "date"},
+          "locator": {"type": "string", "minLength": 1},
+          "official_url": {"type": "string", "format": "uri"},
+          "file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"source_type": {"enum": ["law", "administrative_regulation", "department_rule"]}}},
+            "then": {"required": ["official_url"]}
+          }
+        ],
+        "additionalProperties": false
+      }
+    },
+    "charter_versions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["charter_id", "version_label", "status", "source_id"],
+        "properties": {
+          "charter_id": {"type": "string", "minLength": 3},
+          "version_label": {"type": "string", "minLength": 1},
+          "status": {"enum": ["confirmed_current", "historical", "draft", "unknown"]},
+          "effective_date": {"type": ["string", "null"], "format": "date"},
+          "source_id": {"type": "string", "minLength": 3}
+        },
+        "additionalProperties": false
+      }
+    },
+    "shareholders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["party_id", "name", "holding_description", "voting_rights_description", "verification_status", "source_ref"],
+        "properties": {
+          "party_id": {"type": "string", "minLength": 3},
+          "name": {"type": "string", "minLength": 1},
+          "holding_description": {"type": "string"},
+          "voting_rights_description": {"type": "string"},
+          "verification_status": {"enum": ["verified", "unverified", "conflict"]},
+          "source_ref": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "governance_persons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["person_id", "name", "role", "appointment_status", "source_ref"],
+        "properties": {
+          "person_id": {"type": "string", "minLength": 3},
+          "name": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "appointment_status": {"enum": ["verified", "unverified", "conflict"]},
+          "source_ref": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "agenda_items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["agenda_id", "title", "proposed_body", "authority_source_ids", "charter_ids"],
+        "properties": {
+          "agenda_id": {"type": "string", "minLength": 3},
+          "title": {"type": "string", "minLength": 1},
+          "proposed_body": {"type": "string", "minLength": 1},
+          "proposed_action": {"type": "string"},
+          "authority_source_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "charter_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        },
+        "additionalProperties": false
+      }
+    },
+    "governance_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["action_id", "action_type", "body", "agenda_ids", "convenor", "notice_rule_text", "voting_rule_text", "signing_responsible", "registration_need", "disclosure_need", "responsible_by_stage", "rule_source_ids"],
+        "properties": {
+          "action_id": {"type": "string", "minLength": 3},
+          "action_type": {"enum": ["meeting", "written_resolution", "appointment", "capital_change", "other"]},
+          "body": {"type": "string", "minLength": 1},
+          "agenda_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "convenor": {"type": "string"},
+          "notice_rule_text": {"type": "string"},
+          "voting_rule_text": {"type": "string"},
+          "conflict_review_notes": {"type": "string"},
+          "signing_responsible": {"type": "string"},
+          "registration_need": {"enum": ["yes", "no", "to_be_determined"]},
+          "disclosure_need": {"enum": ["yes", "no", "to_be_determined"]},
+          "responsible_by_stage": {
+            "type": "object",
+            "propertyNames": {"enum": ["authority_review", "convocation", "notice", "voting", "minutes", "signing", "registration_disclosure"]},
+            "additionalProperties": {"type": "string"}
+          },
+          "rule_source_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

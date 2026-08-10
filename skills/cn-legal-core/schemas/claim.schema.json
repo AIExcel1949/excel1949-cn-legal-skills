@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/claim.schema.json",
+  "type": "object",
+  "required": ["claim_id", "order", "text_verbatim", "status", "source_spans"],
+  "properties": {
+    "claim_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "order": {"type": "integer", "minimum": 1},
+    "text_verbatim": {"type": "string", "minLength": 1},
+    "status": {"$ref": "common.schema.json#/$defs/fact_status"},
+    "amount": {"type": "number"},
+    "currency": {"type": "string", "default": "CNY"},
+    "liable_party_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/stable_id"}},
+    "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/source_span"}}
+  },
+  "additionalProperties": false
+}
+

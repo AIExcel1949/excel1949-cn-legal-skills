@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MATTER-2026-001",
+  "preparation_id": "HEARING-001",
+  "as_of_date": "2026-07-18",
+  "case_analysis": {
+    "analysis_id": "ANALYSIS-001",
+    "matter_id": "MATTER-2026-001",
+    "artifact_state": "lawyer_review_required",
+    "issues": [
+      {"issue_id": "ISSUE-001", "question": "某项合同义务是否按约履行", "frame": "claim_right", "status": "disputed"},
+      {"issue_id": "ISSUE-002", "question": "相对方提出的抵销主张是否有事实基础", "frame": "defense", "status": "research_required"}
+    ]
+  },
+  "evidence_map": {
+    "map_id": "MAP-001",
+    "matter_id": "MATTER-2026-001",
+    "artifact_state": "lawyer_review_required",
+    "evidence": [
+      {"evidence_id": "EVID-001", "name": "脱敏合同工作副本", "authenticity": "unreviewed", "legality": "unreviewed", "relevance": "unreviewed", "proof_purpose_status": "user_confirmed"}
+    ],
+    "issue_links": [{"issue_id": "ISSUE-001", "evidence_id": "EVID-001"}]
+  },
+  "sources": [
+    {"source_id": "SRC-ANALYSIS", "kind": "case_analysis", "file_name": "case-analysis.json", "mime_type": "application/json"},
+    {"source_id": "SRC-EVIDENCE", "kind": "evidence_map", "file_name": "evidence-map.json", "mime_type": "application/json"}
+  ],
+  "recording_action": "none",
+  "question_plans": [
+    {"question_id": "Q-001", "issue_id": "ISSUE-001", "text": "请核对合同工作副本中的履行节点记载", "purpose": "核对材料中的时间节点，不预设回答", "evidence_ids": ["EVID-001"], "basis": {"basis_type": "user_confirmed", "confirmed_at": "2026-07-18T10:00:00+08:00", "confirmation_note": "出庭工作人员登记的提问草案，待出庭律师复核"}}
+  ],
+  "objection_plans": [
+    {"objection_id": "OBJ-001", "issue_id": "ISSUE-001", "trigger": "对方使用未经核对的副本作出实体结论", "working_response": "请求核对原件、形成过程和完整性，具体表述由出庭律师当庭决定", "basis": {"basis_type": "user_confirmed", "confirmed_at": "2026-07-18T10:05:00+08:00", "confirmation_note": "庭前会议工作记录，待出庭律师复核"}}
+  ],
+  "post_hearing_tasks": [
+    {"task_id": "TASK-001", "issue_ids": ["ISSUE-001"], "description": "根据庭审实际情况核对是否需要补充材料", "owner_role": "承办团队", "target_date_raw": null, "status": "open"}
+  ],
+  "external_action_requested": false
+}

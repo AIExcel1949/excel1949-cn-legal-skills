@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-diligence/diligence-input.schema.json",
+  "title": "中国法律尽调底稿输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "mode", "jurisdiction", "data_room_cutoff", "documents", "material_requests", "management_representations", "authorities", "findings"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "mode": {"enum": ["production", "training_fixture"]},
+    "jurisdiction": {"type": "string", "minLength": 2, "maxLength": 100},
+    "data_room_cutoff": {"type": "string", "format": "date-time"},
+    "documents": {"type": "array", "items": {"$ref": "#/$defs/document"}},
+    "material_requests": {"type": "array", "items": {"$ref": "#/$defs/material_request"}},
+    "management_representations": {"type": "array", "items": {"$ref": "#/$defs/representation"}},
+    "authorities": {"type": "array", "items": {"$ref": "#/$defs/authority"}},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "span_ref": {
+      "type": "object", "additionalProperties": false,
+      "required": ["document_id", "span_id"],
+      "properties": {"document_id": {"$ref": "#/$defs/id"}, "span_id": {"$ref": "#/$defs/id"}}
+    },
+    "span": {
+      "type": "object", "additionalProperties": false,
+      "required": ["span_id", "locator", "excerpt"],
+      "properties": {"span_id": {"$ref": "#/$defs/id"}, "locator": {"type": "string", "minLength": 1, "maxLength": 300}, "excerpt": {"type": "string", "minLength": 1, "maxLength": 4000}}
+    },
+    "document": {
+      "type": "object", "additionalProperties": false,
+      "required": ["document_id", "file_name", "source_locator", "content_sha256", "hash_verified", "received_at", "spans"],
+      "properties": {
+        "document_id": {"$ref": "#/$defs/id"}, "file_name": {"type": "string", "minLength": 1, "maxLength": 255},
+        "source_locator": {"type": "string", "minLength": 1, "maxLength": 500}, "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "hash_verified": {"type": "boolean"}, "received_at": {"type": "string", "format": "date-time"},
+        "spans": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span"}}
+      }
+    },
+    "material_request": {
+      "type": "object", "additionalProperties": false,
+      "required": ["request_id", "description", "status", "related_document_ids"],
+      "properties": {"request_id": {"$ref": "#/$defs/id"}, "description": {"type": "string", "minLength": 1, "maxLength": 1000}, "status": {"enum": ["provided", "partial", "not_provided", "not_applicable"]}, "related_document_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "note": {"type": "string", "maxLength": 2000}}
+    },
+    "representation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["representation_id", "statement", "confirmation_status", "source_spans"],
+      "properties": {"representation_id": {"$ref": "#/$defs/id"}, "statement": {"type": "string", "minLength": 1, "maxLength": 4000}, "confirmation_status": {"enum": ["unconfirmed", "written_confirmed", "independently_corroborated"]}, "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span_ref"}}}
+    },
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["authority_id", "title", "issuing_body", "official_url", "verified_on", "effect_status", "locator", "text_sha256", "verification_status"],
+      "properties": {"authority_id": {"$ref": "#/$defs/id"}, "title": {"type": "string", "minLength": 1}, "issuing_body": {"type": "string", "minLength": 1}, "official_url": {"type": "string", "format": "uri", "pattern": "^https://"}, "verified_on": {"type": "string", "format": "date"}, "effect_status": {"enum": ["effective", "not_yet_effective", "expired", "unknown"]}, "locator": {"type": "string", "minLength": 1}, "text_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "verification_status": {"enum": ["verified_official", "pending", "conflict"]}}
+    },
+    "finding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["finding_id", "kind", "title", "statement", "source_spans", "authority_ids", "priority"],
+      "properties": {"finding_id": {"$ref": "#/$defs/id"}, "kind": {"enum": ["fact", "legal", "exception", "red_flag"]}, "title": {"type": "string", "minLength": 1, "maxLength": 300}, "statement": {"type": "string", "minLength": 1, "maxLength": 6000}, "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span_ref"}}, "authority_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "priority": {"enum": ["low", "medium", "high", "critical"]}}
+      ,"allOf": [{"if": {"properties": {"kind": {"const": "legal"}}, "required": ["kind"]}, "then": {"properties": {"authority_ids": {"minItems": 1}}}}]
+    }
+  }
+}

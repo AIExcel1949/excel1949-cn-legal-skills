@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "procedure_type": "civil",
+  "case_cause": "买卖合同纠纷",
+  "case_court": "某市某区人民法院",
+  "client_name": "某科技有限公司",
+  "client_identity_description": "统一社会信用代码 91340000MA0000000X，法定代表人赵某某",
+  "client_address": "安徽省某市某区示例路 1 号",
+  "client_phone": "0551-00000001",
+  "opponent_name": "某商贸有限公司",
+  "opponent_identity_description": "统一社会信用代码 91340000MA0000001Y，法定代表人孙某某",
+  "opponent_address": "安徽省某市某区示例路 2 号",
+  "opponent_phone": "0551-00000002",
+  "preservation_amount": "200000.00",
+  "preservation_request": "请求冻结被申请人名下银行存款人民币 200000.00 元；不足部分查封、扣押其等值财产。",
+  "preservation_necessity": "申请人与被申请人之间的买卖合同纠纷已经形成明确到期债权。申请人掌握的往来材料显示，被申请人近期持续处置主要经营资产，可能导致生效裁判难以执行。相关事实和材料见附件。",
+  "property_clues": "被申请人在某银行某支行开立的账户及名下位于某市某区的不动产线索，具体账号、权证号见单独提交的财产线索表。",
+  "security_method": "申请人拟以诉讼财产保全责任保险保函提供担保，保函原件随申请提交。",
+  "attachments": "1. 主体资格材料；2. 起诉材料及基础证据；3. 财产线索表；4. 担保材料。",
+  "sign_date": "2026 年 7 月 26 日"
+}

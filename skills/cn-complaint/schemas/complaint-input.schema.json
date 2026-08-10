@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-complaint/complaint-input.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "draft_id", "matter_id", "as_of_date", "case_analysis", "evidence_map", "research_report", "draft_request", "declared_conflicts"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "draft_id": {"$ref": "#/$defs/id"},
+    "matter_id": {"$ref": "#/$defs/id"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "case_analysis": {
+      "type": "object", "additionalProperties": true,
+      "required": ["schema_version", "analysis_id", "matter_id", "cause_of_action_status", "final_outcome_status", "pending_confirmations", "risks"],
+      "properties": {
+        "schema_version": {"const": "1.0"}, "analysis_id": {"$ref": "#/$defs/id"}, "matter_id": {"$ref": "#/$defs/id"},
+        "cause_of_action_status": {"const": "not_selected_by_skill"}, "final_outcome_status": {"const": "lawyer_independent_judgment_required"},
+        "pending_confirmations": {"type": "array", "items": {"type": "object"}}, "risks": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "evidence_map": {
+      "type": "object", "additionalProperties": true,
+      "required": ["schema_version", "map_id", "matter_id", "matrix", "gaps", "potential_conflicts", "artifact_state"],
+      "properties": {
+        "schema_version": {"const": "1.0"}, "map_id": {"$ref": "#/$defs/id"}, "matter_id": {"$ref": "#/$defs/id"},
+        "matrix": {"type": "array", "items": {"type": "object"}}, "gaps": {"type": "array", "items": {"type": "object"}},
+        "potential_conflicts": {"type": "array", "items": {"type": "object"}}, "artifact_state": {"const": "lawyer_review_required"}
+      }
+    },
+    "research_report": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "report_id", "task", "state", "records"],
+      "properties": {
+        "schema_version": {"const": "1.0"}, "report_id": {"$ref": "#/$defs/id"},
+        "task": {"type": "object", "additionalProperties": true, "required": ["matter_id"], "properties": {"matter_id": {"$ref": "#/$defs/id"}}},
+        "state": {"enum": ["machine_checked", "lawyer_review_required", "lawyer_reviewed"]},
+        "records": {"type": "array", "items": {"$ref": "#/$defs/authority"}}
+      }
+    },
+    "calculation_report": {
+      "type": "object", "additionalProperties": true,
+      "required": ["status", "lawyer_reviewed", "calculations"],
+      "properties": {"status": {"const": "calculated_unreviewed"}, "lawyer_reviewed": {"type": "boolean"}, "calculations": {"type": "array", "items": {"type": "object", "required": ["id", "rounded_value"], "properties": {"id": {"type": "string"}, "rounded_value": {"type": "string"}}}}}
+    },
+    "draft_request": {
+      "type": "object", "additionalProperties": false,
+      "required": ["court", "case_type", "parties", "claims", "facts", "legal_grounds", "evidence_ids"],
+      "properties": {
+        "court": {"$ref": "#/$defs/sourced_text"}, "case_type": {"$ref": "#/$defs/sourced_text"},
+        "parties": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/party"}},
+        "claims": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/claim"}},
+        "facts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/fact"}},
+        "legal_grounds": {"type": "array", "items": {"$ref": "#/$defs/ground"}},
+        "evidence_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      }
+    },
+    "declared_conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"},
+    "span": {"type": "object", "additionalProperties": false, "required": ["source_id", "locator", "quote"], "properties": {"source_id": {"$ref": "#/$defs/id"}, "locator": {"type": "string", "minLength": 1}, "quote": {"type": "string", "minLength": 1}}},
+    "provenance": {"anyOf": [{"required": ["source_spans"], "properties": {"source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span"}}}}, {"required": ["user_confirmed", "confirmation_note"], "properties": {"user_confirmed": {"const": true}, "confirmation_note": {"type": "string", "minLength": 1}}}]},
+    "sourced_text": {"type": "object", "additionalProperties": false, "required": ["text"], "properties": {"text": {"type": "string", "minLength": 1}, "source_spans": {"type": "array", "items": {"$ref": "#/$defs/span"}}, "user_confirmed": {"type": "boolean"}, "confirmation_note": {"type": "string"}}, "allOf": [{"$ref": "#/$defs/provenance"}]},
+    "party": {"type": "object", "additionalProperties": false, "required": ["party_id", "role", "display_text"], "properties": {"party_id": {"$ref": "#/$defs/id"}, "role": {"enum": ["plaintiff", "defendant", "third_party"]}, "display_text": {"type": "string", "minLength": 1}, "source_spans": {"type": "array", "items": {"$ref": "#/$defs/span"}}, "user_confirmed": {"type": "boolean"}, "confirmation_note": {"type": "string"}}, "allOf": [{"$ref": "#/$defs/provenance"}]},
+    "claim": {"type": "object", "additionalProperties": false, "required": ["claim_id", "text_verbatim"], "properties": {"claim_id": {"$ref": "#/$defs/id"}, "text_verbatim": {"type": "string", "minLength": 1}, "calculation_id": {"type": "string", "minLength": 1}, "source_spans": {"type": "array", "items": {"$ref": "#/$defs/span"}}, "user_confirmed": {"type": "boolean"}, "confirmation_note": {"type": "string"}}, "allOf": [{"$ref": "#/$defs/provenance"}]},
+    "fact": {"type": "object", "additionalProperties": false, "required": ["fact_id", "text"], "properties": {"fact_id": {"$ref": "#/$defs/id"}, "text": {"type": "string", "minLength": 1}, "evidence_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}}, "source_spans": {"type": "array", "items": {"$ref": "#/$defs/span"}}, "user_confirmed": {"type": "boolean"}, "confirmation_note": {"type": "string"}}, "allOf": [{"$ref": "#/$defs/provenance"}]},
+    "ground": {"type": "object", "additionalProperties": false, "required": ["ground_id", "text", "authority_ids"], "properties": {"ground_id": {"$ref": "#/$defs/id"}, "text": {"type": "string", "minLength": 1}, "authority_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "source_spans": {"type": "array", "items": {"$ref": "#/$defs/span"}}, "user_confirmed": {"type": "boolean"}, "confirmation_note": {"type": "string"}}, "allOf": [{"$ref": "#/$defs/provenance"}]},
+    "authority": {"type": "object", "additionalProperties": true, "required": ["record_id", "verification_status", "full_text_checked", "effect_status"], "properties": {"record_id": {"$ref": "#/$defs/id"}, "verification_status": {"enum": ["pending", "source_opened", "verified", "failed"]}, "full_text_checked": {"type": "boolean"}, "effect_status": {"enum": ["effective", "amended", "repealed", "not_yet_effective", "not_applicable", "unknown"]}}},
+    "conflict": {"type": "object", "additionalProperties": false, "required": ["conflict_id", "description", "status", "source_spans"], "properties": {"conflict_id": {"$ref": "#/$defs/id"}, "description": {"type": "string", "minLength": 1}, "status": {"enum": ["declared", "human_confirmed", "resolved"]}, "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span"}}}}
+  }
+}

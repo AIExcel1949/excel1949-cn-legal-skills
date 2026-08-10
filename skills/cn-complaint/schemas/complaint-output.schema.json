@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-complaint/complaint-output.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "draft_id", "matter_id", "generation_status", "artifact_state", "complaint", "claim_conservation_audit", "blockers", "gaps", "legal_notice"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "draft_id": {"type": "string"}, "matter_id": {"type": "string"},
+    "generation_status": {"enum": ["draft_ready_for_lawyer_review", "blocked"]}, "artifact_state": {"const": "lawyer_review_required"},
+    "complaint": {"type": "object", "required": ["title", "court", "case_type", "parties", "claims", "facts", "legal_grounds", "evidence_ids"], "properties": {"title": {"const": "民事起诉状"}, "court": {"type": "object"}, "case_type": {"type": "object"}, "parties": {"type": "array"}, "claims": {"type": "array"}, "facts": {"type": "array"}, "legal_grounds": {"type": "array"}, "evidence_ids": {"type": "array"}}, "additionalProperties": false},
+    "claim_conservation_audit": {"type": "object", "required": ["input_count", "output_count", "order_preserved", "all_exact", "items"], "properties": {"input_count": {"type": "integer"}, "output_count": {"type": "integer"}, "order_preserved": {"type": "boolean"}, "all_exact": {"type": "boolean"}, "items": {"type": "array"}}},
+    "blockers": {"type": "array", "items": {"type": "object"}}, "gaps": {"type": "array", "items": {"type": "object"}}, "legal_notice": {"type": "array", "minItems": 5, "items": {"type": "string"}}
+  }
+}

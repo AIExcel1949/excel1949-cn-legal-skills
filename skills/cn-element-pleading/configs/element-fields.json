@@ -1,0 +1,504 @@
+{
+  "catalog_version": "2025.82-1.0.0",
+  "common": [
+    {
+      "id": "party.plaintiff",
+      "section": "当事人信息",
+      "label": "原告信息"
+    },
+    {
+      "id": "party.agent",
+      "section": "当事人信息",
+      "label": "委托诉讼代理人"
+    },
+    {
+      "id": "party.defendant",
+      "section": "当事人信息",
+      "label": "被告信息"
+    },
+    {
+      "id": "party.third_party",
+      "section": "当事人信息",
+      "label": "第三人信息"
+    },
+    {
+      "id": "claim.fulltext",
+      "section": "诉讼请求",
+      "label": "诉讼请求全文"
+    },
+    {
+      "id": "procedure.jurisdiction",
+      "section": "程序事项",
+      "label": "约定管辖或仲裁"
+    },
+    {
+      "id": "procedure.preservation",
+      "section": "程序事项",
+      "label": "诉前保全"
+    },
+    {
+      "id": "fact.fulltext",
+      "section": "事实与理由",
+      "label": "事实与理由全文"
+    },
+    {
+      "id": "fact.other",
+      "section": "事实与理由",
+      "label": "其他需要说明的内容"
+    },
+    {
+      "id": "evidence.list",
+      "section": "证据",
+      "label": "证据清单"
+    },
+    {
+      "id": "mediation.knowledge",
+      "section": "纠纷解决方式",
+      "label": "对先行调解的了解"
+    },
+    {
+      "id": "mediation.intent",
+      "section": "纠纷解决方式",
+      "label": "是否考虑先行调解"
+    },
+    {
+      "id": "signature.person",
+      "section": "落款",
+      "label": "具状人"
+    },
+    {
+      "id": "signature.date",
+      "section": "落款",
+      "label": "日期"
+    }
+  ],
+  "case_types": {
+    "private_lending": {
+      "label": "民间借贷纠纷",
+      "template": "民间借贷纠纷民事起诉状.docx",
+      "source_original_sha256": "e0f0e5ad40e5f42f495fb2366ae1140d401fe0df112d3866d87387e1ee55aeb9",
+      "template_sha256": "980885efe753ae63f094ae12937ce4557a6913f0aa948de33f3a8f3b45091b5f",
+      "fields": [
+        {
+          "id": "loan.claim.principal",
+          "section": "诉讼请求要素",
+          "label": "本金"
+        },
+        {
+          "id": "loan.claim.interest",
+          "section": "诉讼请求要素",
+          "label": "利息及计算方式"
+        },
+        {
+          "id": "loan.claim.acceleration",
+          "section": "诉讼请求要素",
+          "label": "提前还款或解除合同"
+        },
+        {
+          "id": "loan.claim.security",
+          "section": "诉讼请求要素",
+          "label": "担保权利"
+        },
+        {
+          "id": "loan.claim.collection_cost",
+          "section": "诉讼请求要素",
+          "label": "实现债权的费用"
+        },
+        {
+          "id": "loan.claim.litigation_cost",
+          "section": "诉讼请求要素",
+          "label": "诉讼费用"
+        },
+        {
+          "id": "loan.claim.other",
+          "section": "诉讼请求要素",
+          "label": "其他请求"
+        },
+        {
+          "id": "loan.claim.total",
+          "section": "诉讼请求要素",
+          "label": "标的总额"
+        },
+        {
+          "id": "loan.fact.contract",
+          "section": "事实要素",
+          "label": "合同签订情况"
+        },
+        {
+          "id": "loan.fact.parties",
+          "section": "事实要素",
+          "label": "借款主体"
+        },
+        {
+          "id": "loan.fact.amount_delivery",
+          "section": "事实要素",
+          "label": "约定金额、实际提供金额及提供方式"
+        },
+        {
+          "id": "loan.fact.term",
+          "section": "事实要素",
+          "label": "借款期限及是否到期"
+        },
+        {
+          "id": "loan.fact.rate",
+          "section": "事实要素",
+          "label": "借款利率"
+        },
+        {
+          "id": "loan.fact.delivery_date",
+          "section": "事实要素",
+          "label": "借款提供时间"
+        },
+        {
+          "id": "loan.fact.repayment_method",
+          "section": "事实要素",
+          "label": "还款方式"
+        },
+        {
+          "id": "loan.fact.repayment",
+          "section": "事实要素",
+          "label": "已还本息"
+        },
+        {
+          "id": "loan.fact.overdue",
+          "section": "事实要素",
+          "label": "逾期情况"
+        },
+        {
+          "id": "loan.fact.property_security",
+          "section": "事实要素",
+          "label": "抵押、质押及登记"
+        },
+        {
+          "id": "loan.fact.guarantee",
+          "section": "事实要素",
+          "label": "保证合同及保证方式"
+        },
+        {
+          "id": "loan.fact.other_security",
+          "section": "事实要素",
+          "label": "其他担保"
+        },
+        {
+          "id": "loan.fact.legal_basis",
+          "section": "事实要素",
+          "label": "请求依据"
+        }
+      ]
+    },
+    "divorce": {
+      "label": "离婚纠纷",
+      "template": "离婚纠纷民事起诉状.docx",
+      "source_original_sha256": "8328ece7b501adea60212101acb95c67c0860956db9d82b254939711d45510c7",
+      "template_sha256": "5b3a6cfa91595759c9629d95dd21f579ffba72499c8e5fa5a9296f36b839d712",
+      "fields": [
+        {
+          "id": "divorce.claim.dissolution",
+          "section": "诉讼请求要素",
+          "label": "解除婚姻关系"
+        },
+        {
+          "id": "divorce.claim.property",
+          "section": "诉讼请求要素",
+          "label": "夫妻共同财产"
+        },
+        {
+          "id": "divorce.claim.debt",
+          "section": "诉讼请求要素",
+          "label": "夫妻共同债务"
+        },
+        {
+          "id": "divorce.claim.custody",
+          "section": "诉讼请求要素",
+          "label": "子女直接抚养"
+        },
+        {
+          "id": "divorce.claim.support",
+          "section": "诉讼请求要素",
+          "label": "子女抚养费"
+        },
+        {
+          "id": "divorce.claim.visitation",
+          "section": "诉讼请求要素",
+          "label": "探望权"
+        },
+        {
+          "id": "divorce.claim.relief",
+          "section": "诉讼请求要素",
+          "label": "损害赔偿、经济补偿或经济帮助"
+        },
+        {
+          "id": "divorce.claim.litigation_cost",
+          "section": "诉讼请求要素",
+          "label": "诉讼费用"
+        },
+        {
+          "id": "divorce.claim.other",
+          "section": "诉讼请求要素",
+          "label": "其他请求"
+        },
+        {
+          "id": "divorce.fact.marriage",
+          "section": "事实要素",
+          "label": "婚姻关系基本情况"
+        },
+        {
+          "id": "divorce.fact.property",
+          "section": "事实要素",
+          "label": "夫妻共同财产情况"
+        },
+        {
+          "id": "divorce.fact.debt",
+          "section": "事实要素",
+          "label": "夫妻共同债务情况"
+        },
+        {
+          "id": "divorce.fact.custody",
+          "section": "事实要素",
+          "label": "子女直接抚养情况"
+        },
+        {
+          "id": "divorce.fact.support",
+          "section": "事实要素",
+          "label": "子女抚养费情况"
+        },
+        {
+          "id": "divorce.fact.visitation",
+          "section": "事实要素",
+          "label": "子女探望权情况"
+        },
+        {
+          "id": "divorce.fact.relief",
+          "section": "事实要素",
+          "label": "赔偿、补偿或经济帮助事实"
+        },
+        {
+          "id": "divorce.fact.legal_basis",
+          "section": "事实要素",
+          "label": "请求依据"
+        }
+      ]
+    },
+    "sales_contract": {
+      "label": "买卖合同纠纷",
+      "template": "买卖合同纠纷民事起诉状.docx",
+      "source_original_sha256": "489ceafc0b935860e1936333b707ada0e734197a348a410acefd790fcc7e5253",
+      "template_sha256": "eae02fa2280c47b72c01c2705b17b07669395f1d824b1090e75e78513582b3a1",
+      "fields": [
+        {
+          "id": "sale.claim.price",
+          "section": "诉讼请求要素",
+          "label": "给付价款"
+        },
+        {
+          "id": "sale.claim.delay",
+          "section": "诉讼请求要素",
+          "label": "迟延利息或违约金"
+        },
+        {
+          "id": "sale.claim.loss",
+          "section": "诉讼请求要素",
+          "label": "卖方违约损失"
+        },
+        {
+          "id": "sale.claim.defect",
+          "section": "诉讼请求要素",
+          "label": "瑕疵责任承担方式"
+        },
+        {
+          "id": "sale.claim.performance",
+          "section": "诉讼请求要素",
+          "label": "继续履行或解除合同"
+        },
+        {
+          "id": "sale.claim.security",
+          "section": "诉讼请求要素",
+          "label": "担保权利"
+        },
+        {
+          "id": "sale.claim.collection_cost",
+          "section": "诉讼请求要素",
+          "label": "实现债权的费用"
+        },
+        {
+          "id": "sale.claim.litigation_cost",
+          "section": "诉讼请求要素",
+          "label": "诉讼费用"
+        },
+        {
+          "id": "sale.claim.other",
+          "section": "诉讼请求要素",
+          "label": "其他请求"
+        },
+        {
+          "id": "sale.claim.total",
+          "section": "诉讼请求要素",
+          "label": "标的总额"
+        },
+        {
+          "id": "sale.fact.contract",
+          "section": "事实要素",
+          "label": "合同签订情况"
+        },
+        {
+          "id": "sale.fact.parties",
+          "section": "事实要素",
+          "label": "合同主体"
+        },
+        {
+          "id": "sale.fact.subject",
+          "section": "事实要素",
+          "label": "标的物"
+        },
+        {
+          "id": "sale.fact.price_payment",
+          "section": "事实要素",
+          "label": "价格及支付方式"
+        },
+        {
+          "id": "sale.fact.delivery",
+          "section": "事实要素",
+          "label": "交货、风险、安装、调试和验收"
+        },
+        {
+          "id": "sale.fact.quality",
+          "section": "事实要素",
+          "label": "质量标准、检验及异议期限"
+        },
+        {
+          "id": "sale.fact.breach",
+          "section": "事实要素",
+          "label": "违约金或定金"
+        },
+        {
+          "id": "sale.fact.performance",
+          "section": "事实要素",
+          "label": "价款支付及标的物交付"
+        },
+        {
+          "id": "sale.fact.delay",
+          "section": "事实要素",
+          "label": "迟延履行及催告"
+        },
+        {
+          "id": "sale.fact.quality_dispute",
+          "section": "事实要素",
+          "label": "质量争议及协商"
+        },
+        {
+          "id": "sale.fact.termination",
+          "section": "事实要素",
+          "label": "解除通知"
+        },
+        {
+          "id": "sale.fact.security",
+          "section": "事实要素",
+          "label": "抵押、质押、保证及其他担保"
+        },
+        {
+          "id": "sale.fact.legal_basis",
+          "section": "事实要素",
+          "label": "请求承担责任的依据"
+        }
+      ]
+    },
+    "traffic_accident": {
+      "label": "机动车交通事故责任纠纷",
+      "template": "机动车交通事故责任纠纷民事起诉状.docx",
+      "source_original_sha256": "d10441e580bea8fbf998784cbdc4128bf2fc8c84fa4cbced3444c124aebcc9dc",
+      "template_sha256": "bbaabdcfc42ad2257b45d9d79b3dfc0133dd47dfeb4787217870571a3e8e261e",
+      "fields": [
+        {
+          "id": "traffic.claim.medical",
+          "section": "诉讼请求要素",
+          "label": "医疗费"
+        },
+        {
+          "id": "traffic.claim.nursing",
+          "section": "诉讼请求要素",
+          "label": "护理费"
+        },
+        {
+          "id": "traffic.claim.nutrition",
+          "section": "诉讼请求要素",
+          "label": "营养费"
+        },
+        {
+          "id": "traffic.claim.meal",
+          "section": "诉讼请求要素",
+          "label": "住院伙食补助费"
+        },
+        {
+          "id": "traffic.claim.lost_income",
+          "section": "诉讼请求要素",
+          "label": "误工费"
+        },
+        {
+          "id": "traffic.claim.transport",
+          "section": "诉讼请求要素",
+          "label": "交通费"
+        },
+        {
+          "id": "traffic.claim.disability",
+          "section": "诉讼请求要素",
+          "label": "残疾赔偿金及被扶养人生活费"
+        },
+        {
+          "id": "traffic.claim.aid",
+          "section": "诉讼请求要素",
+          "label": "残疾辅助器具费"
+        },
+        {
+          "id": "traffic.claim.death",
+          "section": "诉讼请求要素",
+          "label": "死亡赔偿金及丧葬费"
+        },
+        {
+          "id": "traffic.claim.mental",
+          "section": "诉讼请求要素",
+          "label": "精神损害抚慰金"
+        },
+        {
+          "id": "traffic.claim.property",
+          "section": "诉讼请求要素",
+          "label": "财产损失"
+        },
+        {
+          "id": "traffic.claim.other",
+          "section": "诉讼请求要素",
+          "label": "其他费用"
+        },
+        {
+          "id": "traffic.claim.total",
+          "section": "诉讼请求要素",
+          "label": "标的总额"
+        },
+        {
+          "id": "traffic.procedure.appraisal",
+          "section": "程序事项",
+          "label": "鉴定申请"
+        },
+        {
+          "id": "traffic.fact.accident",
+          "section": "事实要素",
+          "label": "交通事故发生情况"
+        },
+        {
+          "id": "traffic.fact.liability",
+          "section": "事实要素",
+          "label": "交通事故责任认定"
+        },
+        {
+          "id": "traffic.fact.insurance",
+          "section": "事实要素",
+          "label": "机动车投保情况"
+        },
+        {
+          "id": "traffic.fact.legal_basis",
+          "section": "事实要素",
+          "label": "请求依据"
+        }
+      ]
+    }
+  }
+}

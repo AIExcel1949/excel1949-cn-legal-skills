@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-contract-review/review-output.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "input_sha256", "source_contract", "blocked", "blockers", "review_items", "coverage_gaps", "defined_term_issues", "cross_reference_issues", "redline_instructions", "authority_records", "artifact_state"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "input_sha256": {"$ref": "#/$defs/hash"},
+    "source_contract": {"type": "object", "required": ["file_name", "sha256", "preserved_text_sha256"], "properties": {"file_name": {"type": "string"}, "sha256": {"$ref": "#/$defs/hash"}, "preserved_text_sha256": {"$ref": "#/$defs/hash"}}, "additionalProperties": false},
+    "blocked": {"type": "boolean"}, "blockers": {"type": "array", "items": {"$ref": "#/$defs/blocker"}},
+    "review_items": {"type": "array", "items": {"type": "object", "required": ["clause_id", "heading", "original_text", "original_text_sha256", "findings"], "properties": {"clause_id": {"type": "string"}, "heading": {"type": "string"}, "original_text": {"type": "string"}, "original_text_sha256": {"$ref": "#/$defs/hash"}, "findings": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": false}},
+    "coverage_gaps": {"type": "array", "items": {"type": "object"}},
+    "defined_term_issues": {"type": "array", "items": {"type": "object"}},
+    "cross_reference_issues": {"type": "array", "items": {"type": "object"}},
+    "redline_instructions": {"type": "array", "items": {"type": "object"}},
+    "authority_records": {"type": "array", "items": {"type": "object"}}, "artifact_state": {"const": "lawyer_review_required"}
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "blocker": {"type": "object", "required": ["code", "path", "message"], "properties": {"code": {"type": "string"}, "path": {"type": "string"}, "message": {"type": "string"}}, "additionalProperties": false}},
+  "additionalProperties": false
+}

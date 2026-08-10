@@ -1,0 +1,299 @@
+{
+  "schema_version": "1.0",
+  "matter": {
+    "matter_id": "MAT-DEVICE-2026-001",
+    "title": "某设备买卖合同争议谈判",
+    "as_of_date": "2026-07-18"
+  },
+  "internal_strategy": {
+    "objectives": [
+      {
+        "objective_id": "OBJ-CASHFLOW",
+        "description": "在不扩大履行风险的前提下缩短实际回款周期"
+      },
+      {
+        "objective_id": "OBJ-CLOSE",
+        "description": "保留后续主张权利并尽可能一次性解决本次争议"
+      }
+    ],
+    "authorization": {
+      "confirmed_by_client": true,
+      "confirmed_at": "2026-07-17",
+      "scope_notes": "客户仅授权律师提出待审方案，任何实质性接受均须再次书面确认",
+      "monetary_limits": [
+        {
+          "issue_id": "ISS-AMOUNT",
+          "direction": "receive_at_least",
+          "amount": 780000,
+          "currency": "CNY"
+        }
+      ],
+      "authorized_commitment_keys": [
+        "propose-installments",
+        "propose-mutual-release"
+      ],
+      "prohibited_commitments": [
+        "不得免除未在协议中明示列明的其他责任",
+        "不得以口头表达确认最终成交"
+      ]
+    },
+    "bottom_lines": [
+      {
+        "issue_id": "ISS-AMOUNT",
+        "description": "任何金额调整都不得低于书面授权记录中的接受边界"
+      },
+      {
+        "issue_id": "ISS-RELEASE",
+        "description": "权利放弃必须以全部对价实际履行完毕为前提"
+      }
+    ],
+    "batna": [
+      {
+        "scenario_id": "BAT-CIVIL",
+        "description": "终止商务磋商并按已审查证据进入争议解决程序",
+        "assumptions": [
+          "证据完整性仍需执业律师最终复核",
+          "时间与费用只是待核算变量"
+        ]
+      }
+    ],
+    "issue_priorities": [
+      {
+        "issue_id": "ISS-AMOUNT",
+        "priority": 1,
+        "reason": "金额与实际受偿程度直接相关"
+      },
+      {
+        "issue_id": "ISS-SCHEDULE",
+        "priority": 2,
+        "reason": "履行周期与客户现金流安排直接相关"
+      },
+      {
+        "issue_id": "ISS-SECURITY",
+        "priority": 2,
+        "reason": "履行保障会影响分期方案的整体风险"
+      },
+      {
+        "issue_id": "ISS-RELEASE",
+        "priority": 3,
+        "reason": "权利放弃范围影响未来争议处理空间"
+      }
+    ],
+    "evaluation_criteria": [
+      {
+        "criterion_id": "CRT-VALUE",
+        "label": "经济回收",
+        "weight": 40
+      },
+      {
+        "criterion_id": "CRT-TIME",
+        "label": "履行周期",
+        "weight": 30
+      },
+      {
+        "criterion_id": "CRT-RISK",
+        "label": "履行风险",
+        "weight": 30
+      }
+    ],
+    "proposal_assessments": [
+      {
+        "proposal_id": "PRO-A",
+        "scores": [
+          {
+            "criterion_id": "CRT-VALUE",
+            "score": 88,
+            "reason": "名义对价较高"
+          },
+          {
+            "criterion_id": "CRT-TIME",
+            "score": 62,
+            "reason": "履行周期相对较长"
+          },
+          {
+            "criterion_id": "CRT-RISK",
+            "score": 78,
+            "reason": "已设计分期保障条件"
+          }
+        ],
+        "internal_notes": "可用于测试对方对履行保障的接受程度"
+      },
+      {
+        "proposal_id": "PRO-B",
+        "scores": [
+          {
+            "criterion_id": "CRT-VALUE",
+            "score": 80,
+            "reason": "名义对价有所调整"
+          },
+          {
+            "criterion_id": "CRT-TIME",
+            "score": 90,
+            "reason": "拟在较短时间内完成履行"
+          },
+          {
+            "criterion_id": "CRT-RISK",
+            "score": 72,
+            "reason": "履行期较短但保障细节仍待确认"
+          }
+        ],
+        "internal_notes": "可用于检验对方是否更重视履行期限"
+      }
+    ],
+    "ethical_confirmation": {
+      "truthful_facts_only": true,
+      "no_deception": true,
+      "no_coercive_manipulation": true
+    }
+  },
+  "external_workspace": {
+    "external_reference": "设备项目商务沟通-01",
+    "disclosure_review": {
+      "reviewed_for_internal_leaks": true,
+      "reviewed_by_role": "lawyer"
+    },
+    "issues": [
+      {
+        "issue_id": "ISS-AMOUNT",
+        "label": "结算金额",
+        "public_position": "请在已核对的交付与付款记录基础上讨论整体结算方案。",
+        "questions": [
+          "贵方对已履行部分的金额核对结果是否存在具体异议？"
+        ]
+      },
+      {
+        "issue_id": "ISS-SCHEDULE",
+        "label": "履行安排",
+        "public_position": "付款安排应当包含明确日期、每期金额和到账确认方式。",
+        "questions": [
+          "贵方可以提供哪些可核验的资金安排信息？"
+        ]
+      },
+      {
+        "issue_id": "ISS-SECURITY",
+        "label": "履行保障",
+        "public_position": "如采用分期履行，应同时讨论可核验且可执行的履行保障。",
+        "questions": [
+          "贵方可提供哪些具体履行保障？"
+        ]
+      },
+      {
+        "issue_id": "ISS-RELEASE",
+        "label": "争议结束安排",
+        "public_position": "权利义务终结安排应当与约定内容的实际履行相衔接。",
+        "questions": [
+          "贵方建议如何确认各项义务已实际履行？"
+        ]
+      }
+    ],
+    "proposals": [
+      {
+        "proposal_id": "PRO-A",
+        "label": "方案一",
+        "terms": [
+          {
+            "issue_id": "ISS-AMOUNT",
+            "offer_text": "以 860000 元作为本轮待讨论的整体结算数额。",
+            "status": "proposed"
+          },
+          {
+            "issue_id": "ISS-SCHEDULE",
+            "offer_text": "按三期履行，具体日期由双方核对后写入文本。",
+            "status": "tentative"
+          }
+        ],
+        "public_rationale": "该方案用于同时讨论整体数额、履行节点和履行保障。",
+        "conditional_exchanges": [
+          {
+            "exchange_id": "EXC-A1",
+            "give_issue_id": "ISS-SCHEDULE",
+            "give_text": "可讨论分期履行",
+            "receive_issue_id": "ISS-SECURITY",
+            "receive_text": "贵方同时提供可核验的履行保障",
+            "condition_text": "具体保障内容经双方律师审查并由客户另行确认"
+          }
+        ],
+        "requires_client_confirmation": true
+      },
+      {
+        "proposal_id": "PRO-B",
+        "label": "方案二",
+        "terms": [
+          {
+            "issue_id": "ISS-AMOUNT",
+            "offer_text": "以 820000 元作为本轮待讨论的整体结算数额。",
+            "status": "proposed"
+          },
+          {
+            "issue_id": "ISS-SCHEDULE",
+            "offer_text": "在双方确认文本后的较短期限内完成履行。",
+            "status": "tentative"
+          },
+          {
+            "issue_id": "ISS-RELEASE",
+            "offer_text": "争议结束条款与约定内容实际履行完毕相衔接。",
+            "status": "tentative"
+          }
+        ],
+        "public_rationale": "该方案用于比较较短履行期与整体条件之间的组合。",
+        "conditional_exchanges": [
+          {
+            "exchange_id": "EXC-B1",
+            "give_issue_id": "ISS-AMOUNT",
+            "give_text": "可讨论调整整体结算结构",
+            "receive_issue_id": "ISS-SCHEDULE",
+            "receive_text": "贵方在约定的较短期限内完成全部履行",
+            "condition_text": "全部条件需作为一个整体由客户另行确认"
+          }
+        ],
+        "requires_client_confirmation": true
+      }
+    ],
+    "meeting_minutes": {
+      "meeting_id": "MTG-001",
+      "meeting_date": "2026-07-18",
+      "participant_roles": [
+        "甲方业务代表",
+        "甲方律师",
+        "乙方业务代表",
+        "乙方律师"
+      ],
+      "discussion": [
+        {
+          "issue_id": "ISS-AMOUNT",
+          "summary": "双方对已履行部分的核对方法交换了意见，尚未形成一致。"
+        },
+        {
+          "issue_id": "ISS-SCHEDULE",
+          "summary": "乙方表示需在会后核对资金安排。"
+        }
+      ],
+      "tentative_items": [
+        {
+          "item_id": "TMP-001",
+          "summary": "双方律师先行交换不具约束力的条款清单。",
+          "status": "pending"
+        },
+        {
+          "item_id": "TMP-002",
+          "summary": "下次沟通继续围绕整体结算结构展开。",
+          "status": "confirmed"
+        }
+      ],
+      "next_steps": [
+        {
+          "action": "甲方律师整理待审条款清单。",
+          "owner_role": "甲方律师",
+          "due_date": "2026-07-21",
+          "status": "pending"
+        },
+        {
+          "action": "乙方业务团队核对资金安排。",
+          "owner_role": "乙方业务代表",
+          "due_date": null,
+          "status": "pending"
+        }
+      ]
+    }
+  }
+}

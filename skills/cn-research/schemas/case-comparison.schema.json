@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-research/case-comparison.schema.json",
+  "type": "object",
+  "required": ["schema_version", "comparison_id", "task_id", "question_id", "case_record_id", "verification_status", "source_url", "dimensions", "overall_status", "non_analogous_reasons", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "comparison_id": {"$ref": "#/$defs/id"},
+    "task_id": {"$ref": "#/$defs/id"},
+    "question_id": {"type": "string", "minLength": 1},
+    "case_record_id": {"$ref": "#/$defs/id"},
+    "verification_status": {"enum": ["pending", "source_opened", "verified", "failed"]},
+    "source_url": {"type": "string", "format": "uri"},
+    "dimensions": {
+      "type": "array", "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["dimension", "comparison_status", "basis", "target_source_refs", "case_locator"],
+        "properties": {
+          "dimension": {"enum": ["legal_relationship", "dispute_issue", "decisive_facts", "evidence_structure", "procedure_stage", "applicable_rules", "result_relevance"]},
+          "comparison_status": {"enum": ["similar", "different", "unknown"]},
+          "basis": {"type": "string", "minLength": 1},
+          "target_source_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "case_locator": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "overall_status": {"enum": ["not_assessed", "partially_analogous", "non_analogous"]},
+    "non_analogous_reasons": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {"id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"}},
+  "additionalProperties": false
+}

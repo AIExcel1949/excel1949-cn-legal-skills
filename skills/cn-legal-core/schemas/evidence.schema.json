@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/evidence.schema.json",
+  "type": "object",
+  "required": ["evidence_id", "name", "source_id", "verification_status"],
+  "properties": {
+    "evidence_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "name": {"type": "string", "minLength": 1},
+    "source_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "fact_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/stable_id"}},
+    "authenticity": {"enum": ["unreviewed", "accepted", "disputed", "unknown"]},
+    "legality": {"enum": ["unreviewed", "accepted", "disputed", "unknown"]},
+    "relevance": {"enum": ["unreviewed", "accepted", "disputed", "unknown"]},
+    "verification_status": {"enum": ["pending", "machine_checked", "human_checked"]}
+  },
+  "additionalProperties": false
+}
+

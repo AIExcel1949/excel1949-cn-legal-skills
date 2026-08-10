@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-verify/verify-input.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "review_context", "artifact", "facts", "evidence", "authorities", "calculations", "deadlines", "citations", "date_checks", "consistency_checks", "human_confirmations"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+    "review_context": {
+      "type": "object",
+      "required": ["review_id", "as_of", "mode", "privacy_mode", "intended_use"],
+      "properties": {
+        "review_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "as_of": {"type": "string", "format": "date-time"},
+        "mode": {"enum": ["production", "training_fixture"]},
+        "privacy_mode": {"enum": ["internal", "case_submission", "external_public"]},
+        "intended_use": {"type": "string", "minLength": 1},
+        "max_authority_age_days": {"type": "integer", "minimum": 1, "maximum": 3650, "default": 90}
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["artifact_id", "title", "input_sha256", "text_sha256", "text"],
+      "properties": {
+        "artifact_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+        "title": {"type": "string", "minLength": 1},
+        "file_name": {"type": "string"},
+        "input_sha256": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/sha256"},
+        "text_sha256": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/sha256"},
+        "text": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record", "required_in_document", "evidence_required"],
+        "properties": {
+          "record": {"$ref": "https://aioffice.example/schemas/cn-legal-core/fact-ledger.schema.json"},
+          "display_text": {"type": "string"},
+          "required_in_document": {"type": "boolean"},
+          "evidence_required": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record"],
+        "properties": {"record": {"$ref": "https://aioffice.example/schemas/cn-legal-core/evidence.schema.json"}},
+        "additionalProperties": false
+      }
+    },
+    "authorities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record", "relied_upon"],
+        "properties": {
+          "record": {"$ref": "https://aioffice.example/schemas/cn-legal-core/authority.schema.json"},
+          "relied_upon": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "calculations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record", "display_text", "recalculated_value"],
+        "properties": {
+          "record": {"$ref": "https://aioffice.example/schemas/cn-legal-core/calculation.schema.json"},
+          "display_text": {"type": "string", "minLength": 1},
+          "recalculated_value": {"type": "number"},
+          "tolerance": {"type": "number", "minimum": 0, "default": 0.01}
+        },
+        "additionalProperties": false
+      }
+    },
+    "deadlines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record", "relied_upon"],
+        "properties": {
+          "record": {"$ref": "https://aioffice.example/schemas/cn-legal-core/deadline.schema.json"},
+          "display_text": {"type": "string"},
+          "relied_upon": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["citation_id", "authority_id", "exact_quote"],
+        "properties": {
+          "citation_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "authority_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "exact_quote": {"type": "string", "minLength": 1},
+          "locator": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "date_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date_id", "value", "display_text", "required_in_document", "source"],
+        "properties": {
+          "date_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "value": {"type": "string", "format": "date"},
+          "display_text": {"type": "string", "minLength": 1},
+          "required_in_document": {"type": "boolean"},
+          "source": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "consistency_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "left_label", "left_value", "operator", "right_label", "right_value"],
+        "properties": {
+          "check_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "left_label": {"type": "string", "minLength": 1},
+          "left_value": {},
+          "operator": {"enum": ["equal", "not_equal"]},
+          "right_label": {"type": "string", "minLength": 1},
+          "right_value": {}
+        },
+        "additionalProperties": false
+      }
+    },
+    "human_confirmations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["confirmation_id", "question", "required", "status"],
+        "properties": {
+          "confirmation_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "question": {"type": "string", "minLength": 1},
+          "required": {"type": "boolean"},
+          "status": {"enum": ["pending", "confirmed", "rejected"]},
+          "confirmed_by": {"type": "string"},
+          "confirmed_at": {"type": "string", "format": "date-time"}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"status": {"const": "confirmed"}}},
+            "then": {"required": ["confirmed_by", "confirmed_at"]}
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

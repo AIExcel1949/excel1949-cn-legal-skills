@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-intake/intake.schema.json",
+  "type": "object",
+  "required": ["schema_version", "intake_id", "matter", "request", "participants", "materials", "statements", "controls"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "intake_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "matter": {
+      "type": "object",
+      "required": ["matter_id", "procedure_type", "stage"],
+      "properties": {
+        "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+        "procedure_type": {"enum": ["unknown", "civil", "commercial", "criminal", "administrative", "arbitration", "enforcement", "non_litigation"]},
+        "stage": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "request": {
+      "type": "object",
+      "required": ["received_at", "raw_request", "desired_outcomes", "urgency_status"],
+      "properties": {
+        "received_at": {"type": "string", "format": "date-time"},
+        "raw_request": {"type": "string", "minLength": 1},
+        "desired_outcomes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "urgency_status": {"enum": ["unknown", "stated_urgent", "no_urgency_stated", "lawyer_confirmed_urgent"]},
+        "language_or_accessibility_needs": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["party_id", "entity_type", "procedural_roles", "name_status"],
+        "properties": {
+          "party_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+          "entity_type": {"enum": ["natural_person", "legal_person", "unincorporated_organization", "state_authority", "unknown"]},
+          "procedural_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "name": {"type": "string"},
+          "name_status": {"enum": ["stated", "user_confirmed", "derived", "disputed", "missing", "conflict", "unreadable"]},
+          "source_spans": {"type": "array", "items": {"$ref": "#/$defs/source_span"}},
+          "confirmation_note": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "file_name", "sha256", "acquisition", "parse_status"],
+        "properties": {
+          "source_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+          "file_name": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "mime_type": {"type": "string"},
+          "acquisition": {"enum": ["user_provided", "official_download", "authorized_export", "other"]},
+          "parse_status": {"enum": ["not_parsed", "parsed", "ocr_unverified", "human_verified", "failed"]},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "statements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["statement_id", "field", "raw_value", "status", "source_spans"],
+        "properties": {
+          "statement_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+          "field": {"type": "string", "minLength": 1},
+          "raw_value": {},
+          "normalized_value": {},
+          "status": {"enum": ["stated", "user_confirmed", "derived", "disputed", "missing", "conflict", "unreadable"]},
+          "source_spans": {"type": "array", "items": {"$ref": "#/$defs/source_span"}},
+          "confirmation_note": {"type": "string"},
+          "derivation_rule": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "controls": {
+      "type": "object",
+      "required": ["conflict_check", "identity_verification", "deadline_review", "emergency_measure_review", "engagement_review"],
+      "properties": {
+        "conflict_check": {"$ref": "#/$defs/control"},
+        "identity_verification": {"$ref": "#/$defs/control"},
+        "deadline_review": {"$ref": "#/$defs/control"},
+        "emergency_measure_review": {"$ref": "#/$defs/control"},
+        "engagement_review": {"$ref": "#/$defs/control"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "source_span": {
+      "type": "object",
+      "required": ["source_id", "quote"],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+        "page": {"type": "integer", "minimum": 1},
+        "paragraph": {"type": "integer", "minimum": 0},
+        "quote": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "control": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["not_started", "pending", "cleared", "blocked", "not_applicable_confirmed"]},
+        "reviewed_by": {"type": "string"},
+        "reviewed_at": {"type": "string", "format": "date-time"},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
+

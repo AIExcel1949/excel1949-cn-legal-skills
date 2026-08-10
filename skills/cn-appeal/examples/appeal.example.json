@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MAT-2026-APPEAL-001",
+  "appeal_id": "APL-2026-001",
+  "case_type": "civil",
+  "sources": [
+    {"source_id": "SRC-JUDGMENT", "file_name": "脱敏原审裁判.txt", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    {"source_id": "SRC-INSTRUCTION", "file_name": "甲公司上诉指示.txt", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    {"source_id": "SRC-SERVICE", "file_name": "送达材料.pdf", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+    {"source_id": "SRC-EVIDENCE", "file_name": "补充往来邮件.pdf", "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}
+  ],
+  "authorities": [
+    {"authority_id": "AUTH-DEADLINE", "title": "上诉期限规则待核验条款", "official_url": "https://www.court.gov.cn/", "verified_on": "2026-07-18", "effect_status": "unknown"}
+  ],
+  "judgment": {
+    "source_id": "SRC-JUDGMENT",
+    "operative_part": [
+      {"statement_id": "JUD-OP-001", "text": "驳回甲公司的诉讼请求。", "citation": {"source_id": "SRC-JUDGMENT", "locator": "第8页主文第1项"}}
+    ],
+    "reasoning": [
+      {"statement_id": "JUD-RS-001", "text": "原审认为甲公司提交的履行材料不足以证明其主张。", "citation": {"source_id": "SRC-JUDGMENT", "locator": "第7页第2段"}}
+    ],
+    "issues": [
+      {"statement_id": "JUD-IS-001", "text": "甲公司是否已完成约定履行。", "citation": {"source_id": "SRC-JUDGMENT", "locator": "第4页争议焦点第1项"}}
+    ]
+  },
+  "appeal_requests": [
+    {"request_id": "REQ-001", "verbatim_text": "请求撤销原审判决并依法改判支持甲公司原审全部诉讼请求。", "basis": {"basis_type": "source_span", "source_id": "SRC-INSTRUCTION", "locator": "第1段"}}
+  ],
+  "review_issues": [
+    {"issue_id": "ISS-FACT-001", "issue_type": "fact_dispute", "question": "原审对履行邮件的认定是否完整？", "supporting_citations": [{"source_id": "SRC-EVIDENCE", "locator": "邮件第2页"}], "opposing_citations": [{"source_id": "SRC-JUDGMENT", "locator": "第7页第2段"}]},
+    {"issue_id": "ISS-LAW-001", "issue_type": "legal_application", "question": "原审对履行标准的法律适用是否准确？", "supporting_citations": [], "opposing_citations": [{"source_id": "SRC-JUDGMENT", "locator": "第7页第2段"}]},
+    {"issue_id": "ISS-PROC-001", "issue_type": "procedural_issue", "question": "原审对补充材料的处理过程是否需要复核？", "supporting_citations": [{"source_id": "SRC-EVIDENCE", "locator": "邮件第1页"}], "opposing_citations": []}
+  ],
+  "deadline_review": {
+    "status": "unverified",
+    "rule_inputs": [{"rule_id": "RULE-APPEAL-001", "authority_id": "AUTH-DEADLINE", "locator": "待核验条款", "rule_text": "本示例不写入具体期限，应由律师核验官方原文。"}],
+    "service_facts": [{"statement_id": "SVC-001", "text": "送达材料显示甲公司收到一份裁判文书。", "citation": {"source_id": "SRC-SERVICE", "locator": "第1页"}}],
+    "lawyer_conclusion": null
+  },
+  "evidence": [
+    {"evidence_id": "EVD-001", "name": "补充往来邮件", "citation": {"source_id": "SRC-EVIDENCE", "locator": "全文"}, "purpose": "待复核是否可以支持履行事实主张", "review_status": "unreviewed"}
+  ],
+  "new_evidence_explanations": [
+    {"evidence_id": "EVD-001", "claimed_as_new": true, "not_submitted_reason": "当事人称原审结束后才从归档邮箱导出，待核验。", "purpose": "补充说明履行过程", "explanation_basis": {"source_id": "SRC-EVIDENCE", "locator": "邮件导出页"}}
+  ],
+  "external_action_requested": false
+}

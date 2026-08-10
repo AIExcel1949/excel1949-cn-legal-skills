@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-opinion/opinion-output.schema.json",
+  "title": "中国法律意见分析律师复核底稿",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "mode", "jurisdiction", "as_of_date", "artifact_state", "formal_opinion_issued", "questions", "confirmed_facts", "unresolved_facts", "assumptions", "limitations", "verified_authorities", "other_authorities", "propositions", "conclusions", "blockers", "warnings"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "mode": {"enum": ["production", "training_fixture"]}, "jurisdiction": {"type": "string"}, "as_of_date": {"type": "string", "format": "date"},
+    "artifact_state": {"const": "lawyer_review_required"}, "formal_opinion_issued": {"const": false},
+    "questions": {"type": "array"}, "confirmed_facts": {"type": "array"}, "unresolved_facts": {"type": "array"}, "assumptions": {"type": "array"}, "limitations": {"type": "array"}, "verified_authorities": {"type": "array"}, "other_authorities": {"type": "array"}, "propositions": {"type": "array"},
+    "conclusions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["conclusion_id", "question_id", "statement", "fact_ids", "authority_ids", "dependency_assumption_ids", "conditions", "status", "blockers"],
+        "properties": {
+          "status": {"enum": ["blocked", "provisional_for_lawyer_review"]},
+          "blockers": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "blockers": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}, "warnings": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+  }
+}

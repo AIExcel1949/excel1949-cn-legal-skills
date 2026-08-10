@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-evidence/evidence-handoff.schema.json",
+  "title": "录音转写到证据数据层的交接结构",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "source", "evidence", "transcript", "blockers", "artifact_state"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "source": {"$ref": "https://aioffice.example/schemas/cn-legal-core/source.schema.json"},
+    "evidence": {"$ref": "https://aioffice.example/schemas/cn-legal-core/evidence.schema.json"},
+    "transcript": {
+      "type": "object",
+      "required": ["segment_count", "review_status", "flagged_segment_count"],
+      "properties": {
+        "segment_count": {"type": "integer", "minimum": 1},
+        "review_status": {"enum": ["未完成逐句回听", "已完成逐句回听"]},
+        "flagged_segment_count": {"type": "integer", "minimum": 0},
+        "transcribe_model": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "blockers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["original_sha256_missing", "original_audio_not_rechecked", "original_audio_hash_mismatch", "transcript_review_incomplete", "flagged_segments_pending_review"]}
+    },
+    "artifact_state": {"const": "lawyer_review_required"}
+  },
+  "additionalProperties": false
+}

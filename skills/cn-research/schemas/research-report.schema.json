@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-research/research-report.schema.json",
+  "type": "object",
+  "required": ["schema_version", "report_id", "task", "search_log", "records", "findings", "limitations", "state"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "report_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "task": {"$ref": "research-task.schema.json"},
+    "search_log": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["searched_at", "tool", "query", "status"],
+        "properties": {
+          "searched_at": {"type": "string", "format": "date-time"},
+          "tool": {"type": "string", "minLength": 1},
+          "query": {"type": "string", "minLength": 1},
+          "filters": {"type": "object"},
+          "result_count": {"type": "integer", "minimum": 0},
+          "status": {"enum": ["success", "partial", "failed"]},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "records": {"type": "array", "items": {"$ref": "research-record.schema.json"}},
+    "findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["question_id", "conclusion", "supporting_record_ids", "counterpoints", "confidence"],
+        "properties": {
+          "question_id": {"type": "string"},
+          "conclusion": {"type": "string", "minLength": 1},
+          "supporting_record_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "counterpoints": {"type": "array", "items": {"type": "string"}},
+          "confidence": {"enum": ["high", "medium", "low"]},
+          "lawyer_review_notes": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "state": {"enum": ["draft", "machine_checked", "lawyer_review_required", "lawyer_reviewed"]}
+  },
+  "additionalProperties": false
+}
+

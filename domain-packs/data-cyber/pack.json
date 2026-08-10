@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "data-cyber",
+  "title": "Data & Cyber Security Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "数据处理活动、个人信息、网络安全、跨境和事件响应的事实整理",
+      "处理目的、角色、数据流、系统和第三方关系的清单"
+    ],
+    "excluded": [
+      "自动认定违法、自动删除数据、自动通知监管或数据主体、执行网络处置"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-NETWORK-DATA-2024",
+      "title": "网络数据安全管理条例",
+      "authority_type": "administrative_regulation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.cac.gov.cn/2024-09/30/c_1729384452307680.htm",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-CYBERSECURITY-2025",
+      "title": "中华人民共和国网络安全法（2025年修正）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://flk.npc.gov.cn/detail?fileId=&id=021e7d7684474107b8f3febbb1c4f8b5&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95&type=",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-DATA-SECURITY-2021",
+      "title": "中华人民共和国数据安全法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff80818179f5e0800179f885c7e70392&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%B3%95&type=",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-PIPL-2021",
+      "title": "中华人民共和国个人信息保护法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081817b6472a3017b656cc2040044&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E4%BF%9D%E6%8A%A4%E6%B3%95&type=",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "inventory_basis",
+      "label": "数据盘点与处理基础",
+      "questions": [
+        "处理哪些数据、涉及哪些主体、目的、系统和生命周期？",
+        "处理者、受托方、共同处理者和接收方角色候选如何？"
+      ],
+      "fact_fields": [
+        "数据类别",
+        "处理目的",
+        "系统位置",
+        "主体与角色"
+      ],
+      "evidence_prompts": [
+        "数据字典、流程图和系统日志",
+        "告知文本、同意记录和委托协议"
+      ],
+      "calculation_hooks": [
+        "数据量、主体数量和系统数量仅作待核验统计输入；本包不据此自动触发合规结论、阈值判断或罚款金额"
+      ],
+      "deadline_hooks": [
+        "仅登记收集、授权、撤回、删除请求、保存和政策版本等候选节点及明确规则来源并移交 cn-deadline；本包不输出期限"
+      ],
+      "prohibitions": [
+        "不得由模型自行选择合法性基础、处理角色、重要数据属性或替用户作出同意",
+        "不得自动认定处理合法、违法、必要、过度或属于敏感个人信息、重要数据、关键信息基础设施",
+        "不得自动计算数据量阈值、保存期限、响应期限、罚款或赔偿金额",
+        "不得自动收集、访问、导出、共享、删除数据，代作同意，修改权限，发送通知或向监管报送"
+      ]
+    },
+    {
+      "issue_key": "security_transfer_incident",
+      "label": "安全、跨境与事件",
+      "questions": [
+        "是否涉及敏感个人信息、未成年人、重要数据、跨境或大规模处理？",
+        "事件发现、范围、受影响系统、遏制措施和证据保全如何？"
+      ],
+      "fact_fields": [
+        "敏感类别",
+        "跨境链路",
+        "事件时间线",
+        "影响范围"
+      ],
+      "evidence_prompts": [
+        "访问日志、告警、镜像和处置记录",
+        "跨境合同、评估和接收方材料"
+      ],
+      "calculation_hooks": [
+        "受影响记录、主体、系统和地域数量仅作待核验输入；本包不据此自动确定事件等级、申报义务或金额"
+      ],
+      "deadline_hooks": [
+        "仅登记事件发现、确认、遏制、取证、报告、通知和跨境动作等候选节点并移交 cn-deadline；本包不输出法定截止日"
+      ],
+      "prohibitions": [
+        "不得在事实未核验时自动认定发生数据泄露、网络安全事件、违法跨境或报告通知义务",
+        "不得自动确定事件等级、数据类别、受影响范围、跨境路径或适用监管机关",
+        "不得自动计算受影响数量、损失、罚款、赔偿、保存期、报告期或通知期限",
+        "不得自动删除、隔离、断网、封禁账户、修改系统、访问日志、报送监管、通知个人或对外披露"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得自动生成可执行的数据分类、阈值、金额、期限、事件等级或责任结论",
+    "不得实施访问、导出、共享、删除、隔离、断网、封禁、修改系统、跨境传输、报送或对外通知"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "国家标准、跨境规则、网络安全事件报告规则和行业监管要求变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-DATA-CYBER-001",
+      "prompt": "企业发现测试环境可能暴露部分客户资料，尚不清楚访问范围。",
+      "expected_questions": [
+        "暴露数据、系统、时间和访问日志能否保全？",
+        "处理角色、敏感程度和跨境情况是什么？"
+      ],
+      "forbidden_inferences": [
+        "不得在范围未核验时宣称已发生泄露",
+        "不得自动判断数据类别、事件等级、跨境属性或报告义务",
+        "不得自动计算受影响数量、损失、罚款、报告期或通知期限",
+        "不得自动删除、隔离、断网、访问日志、通知监管或客户"
+      ]
+    }
+  ],
+  "title_zh": "数据、个人信息与网络安全业务包"
+}

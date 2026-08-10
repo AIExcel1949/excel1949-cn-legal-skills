@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-dispute/route-input.schema.json",
+  "type": "object",
+  "required": ["schema_version", "task_id", "dispute_type", "dispute_type_status", "role", "role_status", "stage", "urgent_flags"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "task_id": {"type": "string", "minLength": 3},
+    "dispute_type": {"enum": ["civil_litigation", "arbitration", "mediation", "enforcement", "criminal_defense", "administrative_litigation", "unknown"]},
+    "dispute_type_status": {"enum": ["user_confirmed", "unconfirmed"]},
+    "role": {"enum": ["claimant", "respondent", "neutral", "unknown"]},
+    "role_status": {"enum": ["user_confirmed", "unconfirmed"]},
+    "stage": {"type": "string", "minLength": 1},
+    "urgent_flags": {"type": "array", "uniqueItems": true, "items": {"enum": ["deadline", "personal_safety", "asset_preservation", "coercive_measure", "none"]}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-employment/employment-input.schema.json",
+  "title": "劳动用工审查输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter", "sources", "relationship_review", "lifecycle_reviews", "proposed_actions", "dispute"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matter_id", "title", "as_of_date", "employment_location"],
+      "properties": {
+        "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "as_of_date": {"type": "string", "format": "date"},
+        "employment_location": {"type": "string", "minLength": 2, "maxLength": 120}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/sourceRecord"}
+    },
+    "relationship_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_types", "signals", "lawyer_question"],
+      "properties": {
+        "candidate_types": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["labor_relation", "service_relation", "dispatch_relation", "platform_relation", "mixed_or_other", "unknown"]}
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["signal_id", "dimension", "observation", "source_ids", "supports_candidate_types"],
+            "properties": {
+              "signal_id": {"type": "string", "pattern": "^SIG-[A-Za-z0-9_-]{1,40}$"},
+              "dimension": {"enum": ["management_control", "work_integration", "remuneration", "tools_and_risk", "time_and_place", "contract_label", "other"]},
+              "observation": {"type": "string", "minLength": 2, "maxLength": 1000},
+              "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+              "supports_candidate_types": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+            }
+          }
+        },
+        "lawyer_question": {"type": "string", "minLength": 2, "maxLength": 1000}
+      }
+    },
+    "lifecycle_reviews": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["review_id", "category", "question", "fact_source_ids", "authority_ids", "open_questions", "review_state"],
+        "properties": {
+          "review_id": {"type": "string", "pattern": "^REV-[A-Za-z0-9_-]{1,40}$"},
+          "category": {"$ref": "#/$defs/category"},
+          "question": {"type": "string", "minLength": 2, "maxLength": 1000},
+          "fact_source_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "authority_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^EMP-[A-Z0-9-]+$"}},
+          "open_questions": {"type": "array", "items": {"type": "string", "minLength": 2, "maxLength": 500}},
+          "review_state": {"enum": ["facts_incomplete", "research_needed", "lawyer_review_pending"]}
+        }
+      }
+    },
+    "proposed_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action_id", "action_type", "description", "source_ids", "adverse_effect_candidate", "authorization_status", "execution_status"],
+        "properties": {
+          "action_id": {"type": "string", "pattern": "^ACT-[A-Za-z0-9_-]{1,40}$"},
+          "action_type": {"enum": ["hire", "reject_candidate", "change_terms", "discipline", "adjust_pay", "change_role", "terminate", "issue_notice", "file_claim", "other"]},
+          "description": {"type": "string", "minLength": 2, "maxLength": 1000},
+          "source_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "adverse_effect_candidate": {"type": "boolean"},
+          "authorization_status": {"enum": ["pending", "client_confirmed"]},
+          "execution_status": {"enum": ["draft", "task_candidate"]}
+        }
+      }
+    },
+    "dispute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exists", "phase_candidate", "questions", "source_ids"],
+      "properties": {
+        "exists": {"type": "boolean"},
+        "phase_candidate": {"enum": ["none", "internal_grievance", "mediation", "arbitration", "litigation", "enforcement", "unknown"]},
+        "questions": {"type": "array", "items": {"type": "string", "minLength": 2, "maxLength": 500}},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "category": {"enum": ["recruitment_onboarding", "labor_contract", "work_rules", "pay_hours_leave", "social_insurance_benefits", "change_termination", "exit_handover", "labor_dispute"]},
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "source_kind", "source_locator", "original_text", "sha256", "verification_status", "verified_on"],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^SRC-[A-Za-z0-9_-]{1,40}$"},
+        "source_kind": {"enum": ["contract", "policy", "payroll", "attendance", "communication", "social_insurance", "handover", "testimony", "filing", "other"]},
+        "source_locator": {"type": "string", "minLength": 1, "maxLength": 500},
+        "original_text": {"type": "string", "minLength": 1, "maxLength": 20000},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "verification_status": {"enum": ["unverified", "source_checked", "lawyer_verified"]},
+        "verified_on": {"type": ["string", "null"], "format": "date"}
+      }
+    }
+  }
+}

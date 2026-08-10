@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "minimum_compatibility_period": "两个课程版本",
+  "aliases": [
+    {
+      "legacy_name": "cn-evidence-transcribe-skill",
+      "canonical_name": "cn-evidence",
+      "compatibility_status": "active-testing"
+    },
+    {
+      "legacy_name": "cn-write-procedure-skill",
+      "canonical_name": "cn-procedure",
+      "compatibility_status": "active-testing"
+    },
+    {
+      "legacy_name": "cn-complaint-to-element-skill",
+      "canonical_name": "cn-element-pleading",
+      "compatibility_status": "active-testing"
+    },
+    {
+      "legacy_name": "cn-case-search-skill",
+      "canonical_name": "cn-research",
+      "compatibility_status": "active-testing"
+    }
+  ]
+}

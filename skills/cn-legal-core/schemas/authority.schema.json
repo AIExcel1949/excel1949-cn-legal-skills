@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/authority.schema.json",
+  "type": "object",
+  "required": ["authority_id", "authority_type", "title", "effect_status", "verified_at", "source_url"],
+  "properties": {
+    "authority_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "authority_type": {"enum": ["law", "administrative_regulation", "judicial_interpretation", "department_rule", "local_rule", "case", "guidance", "other"]},
+    "title": {"type": "string", "minLength": 1},
+    "document_number": {"type": "string"},
+    "effect_status": {"enum": ["effective", "amended", "repealed", "not_yet_effective", "unknown"]},
+    "effective_from": {"type": "string", "format": "date"},
+    "verified_at": {"type": "string", "format": "date-time"},
+    "source_url": {"type": "string", "format": "uri"},
+    "quoted_text": {"type": "string"}
+  },
+  "additionalProperties": false
+}
+

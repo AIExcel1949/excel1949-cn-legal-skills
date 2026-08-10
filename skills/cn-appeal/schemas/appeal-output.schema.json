@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-appeal/appeal-output.schema.json",
+  "title": "上诉审查输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "appeal_id", "case_type", "artifact_state", "request_integrity", "issue_audit", "deadline_audit", "evidence_audit", "review_items", "source_record"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "appeal_id": {"type": "string"},
+    "case_type": {"type": "string"}, "artifact_state": {"const": "lawyer_review_required"},
+    "request_integrity": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["request_id", "verbatim_text", "text_sha256", "status"], "properties": {"request_id": {"type": "string"}, "verbatim_text": {"type": "string"}, "text_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "status": {"const": "verbatim_preserved"}}}},
+    "issue_audit": {"type": "object", "required": ["fact_dispute", "legal_application", "procedural_issue"], "additionalProperties": {"type": "array"}},
+    "deadline_audit": {"type": "object", "required": ["status", "rule_inputs", "service_facts", "lawyer_conclusion", "automatic_deadline_decision"], "properties": {"status": {"type": "string"}, "rule_inputs": {"type": "array"}, "service_facts": {"type": "array"}, "lawyer_conclusion": {"type": ["string", "null"]}, "automatic_deadline_decision": {"const": null}}},
+    "evidence_audit": {"type": "object", "required": ["evidence", "new_evidence_explanations"], "properties": {"evidence": {"type": "array"}, "new_evidence_explanations": {"type": "array"}}},
+    "review_items": {"type": "array", "items": {"type": "object", "required": ["item_id", "question", "status"], "properties": {"item_id": {"type": "string"}, "question": {"type": "string"}, "status": {"const": "lawyer_review_required"}}}},
+    "source_record": {"type": "object"}
+  }
+}

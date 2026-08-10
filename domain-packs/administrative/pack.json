@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "administrative",
+  "title": "Administrative & Regulatory Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "行政行为、行政复议、行政诉讼、行政赔偿和执行衔接的事实整理",
+      "主体、职权、程序、证据、送达和救济节点清单"
+    ],
+    "excluded": [
+      "可诉性、复议前置、管辖、期限、行政行为违法或赔偿责任的自动认定"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-ADMIN-RECONSIDERATION-2023",
+      "title": "中华人民共和国行政复议法（2023年修订，自2024年1月1日起施行）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/202309/t20230901_431401.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-ADMIN-LITIGATION-2017",
+      "title": "中华人民共和国行政诉讼法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/zgrdw/npc/xinwen/2017-06/29/content_2024894.htm",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "act_reviewability",
+      "label": "行政行为与救济入口",
+      "questions": [
+        "作出行为的机关、职权依据、对象、内容和实际影响是什么？",
+        "行为形式、送达、履行、复议前置和既往救济情况如何？"
+      ],
+      "fact_fields": [
+        "行政主体",
+        "行为内容",
+        "职权依据",
+        "送达影响"
+      ],
+      "evidence_prompts": [
+        "决定、告知、检查和送达材料",
+        "申请、投诉、复议和回复记录"
+      ],
+      "calculation_hooks": [],
+      "deadline_hooks": [
+        "申请、送达、复议和起诉节点候选"
+      ],
+      "prohibitions": [
+        "不得自动认定行为可诉、复议前置或期限届满"
+      ]
+    },
+    {
+      "issue_key": "procedure_evidence",
+      "label": "程序、证据与请求",
+      "questions": [
+        "行政机关履行了哪些调查、听证、告知、说明理由程序？",
+        "原告资格、请求目标、事实证据和规范性文件附带审查需求是什么？"
+      ],
+      "fact_fields": [
+        "调查程序",
+        "告知听证",
+        "证据依据",
+        "救济请求"
+      ],
+      "evidence_prompts": [
+        "执法卷宗、笔录、听证和审批记录",
+        "规范性文件、申请材料和损害凭证"
+      ],
+      "calculation_hooks": [
+        "损失和赔偿项目台账"
+      ],
+      "deadline_hooks": [
+        "举证、开庭和履行节点候选"
+      ],
+      "prohibitions": [
+        "不得因程序瑕疵候选自动推导撤销、确认违法或赔偿结论"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交",
+    "不得自动发送通知、申请、复议、起诉或履行材料，不得向任何外部系统提交",
+    "不得自动申请或执行停止、撤销、强制、赔偿或其他外部操作"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "行政复议管辖、行政诉讼司法解释和地方行政程序变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-ADMINISTRATIVE-001",
+      "prompt": "企业收到行政处罚决定，认为执法机关未举行听证且认定事实错误。",
+      "expected_questions": [
+        "处罚决定、告知、听证申请和送达时间是什么？",
+        "职权、程序、证据和救济目标如何分别整理？"
+      ],
+      "forbidden_inferences": [
+        "不得自动认定处罚违法",
+        "不得自动计算或提交复议诉讼期限"
+      ]
+    }
+  ],
+  "title_zh": "行政复议与行政诉讼业务包"
+}

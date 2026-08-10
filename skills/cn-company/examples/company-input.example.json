@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "TRAIN-COMPANY-001",
+  "as_of_date": "2026-07-18",
+  "purpose": "教学演示：董事会会议筹备任务矩阵",
+  "company": {
+    "company_id": "COMP-001",
+    "name": "某甲科技有限公司",
+    "company_type": "limited_liability",
+    "jurisdiction": "中华人民共和国境内（虚构登记地）",
+    "registration_status": "存续（教学假设，待核验）",
+    "registration_verified_on": "2026-07-18",
+    "registration_source_ref": "脱敏登记快照 REG-001",
+    "registered_capital_description": "人民币一百万元（教学数据）"
+  },
+  "authority_sources": [
+    {
+      "source_id": "LAW-COMPANY-2023",
+      "title": "中华人民共和国公司法（2023年修订）",
+      "source_type": "law",
+      "effect_status": "effective",
+      "verified_on": "2026-07-18",
+      "locator": "国家法律法规数据库；具体条文待逐项复核",
+      "official_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081818c9108eb018cb6922f750c07&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95&type="
+    },
+    {
+      "source_id": "CHARTER-2025",
+      "title": "某甲科技有限公司章程（脱敏教学稿）",
+      "source_type": "charter",
+      "effect_status": "confirmed_current",
+      "verified_on": "2026-07-18",
+      "locator": "第十条至第十五条",
+      "file_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "charter_versions": [
+    {
+      "charter_id": "CHARTER-2025",
+      "version_label": "2025年脱敏教学版",
+      "status": "confirmed_current",
+      "effective_date": "2025-01-10",
+      "source_id": "CHARTER-2025"
+    }
+  ],
+  "shareholders": [
+    {
+      "party_id": "PARTY-A",
+      "name": "甲方主体（已脱敏）",
+      "holding_description": "持股情况见脱敏名册",
+      "voting_rights_description": "表决权以现行章程和名册复核结果为准",
+      "verification_status": "verified",
+      "source_ref": "脱敏股东名册 SHARE-001"
+    }
+  ],
+  "governance_persons": [
+    {
+      "person_id": "PERSON-A",
+      "name": "董事甲（化名）",
+      "role": "董事长",
+      "appointment_status": "verified",
+      "source_ref": "脱敏任职文件 APPT-001"
+    }
+  ],
+  "agenda_items": [
+    {
+      "agenda_id": "AGENDA-001",
+      "title": "审议年度预算草案",
+      "proposed_body": "董事会（仅为用户输入，待律师复核）",
+      "proposed_action": "形成内部审议结果",
+      "authority_source_ids": ["LAW-COMPANY-2023", "CHARTER-2025"],
+      "charter_ids": ["CHARTER-2025"]
+    }
+  ],
+  "governance_actions": [
+    {
+      "action_id": "ACTION-001",
+      "action_type": "meeting",
+      "body": "董事会",
+      "agenda_ids": ["AGENDA-001"],
+      "convenor": "董事长（待核验身份）",
+      "notice_rule_text": "依输入的现行章程条款复核通知方式与期限，不由脚本计算",
+      "voting_rule_text": "依输入的现行章程及适用法律复核，不由脚本认定结果",
+      "conflict_review_notes": "逐名核对关联关系及回避要求",
+      "signing_responsible": "经授权的实际签署人（待确认）",
+      "registration_need": "to_be_determined",
+      "disclosure_need": "to_be_determined",
+      "responsible_by_stage": {
+        "authority_review": "项目律师",
+        "convocation": "公司治理联系人",
+        "notice": "公司治理联系人",
+        "voting": "会议主持人及项目律师",
+        "minutes": "会议记录人",
+        "signing": "实际签署人",
+        "registration_disclosure": "公司登记联系人及项目律师"
+      },
+      "rule_source_ids": ["LAW-COMPANY-2023", "CHARTER-2025"]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-data-privacy/privacy-input.schema.json",
+  "title": "个人信息保护审查输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter", "sources", "authority_ids", "data_inventory", "processing_activities", "pia_records", "incidents", "individual_requests"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matter_id", "title", "as_of_date", "jurisdiction_scope"],
+      "properties": {
+        "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 120},
+        "as_of_date": {"type": "string", "format": "date"},
+        "jurisdiction_scope": {"type": "string", "minLength": 2, "maxLength": 300}
+      }
+    },
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourceRecord"}},
+    "authority_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^PRV-[A-Z0-9-]+$"}},
+    "data_inventory": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["data_item_id", "label", "classification_candidates", "source_ids", "systems", "retention_statement", "deletion_state"],
+        "properties": {
+          "data_item_id": {"type": "string", "pattern": "^DAT-[A-Za-z0-9_-]{1,40}$"},
+          "label": {"type": "string", "minLength": 1, "maxLength": 120},
+          "classification_candidates": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"enum": ["personal_information", "sensitive_personal_information", "child_under_14", "minor_14_to_17", "important_data", "non_personal_data", "unknown"]}
+          },
+          "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "systems": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+          "retention_statement": {"type": "string", "minLength": 2, "maxLength": 500},
+          "deletion_state": {"enum": ["not_scheduled", "task_candidate", "legal_hold_candidate", "unknown"]}
+        }
+      }
+    },
+    "processing_activities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["activity_id", "name", "purpose", "data_item_ids", "subject_groups", "collection_channels", "legal_basis_candidates", "notice_status", "consent_status", "sensitive_context", "minor_context", "recipients", "cross_border", "retention_plan", "high_impact_candidate"],
+        "properties": {
+          "activity_id": {"type": "string", "pattern": "^ACT-[A-Za-z0-9_-]{1,40}$"},
+          "name": {"type": "string", "minLength": 1, "maxLength": 120},
+          "purpose": {"type": "string", "minLength": 2, "maxLength": 1000},
+          "data_item_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "subject_groups": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+          "collection_channels": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1, "maxLength": 200}},
+          "legal_basis_candidates": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"enum": ["consent", "separate_consent", "contract_necessity", "hr_management", "statutory_duty", "public_health_emergency", "public_interest_news", "publicly_disclosed_reasonable", "other_pending"]}
+          },
+          "notice_status": {"enum": ["documented", "partial", "missing", "unknown"]},
+          "consent_status": {"enum": ["documented", "partial", "not_relied_on_candidate", "missing", "unknown"]},
+          "sensitive_context": {"$ref": "#/$defs/sensitiveContext"},
+          "minor_context": {"$ref": "#/$defs/minorContext"},
+          "recipients": {"type": "array", "items": {"$ref": "#/$defs/recipient"}},
+          "cross_border": {"$ref": "#/$defs/crossBorder"},
+          "retention_plan": {"type": "string", "minLength": 2, "maxLength": 500},
+          "high_impact_candidate": {"type": "boolean"}
+        }
+      }
+    },
+    "pia_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pia_id", "activity_ids", "trigger_candidates", "necessity_assessment", "impact_description", "risk_items", "safeguards", "conclusion_state"],
+        "properties": {
+          "pia_id": {"type": "string", "pattern": "^PIA-[A-Za-z0-9_-]{1,40}$"},
+          "activity_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "trigger_candidates": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["sensitive_information", "automated_decision", "entrusted_or_shared", "cross_border", "public_disclosure", "high_impact", "minor_information", "other"]}},
+          "necessity_assessment": {"type": "string", "minLength": 2, "maxLength": 1500},
+          "impact_description": {"type": "string", "minLength": 2, "maxLength": 1500},
+          "risk_items": {"type": "array", "items": {"type": "string", "minLength": 2, "maxLength": 500}},
+          "safeguards": {"type": "array", "items": {"type": "string", "minLength": 2, "maxLength": 500}},
+          "conclusion_state": {"enum": ["draft", "facts_incomplete", "lawyer_review_pending"]}
+        }
+      }
+    },
+    "incidents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["incident_id", "observed_facts", "source_ids", "severity_candidate", "response_tasks"],
+        "properties": {
+          "incident_id": {"type": "string", "pattern": "^INC-[A-Za-z0-9_-]{1,40}$"},
+          "observed_facts": {"type": "string", "minLength": 2, "maxLength": 1500},
+          "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "severity_candidate": {"enum": ["unknown", "ordinary_candidate", "major_candidate", "critical_candidate"]},
+          "response_tasks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["task_id", "action_type", "description", "execution_status", "human_approval_required"],
+              "properties": {
+                "task_id": {"type": "string", "pattern": "^TSK-[A-Za-z0-9_-]{1,40}$"},
+                "action_type": {"enum": ["contain", "investigate", "preserve_evidence", "assess_notification", "draft_notification", "other"]},
+                "description": {"type": "string", "minLength": 2, "maxLength": 1000},
+                "execution_status": {"enum": ["planned", "in_progress_manual", "completed_manual"]},
+                "human_approval_required": {"const": true}
+              }
+            }
+          }
+        }
+      }
+    },
+    "individual_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["request_id", "request_type", "source_ids", "task_description", "task_state", "auto_execute"],
+        "properties": {
+          "request_id": {"type": "string", "pattern": "^REQ-[A-Za-z0-9_-]{1,40}$"},
+          "request_type": {"enum": ["access", "copy", "correct", "delete", "restrict", "explain", "withdraw_consent", "other"]},
+          "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "task_description": {"type": "string", "minLength": 2, "maxLength": 1000},
+          "task_state": {"enum": ["pending_identity_check", "pending_scope_review", "pending_legal_review", "ready_for_manual_action"]},
+          "auto_execute": {"const": false}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "source_kind", "source_locator", "original_text", "sha256", "verification_status", "verified_on"],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^SRC-[A-Za-z0-9_-]{1,40}$"},
+        "source_kind": {"enum": ["privacy_notice", "consent_record", "contract", "system_inventory", "log", "incident_record", "impact_assessment", "policy", "request_record", "other"]},
+        "source_locator": {"type": "string", "minLength": 1, "maxLength": 500},
+        "original_text": {"type": "string", "minLength": 1, "maxLength": 20000},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "verification_status": {"enum": ["unverified", "source_checked", "lawyer_verified"]},
+        "verified_on": {"type": ["string", "null"], "format": "date"}
+      }
+    },
+    "sensitiveContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_present", "specific_purpose", "necessity_note", "separate_consent_status"],
+      "properties": {
+        "candidate_present": {"type": "boolean"},
+        "specific_purpose": {"type": ["string", "null"], "maxLength": 1000},
+        "necessity_note": {"type": ["string", "null"], "maxLength": 1000},
+        "separate_consent_status": {"enum": ["documented", "partial", "not_applicable_candidate", "missing", "unknown"]}
+      }
+    },
+    "minorContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_present", "age_group_candidates", "guardian_consent_status"],
+      "properties": {
+        "candidate_present": {"type": "boolean"},
+        "age_group_candidates": {"type": "array", "uniqueItems": true, "items": {"enum": ["under_14", "age_14_to_17", "adult", "unknown"]}},
+        "guardian_consent_status": {"enum": ["documented", "partial", "not_applicable_candidate", "missing", "unknown"]}
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recipient_id", "name_or_role", "relationship_candidate", "contract_status", "source_ids"],
+      "properties": {
+        "recipient_id": {"type": "string", "pattern": "^RCP-[A-Za-z0-9_-]{1,40}$"},
+        "name_or_role": {"type": "string", "minLength": 1, "maxLength": 120},
+        "relationship_candidate": {"enum": ["entrusted_processing", "joint_processing", "independent_handler", "unknown"]},
+        "contract_status": {"enum": ["documented", "partial", "missing", "unknown"]},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+      }
+    },
+    "crossBorder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["involved", "destinations", "mechanism_candidates", "quantity_note", "important_data_candidate"],
+      "properties": {
+        "involved": {"type": "boolean"},
+        "destinations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+        "mechanism_candidates": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["security_assessment", "standard_contract", "certification", "exemption_candidate", "not_applicable", "unknown"]}},
+        "quantity_note": {"type": "string", "minLength": 2, "maxLength": 500},
+        "important_data_candidate": {"type": "boolean"}
+      }
+    }
+  }
+}

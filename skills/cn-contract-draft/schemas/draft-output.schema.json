@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-contract-draft/draft-output.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "input_sha256", "blocked", "blockers", "gaps", "conflicts", "cross_reference_report", "draft", "authority_records", "artifact_state"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "blocked": {"type": "boolean"}, "blockers": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "gaps": {"type": "array", "items": {"$ref": "#/$defs/finding"}}, "conflicts": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "cross_reference_report": {"type": "object", "required": ["missing_references", "unused_definitions"], "properties": {"missing_references": {"type": "array", "items": {"$ref": "#/$defs/finding"}}, "unused_definitions": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "draft": {"type": "object", "required": ["title", "parties", "clauses"], "properties": {"title": {"type": "string"}, "parties": {"type": "array", "items": {"type": "object"}}, "clauses": {"type": "array", "items": {"$ref": "#/$defs/clause"}}}, "additionalProperties": false},
+    "authority_records": {"type": "array", "items": {"type": "object"}},
+    "artifact_state": {"const": "lawyer_review_required"}
+  },
+  "$defs": {
+    "finding": {"type": "object", "required": ["code", "path", "message"], "properties": {"code": {"type": "string"}, "path": {"type": "string"}, "message": {"type": "string"}}, "additionalProperties": false},
+    "clause": {"type": "object", "required": ["clause_id", "heading", "body_lines", "references"], "properties": {"clause_id": {"type": "string"}, "heading": {"type": "string"}, "body_lines": {"type": "array", "items": {"type": "string"}}, "references": {"type": "object", "required": ["term_ids", "risk_ids", "definition_ids", "authority_ids"], "properties": {"term_ids": {"type": "array", "items": {"type": "string"}}, "risk_ids": {"type": "array", "items": {"type": "string"}}, "definition_ids": {"type": "array", "items": {"type": "string"}}, "authority_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

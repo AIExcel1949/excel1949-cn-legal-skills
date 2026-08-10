@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/common.schema.json",
+  "$defs": {
+    "stable_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fact_status": {
+      "enum": ["stated", "user_confirmed", "derived", "disputed", "missing", "conflict", "unreadable"]
+    },
+    "artifact_state": {
+      "enum": ["draft", "machine_checked", "lawyer_review_required", "lawyer_reviewed"]
+    },
+    "source_span": {
+      "type": "object",
+      "required": ["source_id", "quote"],
+      "properties": {
+        "source_id": {"$ref": "#/$defs/stable_id"},
+        "page": {"type": "integer", "minimum": 1},
+        "paragraph": {"type": "integer", "minimum": 0},
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 0},
+        "quote": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}
+

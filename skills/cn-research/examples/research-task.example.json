@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "task_id": "RESEARCH-DEMO-001",
+  "matter_id": "MATTER-DEMO-001",
+  "cutoff_date": "2026-07-18",
+  "procedure": "民事诉讼",
+  "jurisdiction": "中国大陆",
+  "case_stage": "诉前分析",
+  "research_questions": [
+    {
+      "question_id": "Q-001",
+      "question": "买卖合同解除后返还与损失赔偿请求应如何区分法律依据？",
+      "known_facts": ["示例案件材料记载合同已经履行部分义务"],
+      "missing_facts": ["解除通知是否到达及到达日期尚待确认"],
+      "search_both_sides": true
+    }
+  ],
+  "source_types": ["legislation", "judicial_interpretation", "case"],
+  "preferred_tools": []
+}

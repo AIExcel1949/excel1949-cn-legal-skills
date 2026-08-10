@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MATTER-2026-DEMO",
+  "review_context": {
+    "review_id": "REVIEW-2026-DEMO",
+    "as_of": "2026-07-18T09:00:00+08:00",
+    "mode": "training_fixture",
+    "privacy_mode": "external_public",
+    "intended_use": "脱敏教学案例公开前终检",
+    "max_authority_age_days": 90
+  },
+  "artifact": {
+    "artifact_id": "ARTIFACT-COMPLAINT-DEMO",
+    "title": "民事起诉状脱敏示例",
+    "file_name": "民事起诉状-脱敏示例.txt",
+    "input_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "text_sha256": "652e94a46fb15755767dd57b06b059f6925fc22e0c135ca0a9c0e6379b166156",
+    "text": "民事起诉状\n\n原告：张某某，身份证号110101199001010010，电话13800138000，邮箱case@example.invalid。\n\n诉讼请求：\n一、判令被告支付借款本金人民币100000元。\n\n事实与理由：\n2025年1月2日，原告向被告交付借款。\n依据《中华人民共和国民法典》，借款人应当按照约定的期限返还借款。\n\n【待确认：管辖法院】\n"
+  },
+  "facts": [
+    {
+      "record": {
+        "fact_id": "FACT-LOAN-AMOUNT",
+        "field": "loan_principal",
+        "raw_value": 100000,
+        "normalized_value": 100000,
+        "status": "user_confirmed",
+        "source_spans": [
+          {"source_id": "SOURCE-LOAN-AGREEMENT", "page": 1, "quote": "借款本金人民币100000元"}
+        ],
+        "confirmed_at": "2026-07-18T08:30:00+08:00"
+      },
+      "display_text": "人民币100000元",
+      "required_in_document": true,
+      "evidence_required": true
+    }
+  ],
+  "evidence": [],
+  "authorities": [
+    {
+      "record": {
+        "authority_id": "AUTH-CIVIL-CODE-LOAN",
+        "authority_type": "law",
+        "title": "中华人民共和国民法典",
+        "document_number": "中华人民共和国主席令第四十五号",
+        "effect_status": "effective",
+        "effective_from": "2021-01-01",
+        "verified_at": "2026-01-01T09:00:00+08:00",
+        "source_url": "https://flk.npc.gov.cn/",
+        "quoted_text": "借款人应当按照约定的期限返还借款。"
+      },
+      "relied_upon": true
+    }
+  ],
+  "calculations": [
+    {
+      "record": {
+        "calculation_id": "CALC-PRINCIPAL",
+        "formula": "借款本金",
+        "inputs": {"principal": 100000},
+        "steps": ["核对借款本金"],
+        "rounding_rule": "保留两位小数",
+        "output": 100000,
+        "status": "machine_checked"
+      },
+      "display_text": "人民币100000元",
+      "recalculated_value": 99999,
+      "tolerance": 0.01
+    }
+  ],
+  "deadlines": [],
+  "citations": [
+    {
+      "citation_id": "CITE-CIVIL-CODE-LOAN",
+      "authority_id": "AUTH-CIVIL-CODE-LOAN",
+      "exact_quote": "借款人应当按照约定的期限返还借款。",
+      "locator": "第三编第二分编借款合同章"
+    }
+  ],
+  "date_checks": [
+    {
+      "date_id": "DATE-LOAN-DELIVERY",
+      "value": "2025-01-02",
+      "display_text": "2025年1月2日",
+      "required_in_document": true,
+      "source": "SOURCE-PAYMENT-RECORD"
+    }
+  ],
+  "consistency_checks": [
+    {
+      "check_id": "CHECK-PRINCIPAL-CONSISTENCY",
+      "left_label": "事实台账本金",
+      "left_value": 100000,
+      "operator": "equal",
+      "right_label": "计算复核本金",
+      "right_value": 99999
+    }
+  ],
+  "human_confirmations": [
+    {
+      "confirmation_id": "CONFIRM-JURISDICTION",
+      "question": "承办律师是否已核定管辖法院？",
+      "required": true,
+      "status": "pending"
+    }
+  ]
+}

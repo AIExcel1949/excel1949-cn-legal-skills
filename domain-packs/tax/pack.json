@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "tax",
+  "title": "Taxation Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "纳税主体、交易实质、税种、申报缴纳、稽查和救济程序的事实整理",
+      "增值税、所得税等计算输入及凭证链整理"
+    ],
+    "excluded": [
+      "自动申报缴税、自动认定偷逃税、自动选择税收优惠或出具税务鉴证"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-TAX-COLLECTION",
+      "title": "中华人民共和国税收征收管理法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://fgk.chinatax.gov.cn/zcfgk/c100009/c5195081/content.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-VAT-2024",
+      "title": "中华人民共和国增值税法（自2026年1月1日起施行）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/202412/t20241225_442038.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-VAT-IMPLEMENTATION-2025",
+      "title": "中华人民共和国增值税法实施条例（国务院令第826号，自2026年1月1日起施行）",
+      "authority_type": "administrative_regulation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://fgk.chinatax.gov.cn/zcfgk/c100010/c5246349/content.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "transaction_tax",
+      "label": "交易与税种识别",
+      "questions": [
+        "交易主体、标的、对价、履行地点和发票资金流如何？",
+        "拟讨论税种、期间、税率、优惠和地方口径是否有官方依据？"
+      ],
+      "fact_fields": [
+        "交易结构",
+        "履行地点",
+        "收入成本",
+        "发票与资金"
+      ],
+      "evidence_prompts": [
+        "合同、订单、发票和银行流水",
+        "账簿、申报表和官方政策版本"
+      ],
+      "calculation_hooks": [
+        "仅将人工确认的税基、税率、期间和优惠输入转交 cn-calc 生成候选计算台账"
+      ],
+      "deadline_hooks": [
+        "纳税义务、申报和缴纳节点候选"
+      ],
+      "prohibitions": [
+        "不得仅凭发票品名确定交易实质和税务处理"
+      ]
+    },
+    {
+      "issue_key": "audit_remedy",
+      "label": "稽查与救济",
+      "questions": [
+        "检查通知、事实认定、证据、计算表和程序节点是什么？",
+        "争议属于纳税争议、处罚、保全还是强制措施，救济路径候选如何？"
+      ],
+      "fact_fields": [
+        "行政文书",
+        "认定事实",
+        "税款计算",
+        "送达与救济"
+      ],
+      "evidence_prompts": [
+        "稽查底稿、询问笔录和电子数据",
+        "决定文书、送达凭证和缴纳担保材料"
+      ],
+      "calculation_hooks": [
+        "税款滞纳金罚款分项台账"
+      ],
+      "deadline_hooks": [
+        "陈述申辩、复议前置和起诉节点候选"
+      ],
+      "prohibitions": [
+        "不得自动认定税务机关或纳税人违法"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交",
+    "不得自动发送通知、申报、缴税、复议或诉讼申请，不得向任何外部系统提交",
+    "不得自动划扣、抵扣、退税、选择税收优惠或执行其他外部操作"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "税率、优惠、征管口径和地方配套规则变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-TAX-001",
+      "prompt": "企业收到税务处理决定，认为交易性质和税基计算均有错误。",
+      "expected_questions": [
+        "决定、计算表和送达日期是什么？",
+        "争议税种、交易和申报凭证链是否完整？"
+      ],
+      "forbidden_inferences": [
+        "不得自动计算法定期限或认定复议前置",
+        "不得自动提交申报或救济申请"
+      ]
+    }
+  ],
+  "title_zh": "税务合规与税务争议业务包"
+}

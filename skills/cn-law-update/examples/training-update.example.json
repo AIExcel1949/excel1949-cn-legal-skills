@@ -1,0 +1,116 @@
+{
+  "analysis_id": "TRAINING-LAW-UPDATE-001",
+  "mode": "training_fixture",
+  "title": "脱敏示例规则",
+  "subject_type": "other",
+  "jurisdiction": "中国内地（纯教学示例）",
+  "comparison_date": "2026-07-18",
+  "old_version": {
+    "version_id": "training-2025",
+    "title": "脱敏示例规则（旧版）",
+    "effect_status": "amended",
+    "verified_on": "2026-07-18",
+    "effective_from": "2025-01-01",
+    "full_text_checked": true,
+    "text_basis": "training_fixture",
+    "text_sha256": "a07741882b7764e0c1592d89d1b6d462b2508101600c36b883fee54fc900ac85",
+    "source": {
+      "url": "https://example.invalid/training/old",
+      "source_tier": "training_fixture",
+      "retrieved_at": "2026-07-18T09:00:00+08:00",
+      "issuer": "虚构教学机构",
+      "document_number": "教学示例〔2025〕1号",
+      "page_title": "脱敏示例规则（旧版）"
+    },
+    "units": [
+      {
+        "unit_id": "article-1",
+        "locator": "第一条",
+        "text": "示例规则第一条 申请人应当在收到通知之日起十日内提交脱敏材料。",
+        "proposed_change_categories": ["deadline"]
+      },
+      {
+        "unit_id": "article-2",
+        "locator": "第二条",
+        "text": "示例规则第二条 受理机构应当记录材料接收日期。"
+      }
+    ]
+  },
+  "new_version": {
+    "version_id": "training-2026",
+    "title": "脱敏示例规则（新版）",
+    "effect_status": "effective",
+    "verified_on": "2026-07-18",
+    "effective_from": "2026-08-01",
+    "full_text_checked": true,
+    "text_basis": "training_fixture",
+    "text_sha256": "a7e8085367b6d4aff374414768a6cef78d29a10ff5d8184acc5d2d354c7f3b1f",
+    "source": {
+      "url": "https://example.invalid/training/new",
+      "source_tier": "training_fixture",
+      "retrieved_at": "2026-07-18T09:10:00+08:00",
+      "issuer": "虚构教学机构",
+      "document_number": "教学示例〔2026〕2号",
+      "page_title": "脱敏示例规则（新版）"
+    },
+    "units": [
+      {
+        "unit_id": "article-1",
+        "locator": "第一条",
+        "text": "示例规则第一条 申请人应当在收到通知之日起十五日内提交脱敏材料。",
+        "proposed_change_categories": ["deadline"]
+      },
+      {
+        "unit_id": "article-2",
+        "locator": "第二条",
+        "text": "示例规则第二条 受理机构应当记录材料接收日期。"
+      },
+      {
+        "unit_id": "article-3",
+        "locator": "第三条",
+        "text": "示例规则第三条 当事人可以通过线上系统查询办理进度。",
+        "proposed_change_categories": ["procedure"]
+      }
+    ]
+  },
+  "monitored_artifacts": [
+    {
+      "artifact_id": "skill-cn-deadline-demo",
+      "artifact_type": "skill",
+      "name": "cn-deadline-demo",
+      "skill_name": "cn-deadline",
+      "path_label": "skills/cn-deadline（示例标签）",
+      "production": false,
+      "uses_unit_ids": ["article-1"],
+      "uses_terms": ["十日", "期限"]
+    },
+    {
+      "artifact_id": "template-application-demo",
+      "artifact_type": "template",
+      "name": "申请书脱敏教学模板",
+      "skill_name": "cn-procedure",
+      "path_label": "教学模板/申请书.docx",
+      "production": false,
+      "uses_unit_ids": [],
+      "uses_terms": ["线上系统"]
+    },
+    {
+      "artifact_id": "conclusion-deadline-demo",
+      "artifact_type": "prior_conclusion",
+      "name": "旧期限结论（脱敏教学示例）",
+      "production": false,
+      "uses_unit_ids": ["article-1"],
+      "uses_terms": []
+    }
+  ],
+  "impact_claims": [
+    {
+      "unit_id": "article-1",
+      "artifact_id": "skill-cn-deadline-demo",
+      "impact_level": "high",
+      "reason": "期限文本发生变化，需要人工复核起算规则和过渡安排。",
+      "recommended_manual_action": "由执业律师确认后，在独立任务中更新期限规则与测试。",
+      "review_status": "pending"
+    }
+  ]
+}

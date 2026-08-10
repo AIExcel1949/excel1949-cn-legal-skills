@@ -1,0 +1,691 @@
+{
+  "manifest_version": "1.0",
+  "cluster_version": "1.0.0",
+  "status": "testing",
+  "brand": "AIOffice职场通关",
+  "author": "AIOffice职场通关-excel1949",
+  "license": "GPL-3.0",
+  "target_skill_count": 40,
+  "target_domain_pack_count": 17,
+  "implemented_skills": [
+    {
+      "skill_name": "cn-legal-core",
+      "status": "testing",
+      "batch": "A",
+      "version": "0.1.0",
+      "dependencies": [],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "尚未完成全部文件类型安全解析组件"
+      ]
+    },
+    {
+      "skill_name": "cn-research",
+      "status": "testing",
+      "batch": "B",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [
+        "cn-case-search-skill"
+      ],
+      "known_limitations": [
+        "本地法律文本用于离线定位，具体案件仍须核验官方现行文本、时间效力和适用范围"
+      ]
+    },
+    {
+      "skill_name": "cn-intake",
+      "status": "testing",
+      "batch": "B",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "利益冲突、身份权限、期限风险和是否承办仍须由律所人工流程确认"
+      ]
+    },
+    {
+      "skill_name": "cn-timeline",
+      "status": "testing",
+      "batch": "B",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "自然语言模糊日期必须先由人工或上游解析流程确认精度"
+      ]
+    },
+    {
+      "skill_name": "cn-deadline",
+      "status": "testing",
+      "batch": "B",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-timeline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不内置未经逐条核验的法定期限表，工作日计算依赖完整官方日历数据"
+      ]
+    },
+    {
+      "skill_name": "cn-verify",
+      "status": "testing",
+      "batch": "B",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "机器终检只能检查结构化台账和文本映射，不能证明事实、证据或法律适用正确"
+      ]
+    },
+    {
+      "skill_name": "cn-law-update",
+      "status": "testing",
+      "batch": "B",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "需要人工提供并核验新旧官方全文，不自动抓取或修改生产模板"
+      ]
+    },
+    {
+      "skill_name": "cn-calc",
+      "status": "testing",
+      "batch": "C",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只计算调用方明确提供并确认适用性的公式、变量和期间，不内置法定利率或赔偿标准"
+      ]
+    },
+    {
+      "skill_name": "cn-case-analysis",
+      "status": "testing",
+      "batch": "C",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只编排显式录入的事实、证据、争点和要件，不推导实体法要件或自动预测案件结果"
+      ]
+    },
+    {
+      "skill_name": "cn-evidence-map",
+      "status": "testing",
+      "batch": "C",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-evidence",
+        "cn-case-analysis"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不读取原始证据文件或判断证据三性、证明力、举证责任和案件胜败"
+      ]
+    },
+    {
+      "skill_name": "cn-evidence",
+      "status": "testing",
+      "batch": "C",
+      "version": "3.3.1",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [
+        "cn-evidence-transcribe-skill"
+      ],
+      "known_limitations": [
+        "ASR 后端仍需按本地环境单独安装；转写交接不自动判断证据三性或证明目的"
+      ]
+    },
+    {
+      "skill_name": "cn-procedure",
+      "status": "testing",
+      "batch": "D",
+      "version": "2.2.0",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [
+        "cn-write-procedure-skill"
+      ],
+      "known_limitations": [
+        "不同法院收件样式、律所审批和收费规则仍需本地人工配置；正式文书须逐份渲染并由执业律师核验"
+      ]
+    },
+    {
+      "skill_name": "cn-element-pleading",
+      "status": "testing",
+      "batch": "D",
+      "version": "3.0.1",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [
+        "cn-complaint-to-element-skill"
+      ],
+      "known_limitations": [
+        "当前确定性支持民间借贷、离婚、买卖合同和机动车交通事故责任纠纷"
+      ]
+    },
+    {
+      "skill_name": "cn-complaint",
+      "status": "testing",
+      "batch": "D",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-case-analysis",
+        "cn-evidence-map",
+        "cn-research",
+        "cn-calc",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "当前生成 JSON 与 Markdown 起诉状底稿，不执行法院提交、电子签章或 DOCX 排版"
+      ]
+    },
+    {
+      "skill_name": "cn-defense",
+      "status": "testing",
+      "batch": "D",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-case-analysis",
+        "cn-evidence-map",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "当前生成逐项答辩矩阵和 Markdown 底稿，不自动推断抗辩或提交文书"
+      ]
+    },
+    {
+      "skill_name": "cn-applications",
+      "status": "testing",
+      "batch": "D",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-deadline",
+        "cn-evidence-map"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只生成程序申请工作底稿，不硬编码期限、担保结论或执行外部提交"
+      ]
+    },
+    {
+      "skill_name": "cn-hearing",
+      "status": "testing",
+      "batch": "D",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-case-analysis",
+        "cn-evidence-map",
+        "cn-deadline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "庭审计划不构成事实承认或证言，且明确阻断任何庭审录音转写"
+      ]
+    },
+    {
+      "skill_name": "cn-mediation",
+      "status": "testing",
+      "batch": "D",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-case-analysis",
+        "cn-calc"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不替当事人作承诺、签署或发送，且内部授权边界不得进入对外预览"
+      ]
+    },
+    {
+      "skill_name": "cn-arbitration",
+      "status": "testing",
+      "batch": "D",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-deadline",
+        "cn-evidence-map"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不自动选择仲裁机构或仲裁员，不硬编码程序期限，规则版本必须由输入提供"
+      ]
+    },
+    {
+      "skill_name": "cn-appeal",
+      "status": "testing",
+      "batch": "E",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-case-analysis",
+        "cn-evidence-map",
+        "cn-research",
+        "cn-deadline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不自动判断上诉期限、案由或改写上诉请求，期限规则必须由输入提供"
+      ]
+    },
+    {
+      "skill_name": "cn-enforcement",
+      "status": "testing",
+      "batch": "E",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-calc",
+        "cn-research",
+        "cn-deadline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不执行查控、冻结、扣划或提交，财产信息只作为待核验线索"
+      ]
+    },
+    {
+      "skill_name": "cn-criminal-defense",
+      "status": "testing",
+      "batch": "E",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-evidence-map",
+        "cn-deadline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不预测定罪量刑，不提供规避侦查建议，不联系办案机关或生成伪造证据"
+      ]
+    },
+    {
+      "skill_name": "cn-admin-litigation",
+      "status": "testing",
+      "batch": "E",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-evidence-map",
+        "cn-deadline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不自动认定行政行为可诉性、复议前置、管辖或起诉期限"
+      ]
+    },
+    {
+      "skill_name": "cn-legal-letter",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-calc",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只生成 JSON 与 Markdown 审查底稿，不自动发送、邮寄、签章或虚构法律后果"
+      ]
+    },
+    {
+      "skill_name": "cn-contract-draft",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只根据已确认交易清单生成 JSON 与 Markdown 底稿，不补造商业条款或签署发送"
+      ]
+    },
+    {
+      "skill_name": "cn-contract-review",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "源合同需先确定性导出为 UTF-8 文本快照，红线指令固定为未应用"
+      ]
+    },
+    {
+      "skill_name": "cn-diligence",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不把未提供材料写成不存在，不自动评估交易是否通过，生产法源仍需联网复核"
+      ]
+    },
+    {
+      "skill_name": "cn-legal-opinion",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-case-analysis",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只生成律师复核底稿，冲突事实、关键假设或未核验法源会阻断正式结论"
+      ]
+    },
+    {
+      "skill_name": "cn-legal",
+      "status": "testing",
+      "batch": "H",
+      "version": "0.2.0",
+      "dependencies": [
+        "cn-intake",
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify",
+        "cn-dispute",
+        "cn-transaction",
+        "cn-compliance",
+        "cn-case-analysis",
+        "cn-contract-review",
+        "cn-procedure",
+        "cn-complaint",
+        "cn-legal-letter",
+        "cn-evidence-map",
+        "cn-applications",
+        "cn-hearing"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "主路由可控制登记的下游生成与验收；未登记的 DOCX 生成器、未分型授权书或需人工确认的法律判断仍会阻断"
+      ]
+    },
+    {
+      "skill_name": "cn-dispute",
+      "status": "testing",
+      "batch": "H",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-case-analysis",
+        "cn-evidence-map",
+        "cn-deadline"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不自动选择程序、案由、管辖、仲裁机构或当事人策略"
+      ]
+    },
+    {
+      "skill_name": "cn-transaction",
+      "status": "testing",
+      "batch": "H",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不读取交易文件内容，不批准交易或替客户接受条款"
+      ]
+    },
+    {
+      "skill_name": "cn-compliance",
+      "status": "testing",
+      "batch": "H",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不读取业务材料或认定违法，只生成专项审查路由候选"
+      ]
+    },
+    {
+      "skill_name": "cn-matter",
+      "status": "testing",
+      "batch": "G",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-intake",
+        "cn-legal-core",
+        "cn-deadline",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只生成状态流转和归档审查快照，不更新律所系统、不审批或删除案件材料"
+      ]
+    },
+    {
+      "skill_name": "cn-compliance-review",
+      "status": "testing",
+      "batch": "G",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只列示差距和风险候选，不自动认定违法、实施整改或对外回复"
+      ]
+    },
+    {
+      "skill_name": "cn-negotiation",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-calc",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "字面泄露检查不能完全识别语义改写、隐喻或复杂换算，任何对外预览仍须律师披露复核且不得自动发送"
+      ]
+    },
+    {
+      "skill_name": "cn-company",
+      "status": "testing",
+      "batch": "G",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不认定公司决议效力，不代签，不执行登记、披露或其他外部操作"
+      ]
+    },
+    {
+      "skill_name": "cn-ma",
+      "status": "testing",
+      "batch": "G",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-company",
+        "cn-diligence",
+        "cn-contract-review",
+        "cn-research",
+        "cn-verify"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不选择交易结构、不估值、不接受条款，也不执行签署、交割或付款"
+      ]
+    },
+    {
+      "skill_name": "cn-employment",
+      "status": "testing",
+      "batch": "G",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-timeline",
+        "cn-deadline",
+        "cn-evidence",
+        "cn-calc",
+        "cn-compliance-review"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不自动认定劳动关系或违法，不作不利人事决定，也不执行通知、解除、提交或其他外部操作"
+      ]
+    },
+    {
+      "skill_name": "cn-data-privacy",
+      "status": "testing",
+      "batch": "G",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core",
+        "cn-research",
+        "cn-verify",
+        "cn-compliance-review"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "不自动选择个人信息处理基础或数据出境路径，不删除数据、不通知监管或个人，也不执行外部处置"
+      ]
+    },
+    {
+      "skill_name": "cn-evidence-catalog",
+      "status": "testing",
+      "batch": "F",
+      "version": "0.1.0",
+      "dependencies": [
+        "cn-legal-core"
+      ],
+      "compatibility_aliases": [],
+      "known_limitations": [
+        "只按用户自制契约排版证据目录，不判断证据三性或证明力"
+      ]
+    }
+  ],
+  "planned_skills": [],
+  "domain_packs": [
+    "contract-obligations",
+    "tort",
+    "family",
+    "labor",
+    "company",
+    "finance-securities",
+    "real-estate-construction",
+    "bankruptcy",
+    "intellectual-property",
+    "competition",
+    "data-cyber",
+    "consumer-advertising",
+    "environment",
+    "tax",
+    "maritime",
+    "criminal",
+    "administrative"
+  ],
+  "domain_pack_status": {
+    "contract-obligations": "testing",
+    "tort": "testing",
+    "family": "testing",
+    "labor": "testing",
+    "company": "testing",
+    "finance-securities": "testing",
+    "real-estate-construction": "testing",
+    "bankruptcy": "testing",
+    "intellectual-property": "testing",
+    "competition": "testing",
+    "data-cyber": "testing",
+    "consumer-advertising": "testing",
+    "environment": "testing",
+    "tax": "testing",
+    "maritime": "testing",
+    "criminal": "testing",
+    "administrative": "testing"
+  },
+  "expert_team": {
+    "status": "testing",
+    "role_count": 8,
+    "resident_role": "matter-lead",
+    "control_owner": "cn-legal",
+    "platforms": [
+      "claude-code"
+    ],
+    "fallback_mode": "serial_same_plan"
+  },
+  "installation_targets": {
+    "claude-code": [
+      ".claude/skills",
+      "~/.claude/skills"
+    ],
+    "claude-code-agents": [
+      ".claude/agents",
+      "~/.claude/agents"
+    ]
+  }
+}

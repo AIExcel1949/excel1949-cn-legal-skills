@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "timeline_id": "TIMELINE-2026-001",
+  "matter_id": "MATTER-2026-001",
+  "cutoff_date": "2026-07-18",
+  "events": [
+    {
+      "event_id": "EVENT-001",
+      "comparison_key": "DELIVERY-BATCH-001",
+      "event_type": "transaction",
+      "description": "甲公司称第一批货物完成交付",
+      "date": {"raw": "2026年3月5日", "precision": "exact", "start": "2026-03-05", "end": "2026-03-05"},
+      "status": "stated",
+      "source_spans": [{"source_id": "SRC-DELIVERY-001", "page": 1, "quote": "交货日期：2026年3月5日"}],
+      "actors": ["PARTY-001", "PARTY-002"],
+      "deadline_trigger_candidate": false
+    },
+    {
+      "event_id": "EVENT-002",
+      "comparison_key": "PAYMENT-DUE-001",
+      "event_type": "payment",
+      "description": "合同记载第一批货款到期",
+      "date": {"raw": "2026年4月5日", "precision": "exact", "start": "2026-04-05", "end": "2026-04-05"},
+      "status": "stated",
+      "source_spans": [{"source_id": "SRC-CONTRACT-001", "page": 3, "quote": "交货后30日内支付"}],
+      "actors": ["PARTY-002"],
+      "deadline_trigger_candidate": true
+    },
+    {
+      "event_id": "EVENT-003",
+      "comparison_key": "DEMAND-001",
+      "event_type": "communication",
+      "description": "甲公司称曾发送催款通知，具体日期待核对",
+      "date": {"raw": "2026年5月左右", "precision": "unknown"},
+      "status": "missing",
+      "source_spans": [{"source_id": "SRC-STATEMENT-001", "paragraph": 2, "quote": "五月左右催过一次"}],
+      "actors": ["PARTY-001", "PARTY-002"],
+      "deadline_trigger_candidate": true
+    }
+  ]
+}

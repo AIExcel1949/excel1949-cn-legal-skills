@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-ma/ma-output.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "as_of_date", "input_sha256", "structure_snapshot", "structure_gate", "authority_register", "document_register", "execution_matrix", "dependency_audit", "long_stop_matrix", "global_blockers", "warnings", "structure_selected_by_skill", "valuation_performed", "transaction_executed", "payment_performed", "artifact_state"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"type": "string"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "structure_snapshot": {"type": "object"},
+    "structure_gate": {"type": "object"},
+    "authority_register": {"type": "array", "items": {"type": "object"}},
+    "document_register": {"type": "array", "items": {"type": "object"}},
+    "execution_matrix": {"type": "array", "items": {"type": "object"}},
+    "dependency_audit": {"type": "object"},
+    "long_stop_matrix": {"type": "object"},
+    "global_blockers": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "structure_selected_by_skill": {"const": false},
+    "valuation_performed": {"const": false},
+    "transaction_executed": {"const": false},
+    "payment_performed": {"const": false},
+    "artifact_state": {"const": "lawyer_review_required"}
+  },
+  "additionalProperties": false
+}

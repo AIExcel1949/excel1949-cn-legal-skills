@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-timeline/timeline.schema.json",
+  "type": "object",
+  "required": ["schema_version", "timeline_id", "matter_id", "cutoff_date", "events"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "timeline_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "matter_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "cutoff_date": {"type": "string", "format": "date"},
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "event_type", "description", "date", "status", "source_spans", "deadline_trigger_candidate"],
+        "properties": {
+          "event_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+          "comparison_key": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+          "event_type": {"enum": ["fact", "procedure", "payment", "communication", "evidence_creation", "transaction", "other"]},
+          "description": {"type": "string", "minLength": 1},
+          "date": {
+            "type": "object",
+            "required": ["raw", "precision"],
+            "properties": {
+              "raw": {"type": "string", "minLength": 1},
+              "precision": {"enum": ["exact", "month", "year", "range", "unknown"]},
+              "start": {"type": "string", "format": "date"},
+              "end": {"type": "string", "format": "date"}
+            },
+            "additionalProperties": false
+          },
+          "status": {"enum": ["stated", "user_confirmed", "derived", "disputed", "missing", "conflict", "unreadable"]},
+          "source_spans": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["source_id", "quote"],
+              "properties": {
+                "source_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+                "page": {"type": "integer", "minimum": 1},
+                "paragraph": {"type": "integer", "minimum": 0},
+                "quote": {"type": "string"}
+              },
+              "additionalProperties": false
+            }
+          },
+          "confirmation_note": {"type": "string"},
+          "derivation_rule": {"type": "string"},
+          "actors": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "deadline_trigger_candidate": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
+

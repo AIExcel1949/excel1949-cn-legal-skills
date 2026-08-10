@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-intake/extraction-audit.schema.json",
+  "type": "object",
+  "required": ["schema_version", "audit_id", "matter_id", "source", "profile", "extractions", "human_review_status"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "audit_id": {"$ref": "#/$defs/id"},
+    "matter_id": {"$ref": "#/$defs/id"},
+    "source": {
+      "type": "object",
+      "required": ["source_id", "file_name", "sha256"],
+      "properties": {
+        "source_id": {"$ref": "#/$defs/id"},
+        "file_name": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "required": ["expected_page_count", "expected_sections", "required_anchors", "dual_extraction_required", "minimum_length_ratio"],
+      "properties": {
+        "expected_page_count": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 1}]},
+        "expected_sections": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "required_anchors": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "dual_extraction_required": {"type": "boolean"},
+        "minimum_length_ratio": {"type": "number", "minimum": 0.1, "maximum": 1.0}
+      },
+      "additionalProperties": false
+    },
+    "extractions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["extraction_id", "parser_id", "status", "text", "text_sha256", "page_numbers", "section_headings", "errors"],
+        "properties": {
+          "extraction_id": {"$ref": "#/$defs/id"},
+          "parser_id": {"$ref": "#/$defs/id"},
+          "status": {"enum": ["success", "partial", "failed"]},
+          "text": {"type": "string"},
+          "text_sha256": {"$ref": "#/$defs/sha256"},
+          "page_numbers": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 1}},
+          "section_headings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "errors": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "human_review_status": {"enum": ["pending", "completed"]}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

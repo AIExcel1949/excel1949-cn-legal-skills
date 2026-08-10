@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-mediation/mediation-output.schema.json",
+  "title": "调解方案工作台输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_state", "matter", "input_sha256", "internal_authority", "proposal_comparison", "external_previews", "action_controls", "blockers"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "matter": {"type": "object"},
+    "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "internal_authority": {"type": "object"},
+    "proposal_comparison": {"type": "array", "items": {"type": "object"}},
+    "external_previews": {"type": "array", "items": {"type": "object"}},
+    "action_controls": {
+      "type": "object", "additionalProperties": false,
+      "required": ["auto_send", "auto_sign", "auto_submit", "external_use_permitted"],
+      "properties": {
+        "auto_send": {"const": false},
+        "auto_sign": {"const": false},
+        "auto_submit": {"const": false},
+        "external_use_permitted": {"const": false}
+      }
+    },
+    "blockers": {"type": "array", "items": {"type": "string"}}
+  }
+}

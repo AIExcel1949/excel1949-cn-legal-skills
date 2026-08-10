@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-defense/defense-output.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "draft_id", "matter_id", "generation_status", "artifact_state", "respondent", "response_matrix", "defensive_facts", "independent_defenses", "blockers", "evidence_gaps", "legal_notice"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "draft_id": {"type": "string"}, "matter_id": {"type": "string"},
+    "generation_status": {"enum": ["draft_ready_for_lawyer_review", "blocked"]}, "artifact_state": {"const": "lawyer_review_required"},
+    "respondent": {"type": "object"}, "response_matrix": {"type": "array", "items": {"type": "object", "required": ["claim_id", "claim_text_verbatim", "stance", "response_text", "fact_ids", "evidence_ids", "authority_ids", "provenance"], "properties": {"claim_id": {"type": "string"}, "claim_text_verbatim": {"type": "string"}, "stance": {"enum": ["admit", "deny", "lack_knowledge", "procedural_objection", "unanswered"]}, "response_text": {"type": ["string", "null"]}, "fact_ids": {"type": "array"}, "evidence_ids": {"type": "array"}, "authority_ids": {"type": "array"}, "provenance": {"type": "object"}}, "additionalProperties": false}},
+    "defensive_facts": {"type": "array"}, "independent_defenses": {"type": "array"}, "blockers": {"type": "array", "items": {"type": "object"}}, "evidence_gaps": {"type": "array", "items": {"type": "object"}}, "legal_notice": {"type": "array", "minItems": 5, "items": {"type": "string"}}
+  }
+}

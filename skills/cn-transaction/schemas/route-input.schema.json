@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://aioffice.example/schemas/cn-transaction/route-input.schema.json","type":"object",
+  "required":["schema_version","task_id","task_type","task_type_status","representation","representation_status","stage"],
+  "properties":{"schema_version":{"const":"1.0"},"task_id":{"type":"string","minLength":3},"task_type":{"enum":["contract_draft","contract_review","diligence","company","ma","legal_opinion","legal_letter","negotiation","unknown"]},"task_type_status":{"enum":["user_confirmed","unconfirmed"]},"representation":{"enum":["client_side","neutral_review","unknown"]},"representation_status":{"enum":["user_confirmed","unconfirmed"]},"stage":{"type":"string","minLength":1}},"additionalProperties":false
+}

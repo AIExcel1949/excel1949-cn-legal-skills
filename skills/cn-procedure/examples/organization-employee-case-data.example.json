@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "procedure_type": "civil",
+  "case_cause": "买卖合同纠纷",
+  "client_name": "某科技有限公司",
+  "client_credit_code": "91340000MA0000000X",
+  "client_address": "安徽省某市某区示例路 1 号",
+  "client_legal_rep": "赵某某",
+  "client_legal_rep_id": "340102198001010011",
+  "client_legal_rep_title": "执行董事",
+  "employee_name": "钱某某",
+  "employee_id": "340102199001010022",
+  "employee_phone": "13800000001",
+  "employee_title": "法务专员",
+  "opponent_name": "某商贸有限公司",
+  "authorization_scope_text": "特别授权",
+  "authorization_period": "自本授权委托书签署之日起至本案一审程序终结之日止",
+  "sign_date": "2026 年 7 月 26 日"
+}

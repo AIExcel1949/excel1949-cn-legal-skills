@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/artifact.schema.json",
+  "type": "object",
+  "required": ["artifact_id", "artifact_type", "input_sha256", "output_sha256", "state", "author"],
+  "properties": {
+    "artifact_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "artifact_type": {"type": "string", "minLength": 1},
+    "input_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "template_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "output_sha256": {"$ref": "common.schema.json#/$defs/sha256"},
+    "state": {"$ref": "common.schema.json#/$defs/artifact_state"},
+    "author": {"const": "AIOffice职场通关-excel1949"},
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}
+

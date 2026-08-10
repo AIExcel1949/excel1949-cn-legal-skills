@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-letter/letter-input.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "matter_id",
+    "sender",
+    "recipient",
+    "facts",
+    "authorities",
+    "calculations",
+    "demands",
+    "delivery_channels",
+    "prohibited_content_declared",
+    "external_action_requested"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "matter_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "sender": {
+      "$ref": "#/$defs/confirmed_text"
+    },
+    "recipient": {
+      "$ref": "#/$defs/confirmed_text"
+    },
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/fact"
+      }
+    },
+    "authorities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/authority"
+      }
+    },
+    "calculations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/calculation"
+      }
+    },
+    "demands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/demand"
+      }
+    },
+    "delivery_channels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prohibited_content_declared": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "fabricated_consequence",
+          "threat",
+          "insult",
+          "coercion"
+        ]
+      }
+    },
+    "external_action_requested": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "span": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "quote"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "description": "定位信息（与 complaint/evidence-map 统一，可选）"
+        }
+      },
+      "additionalProperties": false
+    },
+    "confirmed_text": {
+      "type": "object",
+      "required": [
+        "text",
+        "user_confirmed",
+        "confirmation_note"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "user_confirmed": {
+          "const": true
+        },
+        "confirmation_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "fact": {
+      "type": "object",
+      "required": [
+        "fact_id",
+        "text",
+        "source_spans",
+        "user_confirmed",
+        "confirmation_note"
+      ],
+      "properties": {
+        "fact_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_spans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/span"
+          }
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        },
+        "confirmation_note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "authority_id",
+        "title",
+        "official_url",
+        "verified_on",
+        "full_text_checked",
+        "effect_status"
+      ],
+      "properties": {
+        "authority_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "title": {
+          "type": "string"
+        },
+        "official_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "verified_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "full_text_checked": {
+          "type": "boolean"
+        },
+        "effect_status": {
+          "enum": [
+            "effective",
+            "amended",
+            "repealed",
+            "unknown"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "calculation": {
+      "type": "object",
+      "required": [
+        "calculation_id",
+        "result_text",
+        "status",
+        "lawyer_confirmed"
+      ],
+      "properties": {
+        "calculation_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "result_text": {
+          "type": "string"
+        },
+        "status": {
+          "const": "calculated_unreviewed"
+        },
+        "lawyer_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "demand": {
+      "type": "object",
+      "required": [
+        "demand_id",
+        "text",
+        "fact_ids",
+        "authority_ids",
+        "calculation_ids",
+        "source_spans",
+        "user_confirmed",
+        "confirmation_note"
+      ],
+      "properties": {
+        "demand_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authority_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "calculation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_spans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/span"
+          }
+        },
+        "user_confirmed": {
+          "type": "boolean"
+        },
+        "confirmation_note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

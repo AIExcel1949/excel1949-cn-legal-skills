@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "excel1949-cn-legal-marketplace",
+  "displayName": "excel1949 中国法律 Skill 集群",
+  "description": "面向中国律师诉讼与非诉业务的 Skill、专家角色、确定性 DOCX 文书生成与独立终检集群。",
+  "owner": {
+    "name": "AIOffice职场通关-excel1949"
+  },
+  "plugins": [
+    {
+      "name": "excel1949-cn-legal-skills",
+      "description": "excel1949 法律专家团：39 个中国法律 Skill + 8 个专家角色（案件总控 matter-lead 常驻），全部文档类交付物 DOCX 渲染",
+      "source": ".",
+      "version": "1.0.0"
+    }
+  ]
+}

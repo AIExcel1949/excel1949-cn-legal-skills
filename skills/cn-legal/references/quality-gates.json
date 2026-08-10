@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "gates": [
+    {
+      "gate_id": "G0-scope-authority",
+      "owner": "matter-lead",
+      "requirement": "法域、时点、代表立场、任务轨道、程序阶段、交付物、输出根目录、紧急风险和人工权限状态已登记。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G1-fact-provenance",
+      "owner": "fact-evidence-analyst",
+      "requirement": "每项事实和材料具有 source_id、定位信息、哈希与确认状态，冲突未被静默合并。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G2-authority-applicability",
+      "owner": "source-counsel",
+      "requirement": "法源层级、公布施行失效时间、地域、案件时点、版本和可回查来源已记录。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G3-lawyer-decision",
+      "owner": "matter-lead",
+      "requirement": "案由、管辖、诉请、抗辩、程序选择、特别授权、收费、和解底线及商业条款等重大决定已经人工确认。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G4-deterministic-generation",
+      "owner": "matter-lead",
+      "requirement": "只使用登记生成器和模板，输入、模板、输出哈希齐全，输出位于案件目录，DOCX 回读与品牌检查通过。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G5-numeric-deadline",
+      "owner": "fact-evidence-analyst",
+      "requirement": "金额与期限仅使用有来源且已确认适用的规则、变量、日历和舍入边界。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G6-independent-review",
+      "owner": "independent-reviewer",
+      "requirement": "审校者与起草者 independence_group 不同，每件产物均有匹配 input_sha256 的独立报告且 blocker 为零。",
+      "failure_action": "block"
+    },
+    {
+      "gate_id": "G7-external-action",
+      "owner": "matter-lead",
+      "requirement": "签名、盖章、收费、发送、提交、立案、监管回复和其他外部动作均保留给人工执行。",
+      "failure_action": "human_only"
+    }
+  ]
+}

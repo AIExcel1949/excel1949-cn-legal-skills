@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "description": "案由关键词到领域业务包的映射（route.py 注入执行计划）。匹配顺序按数组顺序，首个命中的关键词生效。",
+  "routes": [
+    { "pack": "contract-obligations", "keywords": ["买卖", "借款", "租赁", "承揽", "运输", "保管", "委托", "合同纠纷", "债权", "债务", "货款"] },
+    { "pack": "tort", "keywords": ["侵权", "人身损害", "交通事故", "医疗损害", "产品责任", "损害赔偿", "名誉权", "肖像权", "隐私权"] },
+    { "pack": "family", "keywords": ["离婚", "婚姻", "抚养", "赡养", "继承", "遗产", "收养", "家事"] },
+    { "pack": "labor", "keywords": ["劳动", "工伤", "工资", "加班", "社保", "经济补偿", "竞业限制", "劳动合同"] },
+    { "pack": "company", "keywords": ["公司", "股东", "股权", "出资", "决议", "法定代表人", "解散", "清算"] },
+    { "pack": "finance-securities", "keywords": ["证券", "期货", "基金", "票据", "保理", "金融借款", "融资租赁", "信托"] },
+    { "pack": "real-estate-construction", "keywords": ["房屋买卖", "建设工程", "施工合同", "土地使用权", "物业", "房地产"] },
+    { "pack": "bankruptcy", "keywords": ["破产", "重整", "和解", "管理人", "清算"] },
+    { "pack": "intellectual-property", "keywords": ["专利", "商标", "著作权", "版权", "商业秘密", "不正当竞争", "技术合同"] },
+    { "pack": "competition", "keywords": ["垄断", "反垄断", "经营者集中"] },
+    { "pack": "data-cyber", "keywords": ["个人信息", "数据", "网络安全", "隐私", "算法"] },
+    { "pack": "consumer-advertising", "keywords": ["消费者", "广告", "欺诈", "退一赔三", "产品质量"] },
+    { "pack": "environment", "keywords": ["环境", "生态", "污染", "公益诉讼"] },
+    { "pack": "tax", "keywords": ["税务", "增值税", "所得税", "滞纳金", "税收"] },
+    { "pack": "maritime", "keywords": ["海商", "海事", "船舶", "货运代理", "船员"] },
+    { "pack": "criminal", "keywords": ["刑事", "盗窃", "诈骗", "故意伤害", "职务犯罪", "毒品", "醉驾"] },
+    { "pack": "administrative", "keywords": ["行政", "处罚", "许可", "复议", "征收", "信息公开", "国家赔偿"] }
+  ]
+}

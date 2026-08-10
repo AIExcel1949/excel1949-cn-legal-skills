@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-negotiation/negotiation-workbook.schema.json",
+  "title": "谈判内部工作簿",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_state", "internal_only", "external_use_permitted", "matter", "input_sha256", "internal_strategy", "issue_plan", "proposal_comparison", "pending_confirmations", "external_preview_sha256", "blockers", "action_controls"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "internal_only": {"const": true},
+    "external_use_permitted": {"const": false},
+    "matter": {"type": "object"},
+    "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "internal_strategy": {"type": "object"},
+    "issue_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_id", "label", "priority", "reason"],
+        "properties": {
+          "issue_id": {"type": "string"},
+          "label": {"type": "string"},
+          "priority": {"type": "integer"},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "proposal_comparison": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["proposal_id", "label", "criterion_scores", "weighted_score", "comparison_note", "requires_client_confirmation", "internal_notes"],
+        "properties": {
+          "proposal_id": {"type": "string"},
+          "label": {"type": "string"},
+          "criterion_scores": {"type": "array", "items": {"type": "object"}},
+          "weighted_score": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{2}$"},
+          "comparison_note": {"const": "仅供并列比较，不构成排名、推荐或结果预测"},
+          "requires_client_confirmation": {"type": "boolean"},
+          "internal_notes": {"type": "string"}
+        }
+      }
+    },
+    "pending_confirmations": {"type": "array", "items": {"type": "object"}},
+    "external_preview_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "action_controls": {"$ref": "#/$defs/actionControls"}
+  },
+  "$defs": {
+    "actionControls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auto_send", "auto_sign", "auto_submit", "auto_commit", "external_use_permitted"],
+      "properties": {
+        "auto_send": {"const": false},
+        "auto_sign": {"const": false},
+        "auto_submit": {"const": false},
+        "auto_commit": {"const": false},
+        "external_use_permitted": {"const": false}
+      }
+    }
+  }
+}

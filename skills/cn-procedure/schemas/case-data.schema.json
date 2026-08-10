@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/case-data-1.0.json",
+  "title": "中国律师程序文书案件数据",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "procedure_type",
+    "client_name",
+    "case_cause"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "procedure_type": {
+      "enum": [
+        "civil",
+        "criminal",
+        "administrative",
+        "enforcement",
+        "nonlitigation"
+      ]
+    },
+    "document_date": {
+      "type": "string"
+    },
+    "case_cause": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_court": {
+      "type": "string"
+    },
+    "case_number": {
+      "type": "string"
+    },
+    "doc_number": {
+      "type": "string"
+    },
+    "litigation_stage": {
+      "type": "string"
+    },
+    "disputed_amount": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]{1,2})?$"
+    },
+    "execution_basis": {
+      "type": "string"
+    },
+    "client_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "client_address": {
+      "type": "string"
+    },
+    "client_phone": {
+      "type": "string"
+    },
+    "client_credit_code": {
+      "type": "string"
+    },
+    "client_identity_description": {
+      "type": "string"
+    },
+    "opponent_name": {
+      "type": "string"
+    },
+    "opponent_identity_description": {
+      "type": "string"
+    },
+    "opponent_address": {
+      "type": "string"
+    },
+    "opponent_phone": {
+      "type": "string"
+    },
+    "criminal_subject_name": {
+      "type": "string"
+    },
+    "criminal_role": {
+      "enum": [
+        "辩护人",
+        "诉讼代理人",
+        ""
+      ]
+    },
+    "principal_relationship": {
+      "type": "string"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "agent_phone": {
+      "type": "string"
+    },
+    "relationship": {
+      "type": "string"
+    },
+    "client_legal_rep": {
+      "type": "string"
+    },
+    "client_legal_rep_id": {
+      "type": "string"
+    },
+    "client_legal_rep_title": {
+      "type": "string"
+    },
+    "employee_name": {
+      "type": "string"
+    },
+    "employee_id": {
+      "type": "string"
+    },
+    "employee_phone": {
+      "type": "string"
+    },
+    "employee_title": {
+      "type": "string"
+    },
+    "lawyer_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lawyer_license": {
+      "type": "string"
+    },
+    "assistant_name": {
+      "type": "string"
+    },
+    "assistant_license": {
+      "type": "string"
+    },
+    "firm_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "firm_address": {
+      "type": "string"
+    },
+    "firm_phone": {
+      "type": "string"
+    },
+    "authorization_scope": {
+      "enum": [
+        "（1）",
+        "（2）",
+        ""
+      ]
+    },
+    "authorization_scope_text": {
+      "type": "string"
+    },
+    "authorization_period": {
+      "type": "string"
+    },
+    "criminal_stages": {
+      "type": "string"
+    },
+    "fee_amount": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]{1,2})?$"
+    },
+    "fee_amount_cn": {
+      "type": "string"
+    },
+    "fee_payment_terms": {
+      "type": "string"
+    },
+    "case_expense_terms": {
+      "type": "string"
+    },
+    "annual_fee": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]{1,2})?$"
+    },
+    "annual_fee_cn": {
+      "type": "string"
+    },
+    "risk_agency_confirmed": {
+      "enum": [
+        "yes",
+        ""
+      ]
+    },
+    "risk_fee_terms": {
+      "type": "string"
+    },
+    "sign_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "apply_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "accept_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "close_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "service_start_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "service_end_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "onsite_count": {
+      "type": "string"
+    },
+    "onsite_hours": {
+      "type": "string"
+    },
+    "outstanding_amount": {
+      "type": "string"
+    },
+    "new_claims": {
+      "type": "string"
+    },
+    "withdraw_reason": {
+      "type": "string"
+    },
+    "preservation_amount": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]{1,2})?$"
+    },
+    "preservation_request": {
+      "type": "string"
+    },
+    "preservation_necessity": {
+      "type": "string"
+    },
+    "property_clues": {
+      "type": "string"
+    },
+    "security_method": {
+      "type": "string"
+    },
+    "attachments": {
+      "type": "string"
+    },
+    "judgment_court": {
+      "type": "string"
+    },
+    "judgment_effective_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\s*年\\s*[0-9]{1,2}\\s*月\\s*[0-9]{1,2}\\s*日$"
+    },
+    "judgment_main_text": {
+      "type": "string"
+    },
+    "execution_claims": {
+      "type": "string"
+    },
+    "preservation_status": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "finance-securities",
+  "title": "Finance & Securities Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "证券发行交易、信息披露、适当性和金融合同事实整理",
+      "投资者损失、交易链和监管身份的核验入口"
+    ],
+    "excluded": [
+      "投资建议、收益承诺、牌照结论、市场操纵或内幕交易的自动认定"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-SECURITIES-2019",
+      "title": "中华人民共和国证券法",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/npc/c2/c30834/201912/t20191231_304436.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-SECURITIES-MISREP-2022",
+      "title": "最高人民法院关于审理证券市场虚假陈述侵权民事赔偿案件的若干规定",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.court.gov.cn/fabu/xiangqing/343221.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-SECURITIES-LIMITATION-2022",
+      "title": "最高人民法院关于证券市场虚假陈述侵权民事赔偿案件诉讼时效衔接适用相关问题的通知",
+      "authority_type": "official_guidance",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://gongbao.court.gov.cn/Details/76f7bf5d4aad36057dc65270dbbd0a.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "product_transaction",
+      "label": "产品与交易",
+      "questions": [
+        "产品法律形式、发行人、销售者、托管人和投资者身份是什么？",
+        "认购、风险揭示、适当性匹配和资金流如何形成？"
+      ],
+      "fact_fields": [
+        "产品结构",
+        "参与主体",
+        "交易时间",
+        "资金流"
+      ],
+      "evidence_prompts": [
+        "合同、说明书和风险揭示书",
+        "账户流水、交易确认和录音录像原件"
+      ],
+      "calculation_hooks": [
+        "仅将经核验的本金、现金流、费用和计算规则移交 cn-calc；本包不计算收益、损失、利息或赔偿金额"
+      ],
+      "deadline_hooks": [
+        "仅登记申购、赎回、风险揭示、投诉和争议发生等候选节点并移交 cn-deadline；本包不输出期限"
+      ],
+      "prohibitions": [
+        "不得把产品名称直接等同于其法律性质、监管分类或风险等级",
+        "不得自动认定适当性义务违反、风险承受能力或销售责任成立",
+        "不得自动计算本金、收益、费用、利息、损失、赔偿或任何期限",
+        "不得提供投资建议、代客交易、申购赎回、划款、投诉、报送或其他外部操作"
+      ]
+    },
+    {
+      "issue_key": "disclosure_conduct",
+      "label": "披露与行为",
+      "questions": [
+        "争议信息由谁在何时以何种渠道披露或遗漏？",
+        "交易决定与争议信息之间的时间和因果链如何？"
+      ],
+      "fact_fields": [
+        "披露义务主体",
+        "信息内容",
+        "发布时间",
+        "交易决策"
+      ],
+      "evidence_prompts": [
+        "公告原文及官方时间戳",
+        "交易记录、沟通记录和决策材料"
+      ],
+      "calculation_hooks": [
+        "交易价格、数量和市场数据仅作为待核验的 cn-calc 输入；本包不选择损失模型或输出损失金额"
+      ],
+      "deadline_hooks": [
+        "仅登记实施日、揭露日、更正日、行政程序和交易日期候选并移交 cn-deadline；不得自动确定起算点或届满日"
+      ],
+      "prohibitions": [
+        "不得自动认定虚假陈述、重大性、内幕信息、操纵行为、过错或因果关系",
+        "不得自动选择基准日、基准价、损失模型或计算赔偿金额",
+        "不得自动确定诉讼时效起算、中止、中断、届满或其他法定期限",
+        "不得自动交易、下单、冻结账户、发出公告、投诉、报送、起诉或执行付款"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得自动生成可执行的金额、收益、损失、期限或责任比例",
+    "不得提供个性化投资建议、收益承诺或实施交易、报送、起诉、付款等外部操作"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "金融监管规则、交易所业务规则和产品版本发生变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-FINANCE-SECURITIES-001",
+      "prompt": "投资者称购买某产品后亏损，销售人员曾口头表示风险很低。",
+      "expected_questions": [
+        "产品和销售主体是否具备可核验身份？",
+        "风险揭示、适当性材料和录音录像是否完整？"
+      ],
+      "forbidden_inferences": [
+        "不得将亏损本身认定为销售违法",
+        "不得承诺追回本金或收益",
+        "不得自动计算损失金额、收益、利息或诉讼时效",
+        "不得代客交易、自动投诉、报送、起诉或划款"
+      ]
+    }
+  ],
+  "title_zh": "金融与证券基础业务包"
+}

@@ -1,0 +1,16 @@
+{
+  "registry_version": "2026-07-18",
+  "verified_on": "2026-07-18",
+  "sources": [
+    {"authority_id": "EMP-LABOR-LAW", "title": "中华人民共和国劳动法（2018年修正）", "issuer": "全国人民代表大会常务委员会", "url": "https://www.npc.gov.cn/c2/c30834/201905/t20190521_296651.html", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-LABOR-CONTRACT", "title": "中华人民共和国劳动合同法（2012年修正）", "issuer": "全国人民代表大会常务委员会", "url": "https://flk.npc.gov.cn/detail?fileId=&id=2c909fdd678bf17901678bf74d7106b3&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95&type=", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-CONTRACT-REG", "title": "中华人民共和国劳动合同法实施条例", "issuer": "国务院", "url": "https://xzfg.moj.gov.cn/SearchTitleFront?QueryAll=%E5%8A%B3%E5%8A%A8%E5%90%88%E5%90%8C%E6%B3%95%E5%AE%9E%E6%96%BD%E6%9D%A1%E4%BE%8BZVING1", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-SOCIAL-INSURANCE", "title": "全国人大常委会关于修改《中华人民共和国社会保险法》的决定", "issuer": "全国人民代表大会常务委员会", "url": "https://www.npc.gov.cn/zgrdw/npc/xinwen/2018-12/29/content_2069931.htm", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-DISPUTE-ARBITRATION", "title": "中华人民共和国劳动争议调解仲裁法", "issuer": "全国人民代表大会常务委员会", "url": "https://gongbao.court.gov.cn/Details/997e66171cf55d219c613ec18dc370.html", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-SPC-INTERP-1", "title": "最高人民法院关于审理劳动争议案件适用法律问题的解释（一）", "issuer": "最高人民法院", "url": "https://www.court.gov.cn/fabu/xiangqing/282121.html", "effect_status": "effective_with_later_changes", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-SPC-INTERP-2", "title": "最高人民法院关于审理劳动争议案件适用法律问题的解释（二）", "issuer": "最高人民法院", "url": "https://www.court.gov.cn/zixun/xiangqing/472691.html", "effect_status": "effective_from_2025-09-01", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-WORKING-HOURS", "title": "国务院关于职工工作时间的规定", "issuer": "国务院", "url": "https://xzfg.moj.gov.cn/front/law/detail?LawID=629", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-ANNUAL-LEAVE", "title": "职工带薪年休假条例", "issuer": "国务院", "url": "https://xzfg.moj.gov.cn/front/law/detail?LawID=208&Query=%E4%BC%91%E5%81%87", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "EMP-FEMALE-PROTECTION", "title": "女职工劳动保护特别规定", "issuer": "国务院", "url": "https://xzfg.moj.gov.cn/law/detail?LawID=343", "effect_status": "effective", "verification_status": "official_page_checked"}
+  ]
+}

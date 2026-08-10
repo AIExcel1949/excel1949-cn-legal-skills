@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-hearing/hearing-output.schema.json",
+  "title": "庭前庭审准备输出",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "preparation_id", "artifact_state", "admission_state", "question_plan_state", "matrix", "gaps", "post_hearing_tasks"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string"}, "preparation_id": {"type": "string"},
+    "artifact_state": {"const": "lawyer_review_required"}, "admission_state": {"const": "no_admissions_made"}, "question_plan_state": {"const": "not_testimony_or_fact"},
+    "matrix": {"type": "array", "items": {"type": "object"}}, "gaps": {"type": "array", "items": {"type": "object"}}, "post_hearing_tasks": {"type": "array", "items": {"type": "object"}}
+  }
+}

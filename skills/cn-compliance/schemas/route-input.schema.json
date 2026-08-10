@@ -1,0 +1,3 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://aioffice.example/schemas/cn-compliance/route-input.schema.json","type":"object","required":["schema_version","task_id","topic","topic_status","jurisdiction","as_of_date","requested_output"],"properties":{"schema_version":{"const":"1.0"},"task_id":{"type":"string","minLength":3},"topic":{"enum":["employment","data_privacy","company","consumer_advertising","competition","general_review","unknown"]},"topic_status":{"enum":["user_confirmed","unconfirmed"]},"jurisdiction":{"type":"string","minLength":1},"as_of_date":{"type":"string","format":"date"},"requested_output":{"type":"string","minLength":1}},"additionalProperties":false
+}

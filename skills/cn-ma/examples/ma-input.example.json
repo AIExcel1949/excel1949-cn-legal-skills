@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "TRAIN-MA-001",
+  "as_of_date": "2026-07-18",
+  "transaction_name": "某甲公司股权交易（脱敏教学案例）",
+  "purpose": "教学演示：签约后至交割前的交易执行矩阵",
+  "structure": {
+    "confirmation_status": "user_confirmed",
+    "structure_label": "收购方受让目标公司部分股权（仅为用户确认的教学结构）",
+    "transaction_form": "equity_transfer",
+    "parties": [
+      {"party_id": "BUYER-A", "role": "收购方", "name": "甲方主体（已脱敏）"},
+      {"party_id": "SELLER-B", "role": "转让方", "name": "乙方主体（已脱敏）"},
+      {"party_id": "TARGET-C", "role": "目标公司", "name": "某甲科技有限公司（虚构）"}
+    ],
+    "consideration_description": "对价以经用户确认的交易文件为准，脚本不计算",
+    "valuation_status": "user_confirmed",
+    "source_refs": ["DOC-TERM-001"]
+  },
+  "authority_sources": [
+    {
+      "source_id": "LAW-COMPANY-2023",
+      "title": "中华人民共和国公司法（2023年修订）",
+      "authority_type": "law",
+      "effect_status": "effective",
+      "verified_on": "2026-07-18",
+      "official_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081818c9108eb018cb6922f750c07&title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E5%85%AC%E5%8F%B8%E6%B3%95&type=",
+      "locator": "具体条文和时点适用性待交易律师复核"
+    },
+    {
+      "source_id": "RULE-MERGER-THRESHOLD-2024",
+      "title": "国务院关于经营者集中申报标准的规定",
+      "authority_type": "administrative_regulation",
+      "effect_status": "effective",
+      "verified_on": "2026-07-18",
+      "official_url": "https://www.samr.gov.cn/fldes/jyzjzsbxbz/art/2024/art_eb4235b9a196486c8df15c7a61d51744.html",
+      "locator": "申报标准及未达标准情形均待专项核验"
+    }
+  ],
+  "document_sources": [
+    {
+      "source_id": "DOC-TERM-001",
+      "title": "脱敏交易条款清单",
+      "document_status": "confirmed",
+      "locator": "结构、对价、交割安排章节",
+      "file_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "source_id": "DOC-SPA-001",
+      "title": "脱敏股权转让协议草案",
+      "document_status": "draft",
+      "locator": "先决条件、陈述保证、承诺、赔偿和交割章节",
+      "file_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ],
+  "approvals": [
+    {
+      "item_id": "APPROVAL-CORP-001",
+      "approval_type": "corporate",
+      "description": "各方内部有权机构审批",
+      "determination": "required",
+      "responsible_party": "各方公司治理联系人",
+      "status": "not_started",
+      "source_refs": ["LAW-COMPANY-2023", "DOC-SPA-001"],
+      "dependencies": [],
+      "completion_evidence": "经律师核验的审批文件和授权链"
+    },
+    {
+      "item_id": "APPROVAL-AML-001",
+      "approval_type": "antitrust",
+      "description": "经营者集中申报必要性专项判断",
+      "determination": "to_be_determined",
+      "responsible_party": "反垄断专项律师",
+      "status": "to_be_determined",
+      "source_refs": ["RULE-MERGER-THRESHOLD-2024"],
+      "dependencies": [],
+      "completion_evidence": "专项分析及适用时的监管决定"
+    }
+  ],
+  "conditions_precedent": [
+    {
+      "item_id": "CP-001",
+      "description": "取得经确认需要的内部批准",
+      "responsible_party": "各方公司治理联系人",
+      "benefiting_party": "交易各方",
+      "status": "pending_evidence",
+      "source_refs": ["DOC-SPA-001"],
+      "dependencies": ["APPROVAL-CORP-001"],
+      "completion_evidence": "审批文件复印件及律师核验记录"
+    }
+  ],
+  "representations_warranties": [
+    {
+      "item_id": "RW-001",
+      "description": "主体资格与授权陈述（仅登记草案条款）",
+      "responsible_party": "陈述作出方",
+      "benefiting_party": "陈述接受方",
+      "status": "under_negotiation",
+      "source_refs": ["DOC-SPA-001"],
+      "dependencies": [],
+      "completion_evidence": "最终签署版协议及交割时更新证明"
+    }
+  ],
+  "covenants": [
+    {
+      "item_id": "COV-001",
+      "description": "过渡期经营承诺（仅登记草案条款）",
+      "responsible_party": "目标公司及相关承诺方",
+      "benefiting_party": "收购方",
+      "status": "under_negotiation",
+      "source_refs": ["DOC-SPA-001"],
+      "dependencies": [],
+      "completion_evidence": "最终条款及履行证明"
+    }
+  ],
+  "indemnities": [
+    {
+      "item_id": "IND-001",
+      "description": "特定事项赔偿安排（仅登记草案条款）",
+      "responsible_party": "待协议确认的赔偿义务人",
+      "benefiting_party": "待协议确认的受偿方",
+      "status": "under_negotiation",
+      "source_refs": ["DOC-SPA-001"],
+      "dependencies": [],
+      "completion_evidence": "最终签署版条款"
+    }
+  ],
+  "closing_deliverables": [
+    {
+      "item_id": "CLOSE-001",
+      "description": "交付经核验的公司批准文件",
+      "responsible_party": "转让方及目标公司",
+      "benefiting_party": "收购方",
+      "status": "draft",
+      "source_refs": ["DOC-SPA-001"],
+      "dependencies": ["CP-001"],
+      "completion_evidence": "交割清单签收记录；脚本不代签"
+    }
+  ],
+  "long_stop": {
+    "item_id": "LONGSTOP-001",
+    "rule_status": "user_confirmed",
+    "rule_text": "显式日期以用户确认的交易条款清单为准，不从条件期限推算",
+    "explicit_date": "2027-03-31",
+    "responsible_party": "交易项目经理及项目律师",
+    "source_refs": ["DOC-TERM-001"],
+    "dependencies": ["CP-001"]
+  }
+}

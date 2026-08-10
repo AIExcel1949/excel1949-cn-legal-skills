@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MATTER-2026-001",
+  "application_id": "APP-001",
+  "as_of_date": "2026-07-18",
+  "application_type": "investigation_order",
+  "procedural_stage": "一审审理中",
+  "tribunal": "某市某区人民法院",
+  "sources": [
+    {"source_id": "SRC-001", "file_name": "脱敏案件材料工作副本.pdf", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+  ],
+  "requested_relief": [
+    {"statement_id": "RELIEF-001", "text": "请求调取某时段交易流水工作副本", "basis": {"basis_type": "user_confirmed", "confirmed_at": "2026-07-18T09:00:00+08:00", "confirmation_note": "委托人确认的申请请求草案，待律师复核"}}
+  ],
+  "supporting_facts": [
+    {"statement_id": "FACT-001", "text": "相关记录由第三方机构持有", "basis": {"basis_type": "source_span", "source_id": "SRC-001", "quote": "相关交易记录由第三方机构保存", "locator": "第3页第2段"}}
+  ],
+  "materials": [
+    {"material_id": "MAT-001", "name": "持有主体和材料范围线索", "status": "available", "source_id": "SRC-001", "note": "待核对完整性"},
+    {"material_id": "MAT-002", "name": "自行获取障碍说明", "status": "missing", "source_id": null, "note": "待补充"}
+  ],
+  "authorities": [],
+  "urgency": {"level": "unknown", "reasons": []},
+  "deadline_review": {"status": "unverified", "conclusion": null, "authority_ids": []},
+  "security_review": {"status": "unverified", "conclusion": null, "authority_ids": []},
+  "external_action_requested": false
+}

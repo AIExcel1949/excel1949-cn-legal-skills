@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "matter": {
+    "matter_id": "MATTER-CALC-001",
+    "matter_name": "甲公司与乙公司款项核算（虚构示例）"
+  },
+  "as_of_date": "2025-02-10",
+  "input_confirmed_by_lawyer": true,
+  "benchmarks": [
+    {
+      "id": "contract_principal",
+      "source_type": "contract",
+      "title": "虚构合同工作副本",
+      "locator": "证据 E-001，第 3 页第 2 条",
+      "quote": "待核算本金为人民币壹拾万元整。",
+      "verification_status": "verified",
+      "verified_on": "2025-02-10",
+      "applicability_status": "confirmed_for_calculation",
+      "notes": "仅用于测试数据契约，不对应真实当事人或合同。"
+    },
+    {
+      "id": "contract_rate",
+      "source_type": "contract",
+      "title": "虚构合同工作副本",
+      "locator": "证据 E-001，第 4 页第 5 条",
+      "quote": "本次内部试算使用年比例百分之六和三百六十五日年基准；是否可作为诉请依据须另行审查。",
+      "verification_status": "verified",
+      "verified_on": "2025-02-10",
+      "applicability_status": "confirmed_for_calculation"
+    },
+    {
+      "id": "period_instruction",
+      "source_type": "lawyer_instruction",
+      "title": "脱敏案件核算指令",
+      "locator": "内部指令 CALC-001 第 1 项",
+      "quote": "本次仅试算二○二五年一月二日至二月一日的日历日，不计起日但计止日。",
+      "verification_status": "verified",
+      "verified_on": "2025-02-10",
+      "applicability_status": "confirmed_for_calculation"
+    },
+    {
+      "id": "damage_vouchers",
+      "source_type": "evidence",
+      "title": "虚构费用凭证汇总表",
+      "locator": "证据 E-002 第 1—2 项",
+      "quote": "维修费人民币壹万贰仟叁佰肆拾伍元陆角柒分；评估费人民币捌佰元整。",
+      "verification_status": "verified",
+      "verified_on": "2025-02-10",
+      "applicability_status": "confirmed_for_calculation"
+    },
+    {
+      "id": "aggregation_instruction",
+      "source_type": "lawyer_instruction",
+      "title": "脱敏案件核算指令",
+      "locator": "内部指令 CALC-001 第 2 项",
+      "quote": "工作底稿暂按本金、本次试算利息和损失项目之和列示，不自动回填诉请。",
+      "verification_status": "verified",
+      "verified_on": "2025-02-10",
+      "applicability_status": "confirmed_for_calculation"
+    }
+  ],
+  "variables": [
+    {
+      "id": "principal",
+      "label": "本金",
+      "kind": "decimal",
+      "value": "100000.00",
+      "unit": "money",
+      "currency": "CNY",
+      "source_ids": ["contract_principal"]
+    },
+    {
+      "id": "annual_rate",
+      "label": "年比例",
+      "kind": "rational",
+      "numerator": "6",
+      "denominator": "100",
+      "unit": "ratio",
+      "source_ids": ["contract_rate"]
+    },
+    {
+      "id": "year_basis",
+      "label": "年基准天数",
+      "kind": "decimal",
+      "value": "365",
+      "unit": "day",
+      "source_ids": ["contract_rate"]
+    },
+    {
+      "id": "interest_days",
+      "label": "本次计息日数",
+      "kind": "date_span",
+      "start_date": "2025-01-02",
+      "end_date": "2025-02-01",
+      "include_start": false,
+      "include_end": true,
+      "unit": "calendar_day",
+      "source_ids": ["period_instruction"]
+    },
+    {
+      "id": "repair_cost",
+      "label": "维修费",
+      "kind": "decimal",
+      "value": "12345.67",
+      "unit": "money",
+      "currency": "CNY",
+      "source_ids": ["damage_vouchers"]
+    },
+    {
+      "id": "assessment_fee",
+      "label": "评估费",
+      "kind": "decimal",
+      "value": "800.00",
+      "unit": "money",
+      "currency": "CNY",
+      "source_ids": ["damage_vouchers"]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "period_days",
+      "label": "期间日数",
+      "category": "period",
+      "formula": "interest_days",
+      "result_type": "quantity",
+      "unit": "calendar_day",
+      "rounding": {"quantum": "1", "mode": "DOWN"},
+      "source_ids": ["period_instruction"]
+    },
+    {
+      "id": "principal_amount",
+      "label": "本金金额",
+      "category": "principal",
+      "formula": "principal",
+      "result_type": "money",
+      "currency": "CNY",
+      "rounding": {"quantum": "0.01", "mode": "HALF_UP"},
+      "source_ids": ["contract_principal"]
+    },
+    {
+      "id": "interest_amount",
+      "label": "本次试算利息",
+      "category": "interest",
+      "formula": "principal * annual_rate * interest_days / year_basis",
+      "result_type": "money",
+      "currency": "CNY",
+      "rounding": {"quantum": "0.01", "mode": "HALF_UP"},
+      "source_ids": ["contract_principal", "contract_rate", "period_instruction"]
+    },
+    {
+      "id": "damages_total",
+      "label": "损失项目合计",
+      "category": "damages",
+      "formula": "repair_cost + assessment_fee",
+      "result_type": "money",
+      "currency": "CNY",
+      "rounding": {"quantum": "0.01", "mode": "HALF_UP"},
+      "source_ids": ["damage_vouchers"]
+    },
+    {
+      "id": "working_total",
+      "label": "工作底稿合计",
+      "category": "total",
+      "formula": "principal_amount + interest_amount + damages_total",
+      "result_type": "money",
+      "currency": "CNY",
+      "rounding": {"quantum": "0.01", "mode": "HALF_UP"},
+      "source_ids": ["aggregation_instruction"]
+    }
+  ]
+}

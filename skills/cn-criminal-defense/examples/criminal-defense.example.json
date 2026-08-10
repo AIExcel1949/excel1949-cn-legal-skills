@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "matter_id": "MAT-CRIM-001",
+  "as_of_date": "2026-07-18",
+  "stage": "investigation",
+  "official_documents": [
+    {
+      "document_id": "DOC-detention-notice",
+      "title": "拘留通知书工作副本",
+      "issuing_authority": "某市公安机关",
+      "document_date": "2026-07-17",
+      "source_file": "脱敏-拘留通知书.pdf"
+    }
+  ],
+  "accusations": [
+    {
+      "accusation_id": "ACC-fact-001",
+      "kind": "alleged_fact",
+      "text_verbatim": "文书记载：因涉嫌实施某项财产犯罪行为被刑事拘留。",
+      "source_document_ids": ["DOC-detention-notice"],
+      "recording_mode": "verbatim_from_official_document"
+    },
+    {
+      "accusation_id": "ACC-offense-001",
+      "kind": "alleged_offense",
+      "text_verbatim": "涉嫌某项财产犯罪。",
+      "source_document_ids": ["DOC-detention-notice"],
+      "recording_mode": "verbatim_from_official_document"
+    }
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-cpl",
+      "title": "中华人民共和国刑事诉讼法官方文本",
+      "source_url": "https://www.npc.gov.cn/",
+      "verified_at": "2026-07-18",
+      "effect_status": "unknown"
+    }
+  ],
+  "deadline_rules": [
+    {
+      "rule_id": "RULE-liberty-check",
+      "name": "人身自由节点期限核验",
+      "rule_text_verbatim": "期限规则须由律师根据已核验官方法源逐条补录。",
+      "start_event": "2026-07-17 收到拘留通知书工作副本",
+      "candidate_due_date": null,
+      "authority_ids": ["AUTH-cpl"],
+      "liberty_related": true
+    }
+  ],
+  "element_candidates": [
+    {
+      "candidate_id": "CAND-element-objective",
+      "statement": "待按涉嫌罪名对应规则核验客观行为、结果及因果关系，不作成立判断。",
+      "source_document_ids": ["DOC-detention-notice"],
+      "evidence_ids": [],
+      "authority_ids": ["AUTH-cpl"],
+      "status": "research_required"
+    }
+  ],
+  "evidence_reviews": [
+    {
+      "evidence_id": "EVID-statement-001",
+      "name": "讯问笔录工作副本",
+      "source_document_ids": ["DOC-detention-notice"],
+      "authenticity": "unreviewed",
+      "legality": "disputed",
+      "relevance": "unreviewed",
+      "notes": "尚未取得完整同步录音录像及签名页。"
+    }
+  ],
+  "exclusion_clues": [
+    {
+      "clue_id": "CLUE-interrogation-001",
+      "description": "材料反映讯问时长和休息情况待核验，不自动认定证据应予排除。",
+      "evidence_ids": ["EVID-statement-001"],
+      "source_document_ids": ["DOC-detention-notice"],
+      "status": "investigation_required"
+    }
+  ],
+  "liberty_and_meeting_tasks": [
+    {
+      "task_id": "TASK-custody-001",
+      "task_type": "custody",
+      "description": "核验羁押地点、强制措施文书和时间节点。",
+      "liberty_status": "detained",
+      "deadline_rule_ids": ["RULE-liberty-check"],
+      "status": "open"
+    },
+    {
+      "task_id": "TASK-meeting-001",
+      "task_type": "meeting",
+      "description": "由承办律师决定并依法办理会见。",
+      "liberty_status": "detained",
+      "deadline_rule_ids": [],
+      "status": "open"
+    }
+  ],
+  "sentencing_candidates": [
+    {
+      "candidate_id": "CAND-sentencing-001",
+      "statement": "是否存在依法可评价的从轻、减轻情节须结合完整材料核验，不预测刑期。",
+      "source_document_ids": [],
+      "evidence_ids": [],
+      "authority_ids": [],
+      "status": "candidate"
+    }
+  ],
+  "defense_positions": [
+    {
+      "candidate_id": "CAND-defense-001",
+      "statement": "现有工作副本不足以核验指控事实和证据链，应调取完整卷宗后再形成辩护观点。",
+      "source_document_ids": ["DOC-detention-notice"],
+      "evidence_ids": ["EVID-statement-001"],
+      "authority_ids": [],
+      "status": "candidate"
+    }
+  ],
+  "requested_actions": []
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-hearing/hearing-input.schema.json",
+  "title": "庭前庭审准备输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter_id", "preparation_id", "as_of_date", "case_analysis", "evidence_map", "sources", "recording_action", "question_plans", "objection_plans", "post_hearing_tasks", "external_action_requested"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "matter_id": {"type": "string", "minLength": 3}, "preparation_id": {"type": "string", "minLength": 3}, "as_of_date": {"type": "string", "format": "date"},
+    "case_analysis": {"type": "object", "additionalProperties": false, "required": ["analysis_id", "matter_id", "artifact_state", "issues"], "properties": {"analysis_id": {"type": "string", "minLength": 3}, "matter_id": {"type": "string", "minLength": 3}, "artifact_state": {"const": "lawyer_review_required"}, "issues": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/issue"}}}},
+    "evidence_map": {"type": "object", "additionalProperties": false, "required": ["map_id", "matter_id", "artifact_state", "evidence", "issue_links"], "properties": {"map_id": {"type": "string", "minLength": 3}, "matter_id": {"type": "string", "minLength": 3}, "artifact_state": {"const": "lawyer_review_required"}, "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}, "issue_links": {"type": "array", "items": {"$ref": "#/$defs/issue_link"}}}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "recording_action": {"enum": ["none", "transcribe", "summarize", "extract"]},
+    "question_plans": {"type": "array", "items": {"$ref": "#/$defs/question"}},
+    "objection_plans": {"type": "array", "items": {"$ref": "#/$defs/objection"}},
+    "post_hearing_tasks": {"type": "array", "items": {"$ref": "#/$defs/task"}},
+    "external_action_requested": {"type": "boolean"}
+  },
+  "$defs": {
+    "basis": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["basis_type", "source_id", "quote", "locator"], "properties": {"basis_type": {"const": "source_span"}, "source_id": {"type": "string", "minLength": 1}, "quote": {"type": "string", "minLength": 1}, "locator": {"type": "string", "minLength": 1}}},
+      {"type": "object", "additionalProperties": false, "required": ["basis_type", "confirmed_at", "confirmation_note"], "properties": {"basis_type": {"const": "user_confirmed"}, "confirmed_at": {"type": "string", "format": "date-time"}, "confirmation_note": {"type": "string", "minLength": 1}}}
+    ]},
+    "issue": {"type": "object", "additionalProperties": false, "required": ["issue_id", "question", "frame", "status"], "properties": {"issue_id": {"type": "string", "minLength": 3}, "question": {"type": "string", "minLength": 1}, "frame": {"enum": ["claim_right", "defense", "procedure"]}, "status": {"type": "string", "minLength": 1}}},
+    "evidence": {"type": "object", "additionalProperties": false, "required": ["evidence_id", "name", "authenticity", "legality", "relevance", "proof_purpose_status"], "properties": {"evidence_id": {"type": "string", "minLength": 3}, "name": {"type": "string", "minLength": 1}, "authenticity": {"type": "string"}, "legality": {"type": "string"}, "relevance": {"type": "string"}, "proof_purpose_status": {"enum": ["source_supported", "user_confirmed", "missing"]}}},
+    "issue_link": {"type": "object", "additionalProperties": false, "required": ["issue_id", "evidence_id"], "properties": {"issue_id": {"type": "string"}, "evidence_id": {"type": "string"}}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["source_id", "kind", "file_name"], "properties": {"source_id": {"type": "string"}, "kind": {"enum": ["case_analysis", "evidence_map", "hearing_audio", "other"]}, "file_name": {"type": "string"}, "mime_type": {"type": ["string", "null"]}}},
+    "question": {"type": "object", "additionalProperties": false, "required": ["question_id", "issue_id", "text", "purpose", "evidence_ids", "basis"], "properties": {"question_id": {"type": "string"}, "issue_id": {"type": "string"}, "text": {"type": "string", "minLength": 1}, "purpose": {"type": "string", "minLength": 1}, "evidence_ids": {"type": "array", "items": {"type": "string"}}, "basis": {"$ref": "#/$defs/basis"}}},
+    "objection": {"type": "object", "additionalProperties": false, "required": ["objection_id", "issue_id", "trigger", "working_response", "basis"], "properties": {"objection_id": {"type": "string"}, "issue_id": {"type": "string"}, "trigger": {"type": "string", "minLength": 1}, "working_response": {"type": "string", "minLength": 1}, "basis": {"$ref": "#/$defs/basis"}}},
+    "task": {"type": "object", "additionalProperties": false, "required": ["task_id", "issue_ids", "description", "owner_role", "target_date_raw", "status"], "properties": {"task_id": {"type": "string"}, "issue_ids": {"type": "array", "items": {"type": "string"}}, "description": {"type": "string", "minLength": 1}, "owner_role": {"type": "string", "minLength": 1}, "target_date_raw": {"type": ["string", "null"]}, "status": {"enum": ["open", "blocked", "done"]}}}
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/source-snapshot.schema.json",
+  "title": "传统民事起诉状源快照",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source",
+    "normalized_text",
+    "text_sha256",
+    "units",
+    "sections",
+    "claims",
+    "classification",
+    "policy"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file_name", "mime_type", "file_sha256", "ocr_used", "human_verified"],
+      "properties": {
+        "file_name": {"type": "string", "minLength": 1},
+        "mime_type": {"enum": ["text/plain", "text/markdown", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]},
+        "file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "ocr_used": {"const": false},
+        "human_verified": {"type": "boolean"}
+      }
+    },
+    "normalized_text": {"type": "string", "minLength": 1},
+    "text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["unit_id", "ordinal", "kind", "text_verbatim", "start", "end", "sha256"],
+        "properties": {
+          "unit_id": {"type": "string", "pattern": "^U[0-9]{6}$"},
+          "ordinal": {"type": "integer", "minimum": 1},
+          "kind": {"enum": ["paragraph", "table_row"]},
+          "text_verbatim": {"type": "string"},
+          "start": {"type": "integer", "minimum": 0},
+          "end": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/span"}
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["order", "text_verbatim", "start", "end", "sha256"],
+        "properties": {
+          "order": {"type": "integer", "minimum": 1},
+          "text_verbatim": {"type": "string", "minLength": 1},
+          "start": {"type": "integer", "minimum": 0},
+          "end": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected", "confidence", "human_confirmed", "candidates"],
+      "properties": {
+        "selected": {"enum": ["private_lending", "divorce", "sales_contract", "traffic_accident", "unknown"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "human_confirmed": {"type": "boolean"},
+        "candidates": {"type": "array"}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claims", "facts", "missing_value", "inference", "unmapped_content"],
+      "properties": {
+        "claims": {"const": "verbatim"},
+        "facts": {"const": "verbatim"},
+        "missing_value": {"const": "leave_blank"},
+        "inference": {"const": "forbidden"},
+        "unmapped_content": {"const": "verbatim_appendix"}
+      }
+    }
+  },
+  "$defs": {
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "text_verbatim", "sha256"],
+      "properties": {
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 0},
+        "text_verbatim": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

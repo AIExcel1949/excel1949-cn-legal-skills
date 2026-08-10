@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-legal-core/matter.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "procedure_type", "stage", "artifact_state"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"$ref": "common.schema.json#/$defs/stable_id"},
+    "procedure_type": {"enum": ["unknown", "civil", "commercial", "criminal", "administrative", "arbitration", "enforcement", "non_litigation"]},
+    "stage": {"type": "string", "minLength": 1},
+    "artifact_state": {"$ref": "common.schema.json#/$defs/artifact_state"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}
+

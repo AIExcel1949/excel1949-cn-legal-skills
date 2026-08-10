@@ -1,0 +1,250 @@
+{
+  "schema_version": "1.0",
+  "map_id": "EMAP-2026-0001",
+  "matter_id": "MATTER-DEMO-0001",
+  "cutoff_date": "2026-07-18",
+  "sources": [
+    {
+      "source_id": "SRC-CONTRACT-001",
+      "file_name": "借款合同（脱敏）.pdf",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mime_type": "application/pdf",
+      "acquisition": "user_provided",
+      "parse_status": "human_verified"
+    },
+    {
+      "source_id": "SRC-BANK-001",
+      "file_name": "银行转账记录（脱敏）.pdf",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "mime_type": "application/pdf",
+      "acquisition": "user_provided",
+      "parse_status": "human_verified"
+    },
+    {
+      "source_id": "SRC-COMPLAINT-001",
+      "file_name": "民事起诉状（脱敏）.pdf",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "mime_type": "application/pdf",
+      "acquisition": "user_provided",
+      "parse_status": "human_verified"
+    },
+    {
+      "source_id": "SRC-DEFENSE-001",
+      "file_name": "书面答辩意见（脱敏）.pdf",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "mime_type": "application/pdf",
+      "acquisition": "user_provided",
+      "parse_status": "human_verified"
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "FACT-CONTRACT-AMOUNT",
+      "field": "contract_amount",
+      "raw_value": "借款本金人民币100000元",
+      "normalized_value": 100000,
+      "status": "stated",
+      "source_spans": [
+        {
+          "source_id": "SRC-CONTRACT-001",
+          "page": 1,
+          "quote": "乙向甲借款人民币100000元"
+        }
+      ]
+    },
+    {
+      "fact_id": "FACT-TRANSFER-AMOUNT",
+      "field": "payment_amount",
+      "raw_value": "转账金额100000元",
+      "normalized_value": 100000,
+      "status": "stated",
+      "source_spans": [
+        {
+          "source_id": "SRC-BANK-001",
+          "page": 1,
+          "quote": "交易金额：人民币100000.00元"
+        }
+      ]
+    },
+    {
+      "fact_id": "FACT-DEFENSE-RECEIVED",
+      "field": "payment_amount",
+      "raw_value": "乙主张实际收到90000元",
+      "normalized_value": 90000,
+      "status": "disputed",
+      "source_spans": [
+        {
+          "source_id": "SRC-DEFENSE-001",
+          "page": 1,
+          "quote": "乙仅认可实际收到借款90000元"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "issue_id": "ISSUE-DELIVERY-AMOUNT",
+      "question": "借款本金实际交付金额是多少",
+      "status": "disputed",
+      "element_ids": [
+        "ELEMENT-LOAN-DELIVERY"
+      ],
+      "burden_of_proof": "待执业律师结合当事人诉讼地位和具体主张核验",
+      "party_positions": []
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "CLAIM-REPAY-PRINCIPAL",
+      "order": 1,
+      "text_verbatim": "判令乙向甲偿还借款本金人民币100000元",
+      "status": "stated",
+      "amount": 100000,
+      "currency": "CNY",
+      "liable_party_ids": [
+        "PARTY-B"
+      ],
+      "source_spans": [
+        {
+          "source_id": "SRC-COMPLAINT-001",
+          "page": 1,
+          "quote": "判令乙向甲偿还借款本金人民币100000元"
+        }
+      ]
+    }
+  ],
+  "defenses": [
+    {
+      "defense_id": "DEFENSE-AMOUNT-90000",
+      "text_verbatim": "乙仅认可实际收到借款90000元",
+      "status": "disputed",
+      "source_spans": [
+        {
+          "source_id": "SRC-DEFENSE-001",
+          "page": 1,
+          "quote": "乙仅认可实际收到借款90000元"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EVID-CONTRACT-001",
+      "name": "借款合同工作副本",
+      "source_id": "SRC-CONTRACT-001",
+      "fact_ids": [
+        "FACT-CONTRACT-AMOUNT"
+      ],
+      "authenticity": "unreviewed",
+      "legality": "unreviewed",
+      "relevance": "unreviewed",
+      "verification_status": "human_checked"
+    },
+    {
+      "evidence_id": "EVID-BANK-001",
+      "name": "银行转账记录工作副本",
+      "source_id": "SRC-BANK-001",
+      "fact_ids": [
+        "FACT-TRANSFER-AMOUNT"
+      ],
+      "authenticity": "unreviewed",
+      "legality": "unreviewed",
+      "relevance": "unreviewed",
+      "verification_status": "human_checked"
+    }
+  ],
+  "evidence_fact_links": [
+    {
+      "link_id": "LINK-EF-CONTRACT-AMOUNT",
+      "evidence_id": "EVID-CONTRACT-001",
+      "fact_id": "FACT-CONTRACT-AMOUNT",
+      "status": "human_confirmed",
+      "confirmation_note": "用户确认该关系仅作为证据目录整理记录",
+      "proof_purpose": {
+        "text": "用于说明合同文本记载的借款本金金额",
+        "basis_status": "human_confirmed",
+        "confirmation_note": "用户明确提供该证明目的，尚待执业律师复核"
+      }
+    },
+    {
+      "link_id": "LINK-EF-BANK-TRANSFER",
+      "evidence_id": "EVID-BANK-001",
+      "fact_id": "FACT-TRANSFER-AMOUNT",
+      "status": "source_stated",
+      "source_spans": [
+        {
+          "source_id": "SRC-BANK-001",
+          "page": 1,
+          "quote": "交易金额：人民币100000.00元"
+        }
+      ]
+    }
+  ],
+  "fact_issue_links": [
+    {
+      "link_id": "LINK-FI-CONTRACT-DELIVERY",
+      "fact_id": "FACT-CONTRACT-AMOUNT",
+      "issue_id": "ISSUE-DELIVERY-AMOUNT",
+      "status": "ai_proposed"
+    },
+    {
+      "link_id": "LINK-FI-TRANSFER-DELIVERY",
+      "fact_id": "FACT-TRANSFER-AMOUNT",
+      "issue_id": "ISSUE-DELIVERY-AMOUNT",
+      "status": "ai_proposed"
+    },
+    {
+      "link_id": "LINK-FI-DEFENSE-DELIVERY",
+      "fact_id": "FACT-DEFENSE-RECEIVED",
+      "issue_id": "ISSUE-DELIVERY-AMOUNT",
+      "status": "ai_proposed"
+    }
+  ],
+  "fact_position_links": [
+    {
+      "link_id": "LINK-FP-CONTRACT-CLAIM",
+      "fact_id": "FACT-CONTRACT-AMOUNT",
+      "target_type": "claim",
+      "target_id": "CLAIM-REPAY-PRINCIPAL",
+      "status": "ai_proposed"
+    },
+    {
+      "link_id": "LINK-FP-TRANSFER-CLAIM",
+      "fact_id": "FACT-TRANSFER-AMOUNT",
+      "target_type": "claim",
+      "target_id": "CLAIM-REPAY-PRINCIPAL",
+      "status": "ai_proposed"
+    },
+    {
+      "link_id": "LINK-FP-DEFENSE-DEFENSE",
+      "fact_id": "FACT-DEFENSE-RECEIVED",
+      "target_type": "defense",
+      "target_id": "DEFENSE-AMOUNT-90000",
+      "status": "ai_proposed"
+    }
+  ],
+  "three_nature_reviews": [],
+  "declared_conflicts": [
+    {
+      "conflict_id": "CONFLICT-PAYMENT-AMOUNT",
+      "fact_ids": [
+        "FACT-TRANSFER-AMOUNT",
+        "FACT-DEFENSE-RECEIVED"
+      ],
+      "description": "转账记录金额与乙方书面陈述的实收金额不一致",
+      "status": "declared",
+      "source_spans": [
+        {
+          "source_id": "SRC-BANK-001",
+          "page": 1,
+          "quote": "交易金额：人民币100000.00元"
+        },
+        {
+          "source_id": "SRC-DEFENSE-001",
+          "page": 1,
+          "quote": "乙仅认可实际收到借款90000元"
+        }
+      ]
+    }
+  ]
+}

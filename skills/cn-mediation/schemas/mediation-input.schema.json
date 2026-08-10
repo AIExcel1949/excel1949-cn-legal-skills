@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-mediation/mediation-input.schema.json",
+  "title": "调解方案工作台输入",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "matter", "authority", "proposals"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter": {
+      "type": "object", "additionalProperties": false,
+      "required": ["matter_id", "title", "as_of_date"],
+      "properties": {
+        "matter_id": {"type": "string", "minLength": 3},
+        "title": {"type": "string", "minLength": 1},
+        "as_of_date": {"type": "string", "format": "date"}
+      }
+    },
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["party_id", "confirmed_by_client", "amount_direction", "target_amount", "limit_amount", "currency", "non_monetary_authorizations", "forbidden_commitments"],
+      "properties": {
+        "party_id": {"type": "string", "minLength": 1},
+        "confirmed_by_client": {"type": "boolean"},
+        "amount_direction": {"enum": ["receive_at_least", "pay_at_most"]},
+        "target_amount": {"type": "number", "minimum": 0},
+        "limit_amount": {"type": "number", "minimum": 0},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "non_monetary_authorizations": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["term_key", "allowed_values"],
+            "properties": {
+              "term_key": {"type": "string", "minLength": 1},
+              "allowed_values": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+            }
+          }
+        },
+        "forbidden_commitments": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "proposals": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["proposal_id", "label", "amount", "currency", "payment_schedule", "non_monetary_terms", "clauses", "public_offer_text", "internal_notes"],
+        "properties": {
+          "proposal_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+          "label": {"type": "string", "minLength": 1},
+          "amount": {"type": "number", "minimum": 0},
+          "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+          "payment_schedule": {
+            "type": "array", "minItems": 1,
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["installment_id", "amount", "due_basis"],
+              "properties": {
+                "installment_id": {"type": "string", "minLength": 1},
+                "amount": {"type": "number", "minimum": 0},
+                "due_basis": {"type": "string", "minLength": 1}
+              }
+            }
+          },
+          "non_monetary_terms": {
+            "type": "array",
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["term_key", "value", "description"],
+              "properties": {
+                "term_key": {"type": "string", "minLength": 1},
+                "value": {"type": "string", "minLength": 1},
+                "description": {"type": "string", "minLength": 1}
+              }
+            }
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["category", "summary"],
+              "properties": {
+                "category": {"enum": ["confidentiality", "performance", "default", "dispute_resolution", "other"]},
+                "summary": {"type": "string", "minLength": 1}
+              }
+            }
+          },
+          "public_offer_text": {"type": "string", "minLength": 1},
+          "internal_notes": {"type": "string"}
+        }
+      }
+    }
+  }
+}

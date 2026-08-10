@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "contract-obligations",
+  "title": "Contract & Debt Obligations Domain Pack",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "合同成立、生效、履行、变更、解除与违约的事实整理",
+      "买卖、借款和一般服务交易的基础问题识别",
+      "本金、价款、利息、违约金和损失项目的计算入口"
+    ],
+    "excluded": [
+      "金融监管、建设工程、海商、涉外合同等特别领域的最终法律结论"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-CIVIL-CODE",
+      "title": "中华人民共和国民法典",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.moj.gov.cn/pub/sfbgw/zwgkztzl/2025nianzhuanti/2025mfdxcy/2025mfdxcy_mfdql/202505/t20250507_518708.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-SALE-CONTRACT",
+      "title": "最高人民法院关于审理买卖合同纠纷案件适用法律问题的解释",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://gongbao.court.gov.cn/Details/ba1b35d94fe5430b29f99395323878.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "formation_validity",
+      "label": "成立与效力",
+      "questions": [
+        "各方何时、以何种方式达成合意？",
+        "签约主体、代理权限、批准登记或格式条款是否需要核验？",
+        "是否存在无效、可撤销或效力待定的争议主张？"
+      ],
+      "fact_fields": [
+        "交易主体",
+        "要约承诺过程",
+        "签署时间与方式",
+        "代理与授权",
+        "合同版本及附件"
+      ],
+      "evidence_prompts": [
+        "合同原件及版本哈希",
+        "授权文件和主体登记信息",
+        "磋商邮件、聊天和签署记录"
+      ],
+      "calculation_hooks": [],
+      "deadline_hooks": [
+        "撤销权或解除权行使节点候选",
+        "诉讼时效起算事实候选"
+      ],
+      "prohibitions": [
+        "不得仅凭合同标题认定法律关系性质"
+      ]
+    },
+    {
+      "issue_key": "performance_breach",
+      "label": "履行与违约",
+      "questions": [
+        "各项主给付、从给付和协作义务的内容与顺序是什么？",
+        "履行、拒收、质量异议、催告和补救分别发生在何时？",
+        "对方抗辩、抵销、同时履行或先履行主张有何事实基础？"
+      ],
+      "fact_fields": [
+        "交付内容",
+        "验收与异议",
+        "付款节点",
+        "催告通知",
+        "履行障碍"
+      ],
+      "evidence_prompts": [
+        "送货单、验收单、对账单和发票",
+        "付款流水及用途说明",
+        "通知送达凭证和往来沟通"
+      ],
+      "calculation_hooks": [
+        "本金或价款余额",
+        "利息、违约金和损失分项"
+      ],
+      "deadline_hooks": [
+        "付款到期日",
+        "检验或异议期间候选"
+      ],
+      "prohibitions": [
+        "不得把发票单独视为合同成立或款项已付的充分证明"
+      ]
+    },
+    {
+      "issue_key": "termination_remedies",
+      "label": "解除与救济",
+      "questions": [
+        "主张解除、继续履行、修理重作或赔偿的目标是否冲突？",
+        "解除通知是否发出、何时到达、是否遭异议？",
+        "损失项目与违约行为之间的因果链和减损情况如何？"
+      ],
+      "fact_fields": [
+        "救济目标",
+        "解除事由",
+        "通知与到达",
+        "替代交易",
+        "损失与减损"
+      ],
+      "evidence_prompts": [
+        "解除或催告通知及送达凭证",
+        "替代采购、转售或修复材料",
+        "损失凭证和因果关系材料"
+      ],
+      "calculation_hooks": [
+        "损失项目逐项台账",
+        "已付款返还与抵扣"
+      ],
+      "deadline_hooks": [
+        "解除通知到达日",
+        "起诉或仲裁时效候选"
+      ],
+      "prohibitions": [
+        "不得重复累计互不相容的救济项目"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-CONTRACT-001",
+      "prompt": "甲公司称乙公司欠付一批货款，但仅提交发票、部分送货单和聊天截图。",
+      "expected_questions": [
+        "交易主体和合同版本是什么？",
+        "各批次交付、验收、开票和付款如何对应？",
+        "是否有质量异议或抵销主张？"
+      ],
+      "forbidden_inferences": [
+        "不得仅凭发票认定全部货款债权成立",
+        "不得自动计算逾期利息起算日"
+      ]
+    }
+  ],
+  "author": "AIOffice职场通关-excel1949",
+  "title_zh": "合同与债权债务基础业务包"
+}

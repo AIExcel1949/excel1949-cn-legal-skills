@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "matter": {
+    "matter_id": "MAT-MED-001",
+    "title": "甲方与乙方合同款项调解（教学脱敏）",
+    "as_of_date": "2026-07-18"
+  },
+  "authority": {
+    "party_id": "PARTY-A",
+    "confirmed_by_client": true,
+    "amount_direction": "receive_at_least",
+    "target_amount": 260000,
+    "limit_amount": 220000,
+    "currency": "CNY",
+    "non_monetary_authorizations": [
+      {"term_key": "payment_period", "allowed_values": ["30_days", "60_days"]},
+      {"term_key": "mutual_release", "allowed_values": ["after_full_payment"]}
+    ],
+    "forbidden_commitments": ["public_apology"]
+  },
+  "proposals": [
+    {
+      "proposal_id": "MED-P-001",
+      "label": "一次性付款方案",
+      "amount": 240000,
+      "currency": "CNY",
+      "payment_schedule": [
+        {"installment_id": "I-1", "amount": 240000, "due_basis": "协议生效后30日内"}
+      ],
+      "non_monetary_terms": [
+        {"term_key": "payment_period", "value": "30_days", "description": "协议生效后30日内付清"},
+        {"term_key": "mutual_release", "value": "after_full_payment", "description": "全额履行后互不追究本案合同请求"}
+      ],
+      "clauses": [
+        {"category": "confidentiality", "summary": "调解内容仅向必要人员和依法有权机关披露"},
+        {"category": "performance", "summary": "明确付款账户、时间与到账标准"},
+        {"category": "default", "summary": "明确迟延履行的责任与恢复请求的条件"},
+        {"category": "dispute_resolution", "summary": "明确本调解协议争议的解决路径"}
+      ],
+      "public_offer_text": "甲方提议乙方于协议生效后30日内一次性支付24万元，其余条款由双方进一步确认。",
+      "internal_notes": "可优先交换缩短付款期限。"
+    },
+    {
+      "proposal_id": "MED-P-002",
+      "label": "两期付款方案",
+      "amount": 230000,
+      "currency": "CNY",
+      "payment_schedule": [
+        {"installment_id": "I-1", "amount": 130000, "due_basis": "协议生效后10日内"},
+        {"installment_id": "I-2", "amount": 100000, "due_basis": "首期到账后50日内"}
+      ],
+      "non_monetary_terms": [
+        {"term_key": "payment_period", "value": "60_days", "description": "总履行期不超过60日"}
+      ],
+      "clauses": [
+        {"category": "confidentiality", "summary": "约定保密范围和法定披露例外"},
+        {"category": "performance", "summary": "约定两期付款和收款确认"},
+        {"category": "default", "summary": "约定任一期逾期后的处理"},
+        {"category": "dispute_resolution", "summary": "约定协议争议解决路径"}
+      ],
+      "public_offer_text": "甲方提议乙方分两期支付23万元，总履行期不超过60日，具体日期由双方确认。",
+      "internal_notes": "需重点核对首期款到账保障。"
+    }
+  ]
+}

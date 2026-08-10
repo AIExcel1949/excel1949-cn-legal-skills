@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evidence Catalog Input",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "matter_id",
+    "case_title",
+    "submitter_role",
+    "submitter",
+    "submit_date",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "matter_id": {
+      "type": "string"
+    },
+    "case_title": {
+      "type": "string",
+      "description": "案件名称，如：甲公司与乙公司买卖合同纠纷案"
+    },
+    "submitter_role": {
+      "type": "string",
+      "enum": [
+        "原告",
+        "被告",
+        "第三人",
+        "申请执行人",
+        "被执行人",
+        "其他"
+      ]
+    },
+    "submitter": {
+      "type": "string",
+      "description": "提交人（单位或个人名称）"
+    },
+    "submit_date": {
+      "type": "string",
+      "description": "提交时间，格式 YYYY年M月D日，如 2026年8月8日"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "proof_purpose"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "证据名称，如：原告营业执照复印件、被告企业信用信息公示报告"
+          },
+          "proof_purpose": {
+            "type": "string",
+            "description": "证明目的；多项可用 1、2、3、 编号并以；分隔"
+          },
+          "source": {
+            "type": "string",
+            "description": "证据来源（格式二/一用）"
+          },
+          "form": {
+            "type": "string",
+            "enum": [
+              "原件",
+              "复印件",
+              "电子件"
+            ],
+            "description": "证据形式"
+          },
+          "pages": {
+            "type": "string",
+            "description": "页数"
+          },
+          "notes": {
+            "type": "string",
+            "description": "备注"
+          }
+        }
+      }
+    },
+    "case_cause": {
+      "type": "string",
+      "description": "案由，如：买卖合同纠纷"
+    },
+    "plaintiff": {
+      "type": "string",
+      "description": "原告（申请人）"
+    },
+    "defendant": {
+      "type": "string",
+      "description": "被告（被申请人）"
+    },
+    "volume_note": {
+      "type": "string",
+      "description": "证据册说明，如：证据册共五册"
+    }
+  },
+  "$id": "https://aioffice.cn/schemas/evidence-catalog-input.schema.json"
+}

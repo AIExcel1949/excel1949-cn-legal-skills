@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "tort",
+  "title": "Tort & Damages Domain Pack",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "一般侵权、共同侵权和人身损害的事实要素整理",
+      "损害项目、因果关系、过错和责任主体候选识别",
+      "医疗、误工、护理等损失凭证清单"
+    ],
+    "excluded": [
+      "医疗损害、环境侵权、产品责任、网络侵权等特别领域的最终责任判断"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-CIVIL-CODE",
+      "title": "中华人民共和国民法典",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.moj.gov.cn/pub/sfbgw/zwgkztzl/2025nianzhuanti/2025mfdxcy/2025mfdxcy_mfdql/202505/t20250507_518708.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-PERSONAL-INJURY",
+      "title": "最高人民法院关于审理人身损害赔偿案件适用法律若干问题的解释",
+      "authority_type": "judicial_interpretation",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://gongbao.court.gov.cn/Details/4d16a63992ba473f7f5885565cc13a.html",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "conduct_fault",
+      "label": "行为、过错与主体",
+      "questions": [
+        "具体行为、行为人、控制人和注意义务来源是什么？",
+        "受害方是否主张共同侵权、替代责任或安全保障义务？",
+        "各方是否提出受害人过错、第三人原因或免责事由？"
+      ],
+      "fact_fields": [
+        "行为发生经过",
+        "行为人与控制关系",
+        "注意义务来源",
+        "各方过错陈述"
+      ],
+      "evidence_prompts": [
+        "现场视频、照片和电子数据原件",
+        "主体关系、雇佣或管理材料",
+        "报警、调查或事故认定材料"
+      ],
+      "calculation_hooks": [],
+      "deadline_hooks": [
+        "损害发生或发现日期候选"
+      ],
+      "prohibitions": [
+        "不得从损害结果倒推出行为人必然有过错"
+      ]
+    },
+    {
+      "issue_key": "causation_damage",
+      "label": "因果关系与损害",
+      "questions": [
+        "行为到损害之间的时间线和中间事件是什么？",
+        "既往疾病、后续治疗、第三方介入和损害扩大如何影响争议？",
+        "每项损失的发生、支付人与必要性材料是什么？"
+      ],
+      "fact_fields": [
+        "受伤与诊疗时间线",
+        "既往状况",
+        "损害项目",
+        "支付主体",
+        "后续影响"
+      ],
+      "evidence_prompts": [
+        "病历、检查、诊断和费用票据",
+        "收入、误工、护理和交通材料",
+        "鉴定意见及检材来源"
+      ],
+      "calculation_hooks": [
+        "损害项目逐项计算",
+        "已获赔付和保险支付抵扣候选"
+      ],
+      "deadline_hooks": [
+        "伤残或损害确定节点候选"
+      ],
+      "prohibitions": [
+        "不得用医疗票据总额替代必要性、关联性和实际负担核验"
+      ]
+    },
+    {
+      "issue_key": "allocation_remedy",
+      "label": "责任分配与救济",
+      "questions": [
+        "可能承担责任的主体是否完整且身份可核验？",
+        "责任形态和比例由哪些已核验规则及事实支持？",
+        "是否存在保险、工伤、合同责任或其他请求权竞合？"
+      ],
+      "fact_fields": [
+        "责任主体列表",
+        "责任形态主张",
+        "保险与赔付",
+        "竞合关系"
+      ],
+      "evidence_prompts": [
+        "保险合同和理赔记录",
+        "劳动或承揽关系材料",
+        "共同侵权各方行为证据"
+      ],
+      "calculation_hooks": [
+        "责任比例仅作为人工确认输入",
+        "赔付抵扣台账"
+      ],
+      "deadline_hooks": [
+        "各请求权时效候选"
+      ],
+      "prohibitions": [
+        "不得由模型臆定责任比例"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-TORT-001",
+      "prompt": "丙某在商场摔伤，只有手机照片、门诊记录和付款截图。",
+      "expected_questions": [
+        "摔倒位置、原因和现场管理情况是什么？",
+        "照片原件、拍摄时间和现场监控能否取得？",
+        "伤情与既往疾病如何区分？"
+      ],
+      "forbidden_inferences": [
+        "不得因事故发生在商场即认定商场全责",
+        "不得自动确定责任比例"
+      ]
+    }
+  ],
+  "author": "AIOffice职场通关-excel1949",
+  "title_zh": "侵权责任基础业务包"
+}

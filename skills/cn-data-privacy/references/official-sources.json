@@ -1,0 +1,18 @@
+{
+  "registry_version": "2026-07-18",
+  "verified_on": "2026-07-18",
+  "sources": [
+    {"authority_id": "PRV-PIPL", "title": "中华人民共和国个人信息保护法", "issuer": "全国人民代表大会常务委员会", "url": "https://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313088.html", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-DATA-SECURITY", "title": "中华人民共和国数据安全法", "issuer": "全国人民代表大会常务委员会", "url": "https://wb.flk.npc.gov.cn/flfg/PDF/8a19eb7aaa1e463cb21ff7cc2bac99d1.pdf", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-CYBERSECURITY-2026", "title": "全国人大常委会关于修改《中华人民共和国网络安全法》的决定", "issuer": "全国人民代表大会常务委员会", "url": "https://www.npc.gov.cn/npc/c1773/c1848/c21114/wlaqfxz/wlaqfxz002/202511/t20251103_449242.html", "effect_status": "effective_from_2026-01-01", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-NETWORK-DATA-REG", "title": "网络数据安全管理条例", "issuer": "国务院", "url": "https://xzfg.moj.gov.cn/front/law/detail?LawID=1734", "effect_status": "effective_from_2025-01-01", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-COMPLIANCE-AUDIT", "title": "个人信息保护合规审计管理办法", "issuer": "国家互联网信息办公室", "url": "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202510/t20251021_526524.html", "effect_status": "effective_from_2025-05-01", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-INCIDENT-REPORT", "title": "国家网络安全事件报告管理办法", "issuer": "国家互联网信息办公室", "url": "https://www.cac.gov.cn/2025-09/15/c_1759583017717009.htm", "effect_status": "effective_from_2025-11-01", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-MINORS", "title": "未成年人网络保护条例", "issuer": "国务院", "url": "https://www.cac.gov.cn/2023-10/24/c_1699806932316206.htm", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-CHILDREN", "title": "儿童个人信息网络保护规定", "issuer": "国家互联网信息办公室", "url": "https://www.cac.gov.cn/2019-08/23/c_1124913903.htm", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-CROSSBORDER", "title": "促进和规范数据跨境流动规定", "issuer": "国家互联网信息办公室", "url": "https://www.cac.gov.cn/2024-03/22/c_1712776611775634.htm", "effect_status": "effective", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-EXPORT-ASSESSMENT", "title": "数据出境安全评估办法", "issuer": "国家互联网信息办公室", "url": "https://www.cac.gov.cn/2022-07/07/c_1658811536396503.htm", "effect_status": "effective_subject_to_later_rules", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-SCC", "title": "个人信息出境标准合同办法", "issuer": "国家互联网信息办公室", "url": "https://www.cac.gov.cn/2023-02/24/c_1678884830036813.htm", "effect_status": "effective_subject_to_later_rules", "verification_status": "official_page_checked"},
+    {"authority_id": "PRV-CERTIFICATION", "title": "个人信息出境认证办法", "issuer": "国家互联网信息办公室、国家市场监督管理总局", "url": "https://www.cac.gov.cn/2025-10/17/c_1762449728720008.htm", "effect_status": "effective_from_2026-01-01", "verification_status": "official_page_checked"}
+  ]
+}

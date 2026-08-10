@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "pack_name": "environment",
+  "title": "Environment & Ecology Domain Pack",
+  "author": "AIOffice职场通关-excel1949",
+  "status": "testing",
+  "verified_on": "2026-07-18",
+  "scope": {
+    "included": [
+      "建设项目、排污许可、污染事件、生态损害和环境行政程序的事实整理",
+      "污染源、介质、迁移路径、监测和因果关系材料清单"
+    ],
+    "excluded": [
+      "污染责任、生态损害、行政违法或修复方案的自动认定"
+    ]
+  },
+  "consumers": [
+    "cn-intake",
+    "cn-case-analysis",
+    "cn-evidence-map",
+    "cn-research",
+    "cn-calc",
+    "cn-deadline"
+  ],
+  "authorities": [
+    {
+      "authority_id": "AUTH-ECOLOGICAL-CODE-2026-PENDING",
+      "title": "中华人民共和国生态环境法典（2026年8月15日起施行，核验日尚未施行）",
+      "authority_type": "law",
+      "effect_status": "not_yet_effective",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.moj.gov.cn/pub/sfbgw/zwgkztzl/2026nianzhuanti/2026qglh0206/lhsj20260206/202603/t20260312_532715.html",
+      "check_before_use": true
+    },
+    {
+      "authority_id": "AUTH-ENVIRONMENT",
+      "title": "中华人民共和国环境保护法（核验日现行，生态环境法典施行后应重新核验）",
+      "authority_type": "law",
+      "effect_status": "effective_at_verification",
+      "verified_on": "2026-07-18",
+      "source_url": "https://www.npc.gov.cn/zgrdw/npc/zfjc/zfjcelys/2016-10/26/content_1999801.htm",
+      "check_before_use": true
+    }
+  ],
+  "issue_families": [
+    {
+      "issue_key": "permit_operation",
+      "label": "许可与生产运行",
+      "questions": [
+        "项目类型、地点、环评、许可、验收和实际工艺如何？",
+        "排放口、污染物、治理设施和运行记录是否一致？"
+      ],
+      "fact_fields": [
+        "项目与地点",
+        "许可文件",
+        "工艺流程",
+        "排放与设施"
+      ],
+      "evidence_prompts": [
+        "环评、批复、许可和验收材料",
+        "生产台账、在线监测和设施运行记录"
+      ],
+      "calculation_hooks": [],
+      "deadline_hooks": [
+        "许可、监测、整改和复查节点"
+      ],
+      "prohibitions": [
+        "不得仅凭许可文件推断实际持续合规"
+      ]
+    },
+    {
+      "issue_key": "incident_damage",
+      "label": "污染事件与损害",
+      "questions": [
+        "事件发生、发现、扩散、控制和采样链如何？",
+        "污染源、迁移路径、受体、损害和其他可能原因有何证据？"
+      ],
+      "fact_fields": [
+        "事件时间线",
+        "污染介质",
+        "迁移路径",
+        "损害对象"
+      ],
+      "evidence_prompts": [
+        "现场记录、样品链和监测报告",
+        "气象水文、生产记录和损害评估材料"
+      ],
+      "calculation_hooks": [
+        "处置费用和损害项目台账"
+      ],
+      "deadline_hooks": [
+        "报告、取样、保全和行政救济节点"
+      ],
+      "prohibitions": [
+        "不得用单次超标自动推断全部因果关系和损害范围"
+      ]
+    }
+  ],
+  "global_prohibitions": [
+    "不得把问题清单直接表述为已成立的法律结论",
+    "不得跳过法域、时间效力、程序阶段和地方规则核验",
+    "不得补写当事人未陈述且材料不能支持的事实",
+    "不得把模型生成的金额、期限或责任比例直接用于提交",
+    "不得自动发送通知、举报、许可申请、整改报告或向任何外部系统提交",
+    "不得自动停产、处置污染物、执行修复方案或实施其他外部操作"
+  ],
+  "update_triggers": [
+    "官方法律法规或司法解释新增、修改、废止或者施行日期变化",
+    "最高人民法院发布与本包问题直接相关的新司法解释、指导性案例或答疑",
+    "案件事实跨境、跨法域、涉及行政前置程序或者存在特别主体",
+    "生态环境法典2026年8月15日施行前后的废止、衔接、过渡和配套规则变化"
+  ],
+  "test_scenarios": [
+    {
+      "scenario_id": "SCN-ENVIRONMENT-001",
+      "prompt": "工厂附近河流出现污染，企业称当天停产但现场已有采样报告。",
+      "expected_questions": [
+        "采样主体、点位、时间和样品链是否可靠？",
+        "企业工艺、排放、停产和其他污染源材料有哪些？"
+      ],
+      "forbidden_inferences": [
+        "不得从地理邻近直接认定污染源",
+        "不得自动提出或执行修复方案"
+      ]
+    }
+  ],
+  "title_zh": "生态环境业务包"
+}

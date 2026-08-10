@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-contract-review/review-input.schema.json",
+  "type": "object",
+  "required": ["schema_version", "matter_id", "review_context", "source_contract", "clauses", "authority_records", "findings"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "matter_id": {"$ref": "#/$defs/id"},
+    "review_context": {"type": "object", "required": ["representation", "representation_status", "jurisdiction", "jurisdiction_status", "contract_version", "version_status"], "properties": {"representation": {"type": "string", "minLength": 1}, "representation_status": {"$ref": "#/$defs/status"}, "jurisdiction": {"type": "string", "minLength": 1}, "jurisdiction_status": {"$ref": "#/$defs/status"}, "contract_version": {"type": "string", "minLength": 1}, "version_status": {"$ref": "#/$defs/status"}}, "additionalProperties": false},
+    "source_contract": {"type": "object", "required": ["file_name", "sha256", "encoding"], "properties": {"file_name": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "encoding": {"const": "utf-8"}}, "additionalProperties": false},
+    "clauses": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/clause"}},
+    "authority_records": {"type": "array", "items": {"$ref": "#/$defs/authority"}},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "coverage_requirements": {"type": "array", "items": {"$ref": "#/$defs/coverage_requirement"}},
+    "defined_terms": {"type": "array", "items": {"$ref": "#/$defs/defined_term"}},
+    "cross_references": {"type": "array", "items": {"$ref": "#/$defs/cross_reference"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"},
+    "status": {"enum": ["confirmed", "unconfirmed"]},
+    "clause": {"type": "object", "required": ["clause_id", "heading", "start_char", "end_char", "original_text"], "properties": {"clause_id": {"$ref": "#/$defs/id"}, "heading": {"type": "string", "minLength": 1}, "start_char": {"type": "integer", "minimum": 0}, "end_char": {"type": "integer", "minimum": 1}, "original_text": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "authority": {"type": "object", "required": ["record_id", "title", "source_url", "effect_status", "verification_status", "full_text_checked", "applicability_status"], "properties": {"record_id": {"$ref": "#/$defs/id"}, "title": {"type": "string", "minLength": 1}, "source_url": {"type": "string", "format": "uri"}, "effect_status": {"enum": ["effective", "amended", "repealed", "not_yet_effective", "unknown"]}, "verification_status": {"enum": ["verified", "pending", "failed"]}, "full_text_checked": {"type": "boolean"}, "applicability_status": {"enum": ["confirmed", "unconfirmed", "not_applicable"]}}, "additionalProperties": false},
+    "risk": {"type": "object", "required": ["level", "expression"], "properties": {"level": {"enum": ["high", "medium", "low"]}, "expression": {"enum": ["potential", "needs_verification"]}}, "additionalProperties": false},
+    "delta": {"type": "object", "required": ["operation", "target_text", "proposed_text"], "properties": {"operation": {"enum": ["comment", "replace", "insert_before", "insert_after", "delete"]}, "target_text": {"type": "string"}, "proposed_text": {"type": "string"}}, "additionalProperties": false},
+    "finding": {"type": "object", "required": ["finding_id", "clause_id", "basis_type", "issue", "risk", "source_refs", "authority_ids", "suggestion", "delta"], "properties": {"finding_id": {"$ref": "#/$defs/id"}, "clause_id": {"$ref": "#/$defs/id"}, "basis_type": {"enum": ["legal", "commercial", "drafting"]}, "issue": {"type": "string", "minLength": 1}, "risk": {"$ref": "#/$defs/risk"}, "source_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true}, "authority_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true}, "suggestion": {"type": "string", "minLength": 1}, "delta": {"$ref": "#/$defs/delta"}}, "additionalProperties": false},
+    "coverage_requirement": {
+      "type": "object",
+      "required": ["requirement_id", "label", "applicability_status", "importance", "basis_type", "reason", "matched_clause_ids", "authority_ids", "recommendation"],
+      "properties": {
+        "requirement_id": {"$ref": "#/$defs/id"},
+        "label": {"type": "string", "minLength": 1},
+        "applicability_status": {"enum": ["confirmed", "unconfirmed", "not_applicable"]},
+        "importance": {"enum": ["blocker", "high", "medium", "low"]},
+        "basis_type": {"enum": ["legal", "commercial", "drafting"]},
+        "reason": {"type": "string", "minLength": 1},
+        "matched_clause_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "authority_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "recommendation": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "defined_term": {
+      "type": "object",
+      "required": ["term_id", "term", "definition_clause_id", "use_clause_ids", "review_status"],
+      "properties": {
+        "term_id": {"$ref": "#/$defs/id"},
+        "term": {"type": "string", "minLength": 1},
+        "definition_clause_id": {"oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "use_clause_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "review_status": {"enum": ["confirmed", "ai_proposed"]}
+      },
+      "additionalProperties": false
+    },
+    "cross_reference": {
+      "type": "object",
+      "required": ["reference_id", "source_clause_id", "target_clause_id", "target_label", "relationship", "review_status"],
+      "properties": {
+        "reference_id": {"$ref": "#/$defs/id"},
+        "source_clause_id": {"$ref": "#/$defs/id"},
+        "target_clause_id": {"oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "target_label": {"type": "string", "minLength": 1},
+        "relationship": {"enum": ["modifies", "conditions", "overrides", "incorporates", "conflicts"]},
+        "review_status": {"enum": ["confirmed", "ai_proposed"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

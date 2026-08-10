@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "draft_id": "DRAFT-COMPLAINT-001",
+  "matter_id": "MATTER-001",
+  "as_of_date": "2026-07-18",
+  "case_analysis": {
+    "schema_version": "1.0",
+    "analysis_id": "ANALYSIS-001",
+    "matter_id": "MATTER-001",
+    "cause_of_action_status": "not_selected_by_skill",
+    "final_outcome_status": "lawyer_independent_judgment_required",
+    "pending_confirmations": [],
+    "risks": []
+  },
+  "evidence_map": {
+    "schema_version": "1.0",
+    "map_id": "MAP-001",
+    "matter_id": "MATTER-001",
+    "matrix": [{"evidence_id": "EVID-CONTRACT-001", "name": "合同复印件"}],
+    "gaps": [],
+    "potential_conflicts": [],
+    "artifact_state": "lawyer_review_required"
+  },
+  "research_report": {
+    "schema_version": "1.0",
+    "report_id": "RESEARCH-001",
+    "task": {"matter_id": "MATTER-001"},
+    "state": "lawyer_review_required",
+    "records": [{"record_id": "AUTH-CIVIL-CODE", "verification_status": "verified", "full_text_checked": true, "effect_status": "effective"}]
+  },
+  "draft_request": {
+    "court": {"text": "某市某区人民法院", "user_confirmed": true, "confirmation_note": "训练案例中由用户明示指定，实务中须律师复核管辖"},
+    "case_type": {"text": "合同纠纷", "user_confirmed": true, "confirmation_note": "训练案例中由用户明示指定，不代表 Skill 自动选择案由"},
+    "parties": [
+      {"party_id": "PARTY-PLAINTIFF-001", "role": "plaintiff", "display_text": "原告：甲公司（训练用虚构主体）", "user_confirmed": true, "confirmation_note": "用户确认的脱敏展示文本"},
+      {"party_id": "PARTY-DEFENDANT-001", "role": "defendant", "display_text": "被告：乙公司（训练用虚构主体）", "user_confirmed": true, "confirmation_note": "用户确认的脱敏展示文本"}
+    ],
+    "claims": [
+      {"claim_id": "CLAIM-001", "text_verbatim": "请求判令被告向原告支付货款人民币10000元。", "user_confirmed": true, "confirmation_note": "用户明示确认诉请原文，程序不改写或计算"}
+    ],
+    "facts": [
+      {"fact_id": "FACT-001", "text": "双方在脱敏合同中记载了交易安排。", "evidence_ids": ["EVID-CONTRACT-001"], "source_spans": [{"source_id": "SRC-CONTRACT-001", "locator": "第1页第1段", "quote": "甲方与乙方约定开展本次交易。"}]}
+    ],
+    "legal_grounds": [
+      {"ground_id": "GROUND-001", "text": "请根据已核验的现行法律及个案事实由律师确定具体适用。", "authority_ids": ["AUTH-CIVIL-CODE"], "user_confirmed": true, "confirmation_note": "用户仅确认该待复核表述，不表示自动得出法律结论"}
+    ],
+    "evidence_ids": ["EVID-CONTRACT-001"]
+  },
+  "declared_conflicts": []
+}

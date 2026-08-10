@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "draft_id": "DRAFT-DEFENSE-001",
+  "matter_id": "MATTER-001",
+  "as_of_date": "2026-07-18",
+  "case_analysis": {"matter_id": "MATTER-001", "pending_confirmations": []},
+  "evidence_map": {
+    "matter_id": "MATTER-001",
+    "matrix": [{"evidence_id": "EVID-PAYMENT-001", "name": "付款凭证"}],
+    "gaps": [],
+    "potential_conflicts": [],
+    "artifact_state": "lawyer_review_required"
+  },
+  "research_report": {
+    "schema_version": "1.0",
+    "report_id": "RESEARCH-001",
+    "task": {"matter_id": "MATTER-001"},
+    "state": "lawyer_review_required",
+    "records": [{"record_id": "AUTH-CIVIL-CODE", "verification_status": "verified", "full_text_checked": true, "effect_status": "effective"}]
+  },
+  "complaint": {
+    "claims": [
+      {"claim_id": "CLAIM-001", "text_verbatim": "请求判令被告支付货款人民币10000元。", "source_spans": [{"source_id": "SRC-COMPLAINT-001", "locator": "诉讼请求第1项", "quote": "请求判令被告支付货款人民币10000元。"}]},
+      {"claim_id": "CLAIM-002", "text_verbatim": "请求判令被告承担案件受理费。", "source_spans": [{"source_id": "SRC-COMPLAINT-001", "locator": "诉讼请求第2项", "quote": "请求判令被告承担案件受理费。"}]}
+    ]
+  },
+  "defense_request": {
+    "respondent": {"text": "答辩人：乙公司（训练用虚构主体）", "user_confirmed": true, "confirmation_note": "用户确认的脱敏展示文本"},
+    "responses": [
+      {"response_id": "RESPONSE-001", "claim_id": "CLAIM-001", "stance": "deny", "response_text": "答辩人否认尚欠全部货款，具体金额待律师核对。", "fact_ids": ["FACT-PAYMENT-001"], "evidence_ids": ["EVID-PAYMENT-001"], "authority_ids": [], "user_confirmed": true, "confirmation_note": "用户明示选择否认状态并确认该文本"},
+      {"response_id": "RESPONSE-002", "claim_id": "CLAIM-002", "stance": "lack_knowledge", "response_text": "答辩人目前无法确认费用负担，请由律师结合裁判结果复核。", "fact_ids": [], "evidence_ids": [], "authority_ids": [], "user_confirmed": true, "confirmation_note": "用户明示选择不知悉状态并确认该文本"}
+    ],
+    "defensive_facts": [
+      {"fact_id": "FACT-PAYMENT-001", "text": "脱敏付款凭证记载了一笔付款。", "evidence_ids": ["EVID-PAYMENT-001"], "source_spans": [{"source_id": "SRC-PAYMENT-001", "locator": "凭证第1页", "quote": "付款金额：人民币5000元。"}]}
+    ],
+    "independent_defenses": [
+      {"defense_id": "DEFENSE-RESERVATION-001", "category": "reservation", "text": "答辩人保留根据后续证据补充答辩的权利，是否使用由律师复核。", "fact_ids": [], "evidence_ids": [], "authority_ids": ["AUTH-CIVIL-CODE"], "user_confirmed": true, "confirmation_note": "用户明示确认该保留性文本"}
+    ]
+  },
+  "declared_conflicts": []
+}

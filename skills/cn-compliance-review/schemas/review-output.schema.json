@@ -1,0 +1,3 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://aioffice.example/schemas/cn-compliance-review/review-output.schema.json","type":"object","required":["schema_version","review_id","summary","findings","blockers","violation_determined","remediation_implemented","external_action_performed","artifact_state"],"properties":{"schema_version":{"const":"1.0"},"review_id":{"type":"string"},"summary":{"type":"object"},"findings":{"type":"array"},"blockers":{"type":"array","items":{"type":"string"}},"violation_determined":{"const":false},"remediation_implemented":{"const":false},"external_action_performed":{"const":false},"artifact_state":{"const":"lawyer_review_required"}},"additionalProperties":false
+}

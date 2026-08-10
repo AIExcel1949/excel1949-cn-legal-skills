@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aiioffice.com/schemas/transcribe-input.schema.json",
+  "title": "录音转写案件信息输入（v3.2）",
+  "description": "录音转写 Skill 的 case-info.json 结构。不能确认的录音时间、地点或身份应留空或标注待核实，不得推测。",
+  "type": "object",
+  "properties": {
+    "recording_time": {
+      "type": "string",
+      "description": "录音时间，中文日期格式",
+      "pattern": "^\\d{4}\\s*年\\s*\\d{1,2}\\s*月\\s*\\d{1,2}\\s*日\\s*\\d{1,2}:\\d{2}$",
+      "examples": ["2025 年 3 月 15 日 15:00"]
+    },
+    "recording_location": {
+      "type": "string",
+      "description": "录音地点",
+      "default": "",
+      "examples": ["电话通话", "XX 市 XX 区 XX 路 XX 咖啡厅"]
+    },
+    "recording_method": {
+      "type": "string",
+      "description": "录音方式",
+      "enum": ["手机通话录音", "现场录音", "微信语音", "电话录音", "其他"],
+      "examples": ["手机通话录音"]
+    },
+    "recording_duration": {
+      "type": "string",
+      "description": "录音时长（人工标注或 ffprobe 自动检测）",
+      "pattern": "^\\d+\\s*分\\s*\\d+\\s*秒$",
+      "examples": ["3 分 15 秒"]
+    },
+    "original_file": {
+      "type": "string",
+      "description": "原始录音文件名",
+      "examples": ["demo-催收电话录音-民间借贷.mp3"]
+    },
+    "original_md5": {
+      "type": "string",
+      "description": "旧数据兼容字段。新任务优先使用 original_sha256",
+      "pattern": "^[a-f0-9]{32}$",
+      "examples": ["d41d8cd98f00b204e9800998ecf8427e"]
+    },
+    "original_sha256": {
+      "type": "string",
+      "description": "原始录音文件的 SHA-256 哈希值",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "speakers": {
+      "type": "object",
+      "description": "经人工确认的说话人信息。未确认身份时保留 SPEAKER_X 标签，不得自动指派姓名。",
+      "minProperties": 1,
+      "patternProperties": {
+        "^[A-Z]$": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "说话人姓名（脱敏处理：使用'某某'替代）",
+              "examples": ["张某某"]
+            },
+            "role": {
+              "type": "string",
+              "description": "说话人在案件中的身份",
+              "examples": ["债权人", "债务人", "担保人", "律师"]
+            },
+            "voice_desc": {
+              "type": "string",
+              "description": "声音特征描述，辅助识别",
+              "examples": ["男声，约40岁，普通话", "男声，约45岁，略带四川口音"]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "description": "关联案件信息",
+      "properties": {
+        "cause": {
+          "type": "string",
+          "description": "案由",
+          "examples": ["民间借贷纠纷", "买卖合同纠纷", "离婚纠纷"]
+        },
+        "docket_number": {
+          "type": "string",
+          "description": "案号（如有）",
+          "examples": ["（2025）X 民初 X 号"]
+        },
+        "evidentiary_purpose": {
+          "type": "string",
+          "description": "录音证据在案件中的证明目的",
+          "examples": ["证明被告承认借款事实并承诺还款"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "transcriber": {
+      "type": "object",
+      "description": "转写人信息",
+      "required": ["name", "role", "date"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "转写人姓名",
+          "examples": ["李某某"]
+        },
+        "role": {
+          "type": "string",
+          "description": "转写人身份",
+          "enum": ["律师", "律师助理", "实习律师"],
+          "examples": ["律师助理"]
+        },
+        "date": {
+          "type": "string",
+          "description": "转写日期",
+          "pattern": "^\\d{4}\\s*年\\s*\\d{1,2}\\s*月\\s*\\d{1,2}\\s*日$",
+          "examples": ["2025 年 6 月 15 日"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "review_status": {
+      "type": "string",
+      "description": "人工回听校核状态",
+      "enum": ["未完成逐句回听", "已完成逐句回听"],
+      "default": "未完成逐句回听"
+    },
+    "asr_backend": {
+      "type": "string",
+      "description": "案例级 backend 覆盖全局配置。",
+      "enum": ["whisper", "whisper-turbo", "paraformer-zh", "funasr-nano", "sensevoice-small"],
+      "examples": ["funasr-nano"],
+      "default": "paraformer-zh"
+    },
+    "language": {
+      "type": "string",
+      "description": "音频语言代码（如 zh/yue/en/ja/ko）。无指定时使用 CLI --language 参数或默认 zh。",
+      "examples": ["zh", "yue", "en"],
+      "default": "zh"
+    },
+    "diarization": {
+      "type": "object",
+      "description": "v3.2 新增：说话人分离配置（案例级覆盖全局）。",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "是否启用说话人分离",
+          "default": true
+        },
+        "speaker_method": {
+          "type": "string",
+          "enum": ["cam++", "sherpa-onnx", "whisperx"],
+          "description": "说话人分离方法。FunASR 系列 backend 内置 cam++；Whisper 路径可外挂 3 种方法。",
+          "default": "cam++"
+        },
+        "default_num_speakers": {
+          "type": ["integer", "null"],
+          "description": "指定说话人数。null 表示自动推断。",
+          "default": null,
+          "minimum": 1,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

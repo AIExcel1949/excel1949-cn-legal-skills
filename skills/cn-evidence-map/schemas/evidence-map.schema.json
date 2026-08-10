@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-evidence-map/evidence-map.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version", "map_id", "matter_id", "cutoff_date", "sources", "facts",
+    "issues", "claims", "defenses", "evidence", "evidence_fact_links",
+    "fact_issue_links", "fact_position_links", "three_nature_reviews", "declared_conflicts"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "map_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+    "matter_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+    "cutoff_date": {"type": "string", "format": "date"},
+    "sources": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/source.schema.json"}},
+    "facts": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/fact-ledger.schema.json"}},
+    "issues": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/issue.schema.json"}},
+    "claims": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/claim.schema.json"}},
+    "defenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["defense_id", "text_verbatim", "status", "source_spans"],
+        "properties": {
+          "defense_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "text_verbatim": {"type": "string", "minLength": 1},
+          "status": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/fact_status"},
+          "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/source_span"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/evidence.schema.json"}},
+    "evidence_fact_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["link_id", "evidence_id", "fact_id", "status"],
+        "properties": {
+          "link_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "evidence_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "fact_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "status": {"enum": ["source_stated", "human_confirmed", "disputed"]},
+          "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/source_span"}},
+          "confirmation_note": {"type": "string", "minLength": 1},
+          "proof_purpose": {
+            "type": "object",
+            "required": ["text", "basis_status"],
+            "properties": {
+              "text": {"type": "string", "minLength": 1},
+              "basis_status": {"enum": ["source_stated", "human_confirmed"]},
+              "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/source_span"}},
+              "confirmation_note": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "fact_issue_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["link_id", "fact_id", "issue_id", "status"],
+        "properties": {
+          "link_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "fact_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "issue_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "status": {"enum": ["ai_proposed", "human_confirmed", "disputed"]},
+          "confirmation_note": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "fact_position_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["link_id", "fact_id", "target_type", "target_id", "status"],
+        "properties": {
+          "link_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "fact_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "target_type": {"enum": ["claim", "defense"]},
+          "target_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "status": {"enum": ["ai_proposed", "human_confirmed", "disputed"]},
+          "confirmation_note": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "three_nature_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["review_id", "evidence_id", "dimension", "status", "reviewer_type", "human_confirmation", "reviewed_at", "basis"],
+        "properties": {
+          "review_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "evidence_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "dimension": {"enum": ["authenticity", "legality", "relevance"]},
+          "status": {"enum": ["accepted", "disputed"]},
+          "reviewer_type": {"enum": ["licensed_lawyer", "human_user"]},
+          "human_confirmation": {"const": true},
+          "reviewed_at": {"type": "string", "format": "date-time"},
+          "basis": {"type": "string", "minLength": 1},
+          "source_spans": {"type": "array", "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/source_span"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "declared_conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["conflict_id", "fact_ids", "description", "status", "source_spans"],
+        "properties": {
+          "conflict_id": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"},
+          "fact_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/stable_id"}},
+          "description": {"type": "string", "minLength": 1},
+          "status": {"enum": ["declared", "human_confirmed", "resolved"]},
+          "source_spans": {"type": "array", "minItems": 1, "items": {"$ref": "https://aioffice.example/schemas/cn-legal-core/common.schema.json#/$defs/source_span"}},
+          "resolution_note": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aioffice.example/schemas/cn-negotiation/external-preview.schema.json",
+  "title": "谈判对外安全预览",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_state", "external_reference", "as_of_date", "agenda", "proposals", "meeting_minutes", "pending_confirmations", "disclosure_statement", "action_controls"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "artifact_state": {"const": "lawyer_review_required"},
+    "external_reference": {"type": "string"},
+    "as_of_date": {"type": "string", "format": "date"},
+    "agenda": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_id", "label", "public_position", "questions"],
+        "properties": {
+          "issue_id": {"type": "string"},
+          "label": {"type": "string"},
+          "public_position": {"type": "string"},
+          "questions": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["proposal_id", "label", "terms", "public_rationale", "conditional_exchanges", "proposal_state"],
+        "properties": {
+          "proposal_id": {"type": "string"},
+          "label": {"type": "string"},
+          "terms": {"type": "array", "items": {"$ref": "#/$defs/publicTerm"}},
+          "public_rationale": {"type": "string"},
+          "conditional_exchanges": {"type": "array", "items": {"$ref": "#/$defs/publicExchange"}},
+          "proposal_state": {"const": "lawyer_review_required"}
+        }
+      }
+    },
+    "meeting_minutes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["meeting_id", "meeting_date", "participant_roles", "discussion", "tentative_items", "next_steps", "minutes_state"],
+      "properties": {
+        "meeting_id": {"type": "string"},
+        "meeting_date": {"type": "string", "format": "date"},
+        "participant_roles": {"type": "array", "items": {"type": "string"}},
+        "discussion": {"type": "array", "items": {"$ref": "#/$defs/discussionItem"}},
+        "tentative_items": {"type": "array", "items": {"$ref": "#/$defs/tentativeItem"}},
+        "next_steps": {"type": "array", "items": {"$ref": "#/$defs/nextStep"}},
+        "minutes_state": {"const": "record_only_not_commitment"}
+      }
+    },
+    "pending_confirmations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_type", "source_id", "summary"],
+        "properties": {
+          "source_type": {"enum": ["proposal", "meeting_item", "next_step"]},
+          "source_id": {"type": "string"},
+          "summary": {"type": "string"}
+        }
+      }
+    },
+    "disclosure_statement": {"const": "本文件仅为待执业律师复核的对外预览，不代表客户承诺，不得自动发送、签署或提交"},
+    "action_controls": {"$ref": "#/$defs/actionControls"}
+  },
+  "$defs": {
+    "publicTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_id", "offer_text", "status"],
+      "properties": {
+        "issue_id": {"type": "string"},
+        "offer_text": {"type": "string"},
+        "status": {"enum": ["proposed", "tentative"]}
+      }
+    },
+    "publicExchange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exchange_id", "give_issue_id", "give_text", "receive_issue_id", "receive_text", "condition_text", "exchange_state"],
+      "properties": {
+        "exchange_id": {"type": "string"},
+        "give_issue_id": {"type": "string"},
+        "give_text": {"type": "string"},
+        "receive_issue_id": {"type": "string"},
+        "receive_text": {"type": "string"},
+        "condition_text": {"type": "string"},
+        "exchange_state": {"const": "proposed_conditional_exchange"}
+      }
+    },
+    "discussionItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_id", "summary"],
+      "properties": {
+        "issue_id": {"type": "string"},
+        "summary": {"type": "string"}
+      }
+    },
+    "tentativeItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item_id", "summary", "status"],
+      "properties": {
+        "item_id": {"type": "string"},
+        "summary": {"type": "string"},
+        "status": {"enum": ["pending", "confirmed", "rejected"]}
+      }
+    },
+    "nextStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "owner_role", "due_date", "status"],
+      "properties": {
+        "action": {"type": "string"},
+        "owner_role": {"type": "string"},
+        "due_date": {"type": ["string", "null"], "format": "date"},
+        "status": {"enum": ["pending", "completed"]}
+      }
+    },
+    "actionControls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auto_send", "auto_sign", "auto_submit", "auto_commit", "external_use_permitted"],
+      "properties": {
+        "auto_send": {"const": false},
+        "auto_sign": {"const": false},
+        "auto_submit": {"const": false},
+        "auto_commit": {"const": false},
+        "external_use_permitted": {"const": false}
+      }
+    }
+  }
+}
