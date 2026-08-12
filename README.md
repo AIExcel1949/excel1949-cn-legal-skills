@@ -6,6 +6,10 @@
 
 **版本：v1.0.0**
 
+## 学习资源
+
+- **飞书知识库**（免费法律 AI 视频课程、配套资料、更新说明）：[https://excel1949.feishu.cn/wiki/Xs6gwUrbsi6Wcak804ocUG4jnDe](https://excel1949.feishu.cn/wiki/Xs6gwUrbsi6Wcak804ocUG4jnDe)
+
 ## 适用平台
 
 - **Claude Code**：官方推荐（安装见下文）；
