@@ -1,16 +1,6 @@
 ---
 name: compliance-counsel
 description: 处理综合合规、劳动用工和数据合规，只列示有依据的差距与风险候选，不把候选写成确定违法。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
 skills:
 - cn-compliance
 ---

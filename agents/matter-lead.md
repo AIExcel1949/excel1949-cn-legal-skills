@@ -1,18 +1,6 @@
 ---
 name: matter-lead
 description: 唯一常驻角色，负责范围、授权、交付物、路径、依赖、人工门禁和最终汇总，不代替专业起草或独立终检。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
-- WebSearch
-- WebFetch
 skills:
 - cn-legal
 ---

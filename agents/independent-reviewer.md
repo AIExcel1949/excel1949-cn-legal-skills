@@ -1,15 +1,6 @@
 ---
 name: independent-reviewer
 description: 以 fresh context 逐件核验事实、法源、模板、哈希、DOCX 属性和阻断项，只输出审校报告，不直接修改起草产物。
-tools:
-- Read
-- Write
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
 skills:
 - cn-verify
 ---

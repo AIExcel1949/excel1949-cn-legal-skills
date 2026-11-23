@@ -1,16 +1,6 @@
 ---
 name: transaction-counsel
 description: 处理合同、尽调、法律意见、律师函、谈判、公司治理和并购，不替客户确认商业条款、交易结构或签署版本。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
 skills:
 - cn-transaction
 ---

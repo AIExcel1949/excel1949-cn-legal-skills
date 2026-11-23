@@ -1,16 +1,6 @@
 ---
 name: fact-evidence-analyst
 description: 整理事实来源、时间轴、争点、证据映射、金额和期限旁路计算，不认定证据三性、事实真伪或案件胜败。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
 skills:
 - cn-case-analysis
 - cn-evidence-catalog

@@ -1,30 +1,90 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "excel1949-cn-legal-skills",
-  "displayName": "excel1949 法律专家团",
   "version": "1.0.1",
-  "description": "面向中国律师诉讼与非诉业务的开源法律专家团（GPL-3.0）：涵盖 40 项中国法律专业 Skill、8 个分工明确的专家角色、藏经阁领域知识包、确定性 DOCX 文书生成与独立终检。",
+  "description": "面向中国律师诉讼与非诉业务的开源法律专家团（GPL-3.0）：涵盖 40 项中国法律专业 Skill、8 个专家角色、确定性 DOCX 文书生成与独立终检。",
   "author": {
-    "name": "AIOffice职场通关-excel1949"
+    "name": "AIOffice职场通关-excel1949",
+    "email": "excel1949@qq.com"
   },
   "license": "GPL-3.0",
-  "keywords": [
-    "中国法律",
-    "律师实务",
-    "诉讼",
-    "非诉",
-    "合同",
-    "合规"
-  ],
   "agents": [
-    "./agents/civil-dispute-counsel.md",
-    "./agents/compliance-counsel.md",
-    "./agents/fact-evidence-analyst.md",
-    "./agents/independent-reviewer.md",
     "./agents/matter-lead.md",
     "./agents/source-counsel.md",
+    "./agents/fact-evidence-analyst.md",
+    "./agents/civil-dispute-counsel.md",
+    "./agents/compliance-counsel.md",
+    "./agents/transaction-counsel.md",
     "./agents/special-proceedings-counsel.md",
-    "./agents/transaction-counsel.md"
+    "./agents/independent-reviewer.md"
+  ],
+  "expertType": "team",
+  "agentName": "matter-lead",
+  "displayName": {
+    "zh": "excel1949法律专家团",
+    "en": "CN Legal Skills Team",
+    "zh-CN": "excel1949法律专家团",
+    "en-US": "CN Legal Skills Team"
+  },
+  "profession": {
+    "zh": "excel1949法律专家团",
+    "en": "CN Legal Skills Team",
+    "zh-CN": "excel1949法律专家团",
+    "en-US": "CN Legal Skills Team"
+  },
+  "displayDescription": {
+    "zh": "开源中国法律实务专家团：八岗协同，涵盖40项诉讼与非诉技能、法源核验、证据映射及DOCX文书终检。",
+    "en": "Open-source Chinese legal expert team with 8 specialized roles, 40 litigation and non-litigation skills, source verification, and DOCX review.",
+    "zh-CN": "开源中国法律实务专家团：八岗协同，涵盖40项诉讼与非诉技能、法源核验、证据映射及DOCX文书终检。",
+    "en-US": "Open-source Chinese legal expert team with 8 specialized roles, 40 litigation and non-litigation skills, source verification, and DOCX review."
+  },
+  "avatar": "avatars/team.png",
+  "categoryId": "11-SecurityCompliance",
+  "defaultInitPrompt": {
+    "zh": "请以被告代理律师视角分析这份民事起诉状与证据清单，梳理核心争点并起草答辩状 DOCX",
+    "en": "Analyze this civil complaint and evidence list from the defense counsel perspective, organize core issues, and draft a defense brief in DOCX",
+    "zh-CN": "请以被告代理律师视角分析这份民事起诉状与证据清单，梳理核心争点并起草答辩状 DOCX",
+    "en-US": "Analyze this civil complaint and evidence list from the defense counsel perspective, organize core issues, and draft a defense brief in DOCX"
+  },
+  "plugin": "excel1949-cn-legal-skills",
+  "tags": [
+    {
+      "zh": "诉讼与仲裁",
+      "en": "Litigation & Arbitration",
+      "zh-CN": "诉讼与仲裁",
+      "en-US": "Litigation & Arbitration"
+    },
+    {
+      "zh": "合同与非诉",
+      "en": "Contracts & Deals",
+      "zh-CN": "合同与非诉",
+      "en-US": "Contracts & Deals"
+    },
+    {
+      "zh": "合规与风控",
+      "en": "Compliance & Risk",
+      "zh-CN": "合规与风控",
+      "en-US": "Compliance & Risk"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "zh": "请以被告代理律师视角分析这份民事起诉状与证据清单，梳理核心争点并起草答辩状 DOCX",
+      "en": "Analyze this civil complaint and evidence list from the defense counsel perspective, organize core issues, and draft a defense brief in DOCX",
+      "zh-CN": "请以被告代理律师视角分析这份民事起诉状与证据清单，梳理核心争点并起草答辩状 DOCX",
+      "en-US": "Analyze this civil complaint and evidence list from the defense counsel perspective, organize core issues, and draft a defense brief in DOCX"
+    },
+    {
+      "zh": "审查这份买卖合同的关键条款与履行风险，输出风险清单、修改建议与法律依据报告 DOCX",
+      "en": "Review key clauses and performance risks of this sales contract, and output a risk list, revision suggestions, and legal basis report in DOCX",
+      "zh-CN": "审查这份买卖合同的关键条款与履行风险，输出风险清单、修改建议与法律依据报告 DOCX",
+      "en-US": "Review key clauses and performance risks of this sales contract, and output a risk list, revision suggestions, and legal basis report in DOCX"
+    },
+    {
+      "zh": "根据现有劳动用工制度与争议材料，整理事实时间轴、补偿金测算及合规整改清单",
+      "en": "Based on the employment policies and dispute materials, organize a fact timeline, severance calculation, and compliance checklist",
+      "zh-CN": "根据现有劳动用工制度与争议材料，整理事实时间轴、补偿金测算及合规整改清单",
+      "en-US": "Based on the employment policies and dispute materials, organize a fact timeline, severance calculation, and compliance checklist"
+    }
   ],
   "skills": [
     "./skills/cn-admin-litigation",
@@ -68,11 +128,154 @@
     "./skills/cn-transaction",
     "./skills/cn-verify"
   ],
-  "interface": {
-    "displayName": "excel1949 法律专家团",
-    "shortDescription": "40 项中国法律 Skill + 8 个专家角色 + 藏经阁领域知识包，确定性 DOCX 文书生成与独立终检",
-    "category": "Legal",
-    "brandColor": "#1F8A4F",
-    "icon": "icon.png"
-  }
+  "teamInfo": {
+    "leadAgent": "matter-lead",
+    "memberAgents": [
+      "source-counsel",
+      "fact-evidence-analyst",
+      "civil-dispute-counsel",
+      "compliance-counsel",
+      "transaction-counsel",
+      "special-proceedings-counsel",
+      "independent-reviewer"
+    ]
+  },
+  "members": [
+    {
+      "id": "matter-lead",
+      "name": {
+        "en": "Si",
+        "zh": "司有度"
+      },
+      "displayName": {
+        "en": "Si",
+        "zh": "司有度"
+      },
+      "profession": {
+        "en": "Matter Delivery Controller",
+        "zh": "案件交付总控"
+      },
+      "avatar": "avatars/matter-lead.png",
+      "role": "lead"
+    },
+    {
+      "id": "source-counsel",
+      "name": {
+        "en": "Lu",
+        "zh": "陆可查"
+      },
+      "displayName": {
+        "en": "Lu",
+        "zh": "陆可查"
+      },
+      "profession": {
+        "en": "Legal Source Counsel",
+        "zh": "法源核验顾问"
+      },
+      "avatar": "avatars/source-counsel.png",
+      "role": "member"
+    },
+    {
+      "id": "fact-evidence-analyst",
+      "name": {
+        "en": "Cheng",
+        "zh": "程知时"
+      },
+      "displayName": {
+        "en": "Cheng",
+        "zh": "程知时"
+      },
+      "profession": {
+        "en": "Fact & Evidence Analyst",
+        "zh": "事实证据分析师"
+      },
+      "avatar": "avatars/fact-evidence-analyst.png",
+      "role": "member"
+    },
+    {
+      "id": "civil-dispute-counsel",
+      "name": {
+        "en": "Teng",
+        "zh": "滕争平"
+      },
+      "displayName": {
+        "en": "Teng",
+        "zh": "滕争平"
+      },
+      "profession": {
+        "en": "Civil Dispute Advisor",
+        "zh": "民商事争议顾问"
+      },
+      "avatar": "avatars/civil-dispute-counsel.png",
+      "role": "member"
+    },
+    {
+      "id": "compliance-counsel",
+      "name": {
+        "en": "He",
+        "zh": "何守规"
+      },
+      "displayName": {
+        "en": "He",
+        "zh": "何守规"
+      },
+      "profession": {
+        "en": "Corporate Compliance Advisor",
+        "zh": "企业合规顾问"
+      },
+      "avatar": "avatars/compliance-counsel.png",
+      "role": "member"
+    },
+    {
+      "id": "transaction-counsel",
+      "name": {
+        "en": "Jia",
+        "zh": "贾言成"
+      },
+      "displayName": {
+        "en": "Jia",
+        "zh": "贾言成"
+      },
+      "profession": {
+        "en": "Investment & Transaction Advisor",
+        "zh": "投融资交易顾问"
+      },
+      "avatar": "avatars/transaction-counsel.png",
+      "role": "member"
+    },
+    {
+      "id": "special-proceedings-counsel",
+      "name": {
+        "en": "Jing",
+        "zh": "荆慎行"
+      },
+      "displayName": {
+        "en": "Jing",
+        "zh": "荆慎行"
+      },
+      "profession": {
+        "en": "Special Proceedings & Enforcement Advisor",
+        "zh": "特别程序与执行顾问"
+      },
+      "avatar": "avatars/special-proceedings-counsel.png",
+      "role": "member"
+    },
+    {
+      "id": "independent-reviewer",
+      "name": {
+        "en": "Bai",
+        "zh": "柏无差"
+      },
+      "displayName": {
+        "en": "Bai",
+        "zh": "柏无差"
+      },
+      "profession": {
+        "en": "Independent Risk Review Counsel",
+        "zh": "独立风控复核律师"
+      },
+      "avatar": "avatars/independent-reviewer.png",
+      "role": "member"
+    }
+  ]
 }

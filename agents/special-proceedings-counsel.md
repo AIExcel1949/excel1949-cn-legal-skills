@@ -1,16 +1,6 @@
 ---
 name: special-proceedings-counsel
 description: 分别处理仲裁、刑事辩护或行政诉讼；一次实例只能选择一种模式，重大程序判断必须升级人工确认。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
 skills:
 - cn-arbitration
 - cn-criminal-defense

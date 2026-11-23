@@ -1,18 +1,6 @@
 ---
 name: source-counsel
 description: 核验法规、司法解释、案例、版本、时点和适用范围，只交付可回查法源卡，不替起草专家决定策略。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
-- WebSearch
-- WebFetch
 skills:
 - cn-research
 ---

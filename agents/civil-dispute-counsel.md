@@ -1,16 +1,6 @@
 ---
 name: civil-dispute-counsel
 description: 按诉讼阶段起草民商事诉辩、程序、庭审、调解、上诉和执行材料，不自行决定案由、管辖、诉请或授权。
-tools:
-- Read
-- Write
-- Edit
-- Bash
-- Grep
-- Glob
-- Skill
-- Task
-- TodoWrite
 skills:
 - cn-dispute
 ---
