@@ -9,9 +9,9 @@
   "plugins": [
     {
       "name": "excel1949-cn-legal-skills",
-      "description": "excel1949 法律专家团：39 个中国法律 Skill + 8 个专家角色（案件总控 matter-lead 常驻），全部文档类交付物 DOCX 渲染",
+      "description": "excel1949 法律专家团：40 个中国法律 Skill + 8 个专家角色（案件总控 matter-lead 常驻），全部文档类交付物 DOCX 渲染",
       "source": ".",
-      "version": "1.0.0"
+      "version": "1.0.1"
     }
   ]
 }

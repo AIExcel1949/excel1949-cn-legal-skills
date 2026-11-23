@@ -1,7 +1,7 @@
 {
   "name": "excel1949-cn-lawyer-skills",
   "displayName": "excel1949 法律专家团",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "面向中国律师诉讼与非诉业务的 Skill、专家角色、确定性文书生成与独立终检集群。",
   "author": {
     "name": "AIOffice职场通关-excel1949"

@@ -1,10 +1,15 @@
-# excel1949 中国法律专家团（Claude Code 插件）
+# excel1949 中国法律专家团（Claude Code / Codex / Antigravity 通用插件）
 
-**本仓库发布的是「法律专家团」插件**：**40 个法律 Skill + 8 个专家角色**组成的专家团，一队各司其职的法律专家协同办案，非单一助手。它是**独立插件**——不依赖任何特定软件，可独立安装到 Claude Code 等任意 CLI、独立升级、独立使用（安装见下文）；亦可作为「法律 AI 工作台 v1.01 - AIOffice职场通关」（作者：excel1949）的内置专家团运行。
+**本仓库发布的是“法律专家团”开源插件（GPL-3.0）**：**40 个法律 Skill + 8 个专家角色**组成的专家团，一队各司其职的法律专家协同办案，非单一助手。它是**独立插件**——不依赖任何特定软件，可独立安装到 Claude Code / OpenAI Codex CLI / Google Antigravity（Gemini）等主流智能体，独立升级、独立使用（安装见下文）；亦可作为“法律 AI 工作台 v1.01 - AIOffice职场通关”（作者：excel1949）的内置专家团运行。
 
 面向中国法律实务，专为法律文书生成与财务数据分析定制：正文排版对齐默认标准（思源宋体、固定行距、纯黑字体、页眉品牌与公众号二维码），**最终交付一律为可编辑 DOCX**。
 
-**版本：v1.0.0**
+**版本：v1.0.1**
+
+## 双分支架构说明
+
+- **`main` 分支（默认）**：Claude Code / OpenAI Codex CLI / Google Antigravity（Gemini）通用开源版。保留 `agents/*.md` 中的 `tools:` 最小权限白名单，配套 `.claude-plugin/`、`.codex-plugin/`、`.gemini-plugin/`、根 `plugin.json` 与 `install.sh` 一键安装脚本。
+- **`workbuddy` 分支**：WorkBuddy / CodeBuddy 专版。从 `main` 派生，按平台规范剥离 `agents/*.md` 的 `tools:` 字段，内置 9 张 512×512 专家团头像、`settings.json` 与 `.codebuddy-plugin/` / `.workbuddy-plugin/` 三清单同步，可直接打包 zip 导入 WorkBuddy。
 
 ## 学习资源
 
@@ -12,22 +17,34 @@
 
 ## 适用平台
 
-- **Claude Code**：官方推荐（安装见下文）；
-- **workbuddy、Qoder 等国内 AI 平台**：插件/Skill 格式兼容，可直接安装使用；
+- **Claude Code / OpenAI Codex CLI / Google Antigravity（Gemini）**：切换 `main` 分支即可直接安装；
+- **WorkBuddy / CodeBuddy**：切换 `workbuddy` 分支或直接导入对应 WorkBuddy 专版 zip 包；
 - 其他兼容 Claude Code 插件生态的 CLI 与工具均可安装。
 
 ## 藏经阁架构（Scripture Vault Architecture）
 
-本专家团采用**「藏经阁架构」**——一种原创的法律 AI 插件设计（2026-08 定名）：
+本专家团采用**“藏经阁架构”**——一种原创的法律 AI 插件设计（2026-08 定名）：
 
-- **知识库外置，如藏经阁**：18 个领域知识包（`domain-packs/`，含案由证据问题族、官方法源索引）独立于 Skill 存放，按案由经 `domain-pack-routing` 路由，执行计划生成时全文注入（`domain_guidance`）——招式在外，心法在阁；
-- **技能轻装，如江湖招式**：40 个 Skill 只承载"怎么生成"的确定性流程（收案→法源核验→事实证据→起草→渲染→终检），内部不囤积知识，法源一律运行时经宿主检索核验（`cn-research` 逐项可回查）——不随附法律文本，永不因版本过期而失真；
+- **知识库外置，如藏经阁**：领域知识包（`domain-packs/`，含案由证据问题族、官方法源索引）独立于 Skill 存放，按案由经 `domain-pack-routing` 路由，执行计划生成时全文注入（`domain_guidance`）——招式在外，心法在阁；
+- **技能轻装，如江湖招式**：40 个 Skill 只承载“怎么生成”的确定性流程（收案→法源核验→事实证据→起草→渲染→终检），内部不囤积知识，法源一律运行时经宿主检索核验（`cn-research` 逐项可回查）——不随附法律文本，永不因版本过期而失真；
 - **按需取经，如临敌翻谱**：每个案件只注入与案由匹配的领域包，知识粒度对应当案争点，不冗余、不串味；
 - **确定性收口**：全部文书走登记生成器/渲染器/独立终检/交付审计，机器可复核、可追溯。
 
-此架构将"知识"与"技能"彻底解耦：知识更新只改 `domain-packs/`，技能迭代只动 `skills/`，互不牵连——是为「藏经阁」。
+此架构将“知识”与“技能”彻底解耦：知识更新只改 `domain-packs/`，技能迭代只动 `skills/`，互不牵连——是为“藏经阁”。
 
-## 安装（已验证：claude CLI 2.1.223 实测通过）
+## 安装
+
+### 方式一：一键脚本安装（推荐，支持 Claude Code / Codex CLI / Antigravity）
+
+```bash
+# 默认实体拷贝安装（自包含，不依赖仓库源码路径）
+./install.sh
+
+# 开发者软链模式（仅限本地开发调试）
+./install.sh --link
+```
+
+### 方式二：Claude Code 插件市场 CLI（已验证：claude CLI 2.1.223 实测通过）
 
 ```bash
 # 1. 添加市场（git URL 或本地路径均可）
@@ -138,22 +155,27 @@ claude plugin install excel1949-cn-legal-skills@excel1949-cn-legal-marketplace
 ## 目录结构
 
 ```
-├── .claude-plugin/          # plugin.json + marketplace.json（安装入口）
-├── agents/                  # 8 个专家角色定义
+├── .claude-plugin/          # plugin.json + marketplace.json（Claude Code 入口）
+├── .codex-plugin/           # plugin.json（OpenAI Codex CLI 入口）
+├── .gemini-plugin/          # plugin.json（Google Antigravity / Gemini 入口）
+├── plugin.json              # 通用插件清单（不含平台专有字段）
+├── icon.png                 # 品牌插件图标（512×512）
+├── install.sh               # 一键实体拷贝 / --link 软链安装脚本
+├── agents/                  # 8 个专家角色定义（main 分支保留 tools: 最小权限）
 ├── skills/                  # 40 个法律 Skill（含生成器/渲染器/模板/校验）
-├── assets/                  # 品牌资源（页眉 Logo、公众号二维码 wechat-qr.jpg、字体）
-├── domain-packs/            # 18 个领域业务包（PACK.md 案由证据脚手架）
+├── assets/                  # 品牌资源（页眉 Logo、公众号二维码、字体）
+├── domain-packs/            # 藏经阁领域业务包（PACK.md 案由证据脚手架）
 └── LICENSE / NOTICE / TRADEMARKS.md
 ```
 
 ## 配套软件（欢迎下载）
 
-**「法律 AI 工作台 v1.01 - AIOffice职场通关」**（作者：excel1949）——以本专家团为核心能力的**法律 AI 工作台软件**：软件内可运行终端、内置文书工作区、一键编排专家团协同办案，专为法律文书生成与财务数据分析打造。**软件将在独立仓库发布，欢迎届时下载使用**（下载地址发布后将于本文档更新）。
+**“法律 AI 工作台 v1.01 - AIOffice职场通关”**（作者：excel1949）——以本专家团为核心能力的**法律 AI 工作台软件**：软件内可运行终端、内置文书工作区、一键编排专家团协同办案，专为法律文书生成与财务数据分析打造。**软件将在独立仓库发布，欢迎届时下载使用**（下载地址发布后将于本文档更新）。
 
 ## 运行环境与能力定位
 
-- **插件独立性**：本插件可独立安装到 Claude Code、workbuddy、Qoder 等 CLI 使用（安装见上文），亦可作为上述「法律 AI 工作台」软件的配套专家团协同运行——软件与插件解耦，各自独立发布、独立升级。
-- **能力定位**：「法律 AI 工作台」软件连同本专家团，是**面向法律实务的领域专精 AI**——以**法律文书全流程生成**为核心（收案、法源核验、事实证据分析、起诉状/答辩状/代理词/合同/法律意见等确定性 DOCX 交付、金额期限计算、独立终检），并在此基础上提供**部分财务数据分析**能力。因领域专精定位，**编程开发、系统运维等通用工程能力弱于通用智能体**——此为设计取舍（专业领域深度优先，通用任务交给通用模型），请按领域专长使用。
+- **插件独立性**：本插件可独立安装到 Claude Code、OpenAI Codex CLI、Google Antigravity（Gemini）及 WorkBuddy（`workbuddy` 分支）使用（安装见上文），亦可作为上述“法律 AI 工作台”软件的配套专家团协同运行——软件与插件解耦，各自独立发布、独立升级。
+- **能力定位**：“法律 AI 工作台”软件连同本专家团，是**面向法律实务的领域专精 AI**——以**法律文书全流程生成**为核心（收案、法源核验、事实证据分析、起诉状/答辩状/代理词/合同/法律意见等确定性 DOCX 交付、金额期限计算、独立终检），并在此基础上提供**部分财务数据分析**能力。因领域专精定位，**编程开发、系统运维等通用工程能力弱于通用智能体**——此为设计取舍（专业领域深度优先，通用任务交给通用模型），请按领域专长使用。
 
 ## 使用边界
 
